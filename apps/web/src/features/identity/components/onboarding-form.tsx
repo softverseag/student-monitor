@@ -1,10 +1,11 @@
 'use client';
 
+import type { UserRole } from '@sm/core';
 import { useActionState } from 'react';
 
 import { type OnboardingState, submitOnboarding } from '../lib/onboarding-action';
 
-const ROLES = [
+const ROLES: { value: UserRole; label: string; hint: string }[] = [
   {
     value: 'COACH',
     label: 'Koç',
@@ -20,7 +21,7 @@ const ROLES = [
     label: 'Veli',
     hint: 'Çocuğumun gelişimini takip ederim.',
   },
-] as const;
+];
 
 const INITIAL: OnboardingState = { error: null };
 

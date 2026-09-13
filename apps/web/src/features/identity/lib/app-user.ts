@@ -1,15 +1,10 @@
 import 'server-only';
 
+import type { AppUser } from '@sm/core';
+
 import { apiRequest } from '@/shared/lib/api';
 
-/** Mirrors the backend's AppUserDTO (apps/backend/src/features/users/dto). */
-export interface AppUser {
-  id: string;
-  email: string | null;
-  displayName: string | null;
-  role: 'COACH' | 'STUDENT' | 'PARENT' | null;
-  onboardedAt: string | null;
-}
+export type { AppUser };
 
 /**
  * The caller's own row, creating it on first use.

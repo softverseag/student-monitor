@@ -1,6 +1,10 @@
+import type { UserRole } from '@sm/core';
+
 import { fetchCurrentUser } from '@/features/identity';
 
-const ROLE_LABELS: Record<string, string> = {
+// Record<UserRole, string>: adding a fourth role becomes a compile error here
+// rather than an undefined label at runtime.
+const ROLE_LABELS: Record<UserRole, string> = {
   COACH: 'Koç',
   STUDENT: 'Öğrenci',
   PARENT: 'Veli',
