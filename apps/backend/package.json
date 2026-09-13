@@ -25,7 +25,8 @@
     "prisma:migrate": "prisma migrate dev",
     "prisma:deploy": "prisma migrate deploy",
     "prisma:studio": "prisma studio",
-    "postinstall": "prisma generate"
+    "postinstall": "prisma generate",
+    "dev": "nest start --watch"
   },
   "dependencies": {
     "@clerk/backend": "^3.17.2",
