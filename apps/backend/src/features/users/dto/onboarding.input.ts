@@ -1,44 +1,32 @@
 import { BadRequestException } from '@nestjs/common';
+import {
+  DISPLAY_NAME_MAX,
+  DISPLAY_NAME_MIN,
+  onboardingSchema,
+  type OnboardingInput,
+} from '@sm/core';
 
-import type { UserRole } from '../../../generated/prisma/enums.js';
-
-export interface OnboardingInput {
-  role: UserRole;
-  displayName: string;
-}
-
-const ROLES: readonly UserRole[] = ['COACH', 'STUDENT', 'PARENT'];
-
-/** Matches the column; long enough for a real Turkish name, short enough to render. */
-const NAME_MIN = 2;
-const NAME_MAX = 80;
+export type { OnboardingInput };
 
 /**
- * Validate an onboarding submission.
+ * Turkish copy per failing field.
  *
- * Hand-rolled on purpose. The project's direction is Zod schemas in `@sm/core`
- * behind a global ValidationPipe ([[T-002]]), and half of that pattern — a Zod
- * schema with no pipe, living in one feature — would be worse than none. Two
- * fields do not justify pulling the stack forward; this function is what gets
- * replaced when the real thing lands.
+ * The schema in `@sm/core` deliberately carries no messages — it is shared with
+ * clients that word things differently, and user-facing copy does not belong in
+ * a domain package (ADR-0011, ADR-0015). Mapping by `issue.path` is how the
+ * backend supplies its own.
  */
+const MESSAGE_BY_FIELD: Record<string, string> = {
+  role: 'Geçerli bir rol seçin.',
+  displayName: `Ad soyad ${DISPLAY_NAME_MIN} ile ${DISPLAY_NAME_MAX} karakter arasında olmalı.`,
+};
+
 export function parseOnboardingInput(raw: unknown): OnboardingInput {
-  if (typeof raw !== 'object' || raw === null || Array.isArray(raw)) {
-    throw new BadRequestException('Geçersiz istek.');
-  }
+  const result = onboardingSchema.safeParse(raw);
+  if (result.success) return result.data;
 
-  const { role, displayName } = raw as { role?: unknown; displayName?: unknown };
-
-  if (typeof role !== 'string' || !ROLES.includes(role as UserRole)) {
-    throw new BadRequestException('Geçerli bir rol seçin.');
-  }
-
-  const name = typeof displayName === 'string' ? displayName.trim() : '';
-  if (name.length < NAME_MIN || name.length > NAME_MAX) {
-    throw new BadRequestException(
-      `Ad soyad ${NAME_MIN} ile ${NAME_MAX} karakter arasında olmalı.`,
-    );
-  }
-
-  return { role: role as UserRole, displayName: name };
+  const field = result.error.issues[0]?.path[0];
+  throw new BadRequestException(
+    (typeof field === 'string' ? MESSAGE_BY_FIELD[field] : undefined) ?? 'Geçersiz istek.',
+  );
 }
