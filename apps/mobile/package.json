@@ -6,6 +6,7 @@
     "@clerk/clerk-expo": "^2.20.0",
     "@clerk/localizations": "^3.37.8",
     "@expo/ui": "~57.0.18",
+    "@sm/core": "workspace:*",
     "expo": "~57.0.22",
     "expo-constants": "~57.0.18",
     "expo-device": "~57.0.2",

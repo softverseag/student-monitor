@@ -1,4 +1,5 @@
 import { useAuth } from '@clerk/clerk-expo';
+import type { UserRole } from '@sm/core';
 import { router } from 'expo-router';
 import { useState } from 'react';
 import {
@@ -15,9 +16,7 @@ import { ApiError, apiRequest } from '@/shared/lib/api';
 
 import { useAppUser } from '../hooks/use-app-user';
 
-type Role = 'COACH' | 'STUDENT' | 'PARENT';
-
-const ROLES: { value: Role; label: string; hint: string }[] = [
+const ROLES: { value: UserRole; label: string; hint: string }[] = [
   { value: 'STUDENT', label: 'Öğrenci', hint: 'Koçumla çalışırım, görevlerimi takip ederim.' },
   { value: 'COACH', label: 'Koç', hint: 'Öğrenci takip ederim, görev ve ödev veririm.' },
   { value: 'PARENT', label: 'Veli', hint: 'Çocuğumun gelişimini takip ederim.' },
@@ -35,7 +34,7 @@ export function OnboardingScreen() {
   const { getToken } = useAuth();
   const { user, isLoading } = useAppUser();
 
-  const [role, setRole] = useState<Role>('STUDENT');
+  const [role, setRole] = useState<UserRole>('STUDENT');
   const [displayName, setDisplayName] = useState<string | null>(null);
   const [isSaving, setIsSaving] = useState(false);
   const [error, setError] = useState<string | null>(null);
