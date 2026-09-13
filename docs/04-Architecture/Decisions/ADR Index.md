@@ -1,6 +1,6 @@
 ---
 title: ADR Index
-updated: 2026-09-12
+updated: 2026-09-14
 ---
 
 # Architecture Decisions
@@ -28,6 +28,7 @@ SORT id ASC
 | [[ADR-0012]] | Clerk for authentication, our database for authorization | accepted |
 | [[ADR-0013]] | Account deletion anonymises our row, deletes the Clerk identity | accepted |
 | [[ADR-0014]] | One role per account, fixed at onboarding | accepted |
+| [[ADR-0015]] | Workspace packages ship compiled output, orchestrated by Turborepo | accepted |
 
 All of these are reversible except [[ADR-0004]] and [[ADR-0008]], which get baked into historical
 data and are therefore worth arguing about now. [[ADR-0009]] is cheap to reverse on day one and
