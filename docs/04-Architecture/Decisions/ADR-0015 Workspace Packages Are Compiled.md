@@ -62,9 +62,10 @@ that outright.
    `turbo run dev --filter=backend...`. The trailing `...` includes dependencies, so `@sm/core` runs
    `tsc --watch` beside Nest's own watcher and an edit propagates without a manual step.
 
-4. **`@sm/config` holds the tsconfig bases**, consumed by `packages/*` and the backend. Web keeps
-   Next's generated config and mobile keeps `expo/tsconfig.base` — forcing either onto our base
-   fights the framework for no gain.
+4. **`@sm/config` holds the tsconfig bases**, consumed by `packages/*`. Web keeps Next's generated
+   config and mobile keeps `expo/tsconfig.base` — forcing either onto our base fights the framework
+   for no gain. The backend also keeps its own for now: adopting the base there would shake loose
+   unrelated type errors in a task about packaging ([[T-018]]).
 
 5. **Packages are sliced by feature name** ([[ADR-0010]]): `core/src/identity/` mirrors
    `features/identity/` in the apps. A single root export for now; subpaths can be added later

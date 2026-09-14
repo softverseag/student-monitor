@@ -60,19 +60,19 @@ see `docs/05-Delivery/Tasks/T-001 Scaffold the monorepo.md`.
 - **No i18n layer.** The product is Turkish only — copy is written directly in components as string
   literals. Dates and numbers still go through `Intl` with `tr-TR` / `Europe/Istanbul`. See
   `docs/04-Architecture/Decisions/ADR-0011 No Internationalisation Layer.md`.
-- **Tooling**: pnpm workspaces. Turborepo and **Biome** are still to be added — the Nest scaffold
-  currently ships oxlint + Prettier, which Biome replaces.
+- **Tooling**: pnpm workspaces + **Turborepo** (`turbo.json`). **Biome** is still to be added — the
+  Nest scaffold currently ships oxlint + Prettier, which Biome replaces.
 - Node 22 locally. Locale `tr-TR`, timezone `Europe/Istanbul`, week starts Monday, currency TRY.
 
-Planned layout:
+Layout:
 
 ```
 apps/backend    NestJS backend
 apps/web        Next.js web app       (coaches, parents)
 apps/mobile     Expo React Native app (students, coach quick actions)
-packages/core   domain types, enums, Zod schemas, progress + earnings rules
-packages/api    axios client, endpoint modules, SWR hooks and cache keys
-packages/config Biome and tsconfig bases
+packages/core   domain types, enums, Zod schemas, progress + earnings rules   (exists)
+packages/api    axios client, endpoint modules, SWR hooks and cache keys      (not yet)
+packages/config tsconfig bases; Biome config to follow                        (exists)
 docs/           Obsidian vault (this is the spec)
 ```
 
@@ -89,21 +89,25 @@ pnpm dev:backend                nest start --watch      (apps/backend)
 pnpm dev:web                    next dev                (apps/web)
 pnpm dev:mobile                 expo start              (apps/mobile)
 
-pnpm typecheck                  tsc --noEmit in every app
+pnpm typecheck                  turbo run typecheck (every app + package)
 docker compose up -d            local Postgres on :5433
 pnpm --filter backend prisma:migrate   create/apply a migration
-pnpm build                      build every app
-pnpm test                       run every test suite
+pnpm build                      turbo run build (packages first, then apps)
+pnpm test                       turbo run test
 
 pnpm --filter backend test      one app only
 ```
 
-Two things that will bite you:
+Four things that will bite you:
 
 - **`pnpm --filter web typecheck` runs `next typegen` first.** Next 16 generates `LayoutProps` /
   `PageProps` into `.next/types`; a bare `tsc --noEmit` fails before those exist.
 - **The backend is ESM.** Relative imports need `.js` (`./app.module.js`), and a bare subpath
   import of a CJS dependency needs the extension too (`supertest/types.js`).
+- **Workspace packages must be built before anything typechecks against them.** `@sm/core` resolves
+  through its `exports` map to `dist/`, so a fresh clone needs `pnpm build` before `pnpm typecheck`
+  succeeds. Turborepo handles this via `dependsOn: ["^build"]` — it only bites when you run a
+  package's script directly with `pnpm --filter`, which silently typechecks against a stale `dist/`.
 - **Mobile typecheck needs the dev server to have run once.** Expo Router's typed routes are
   generated into `.expo/types/` (gitignored), and there is no standalone typegen command in SDK 57,
   so `tsc --noEmit` fails on a fresh clone until `pnpm dev:mobile` has started once.

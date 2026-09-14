@@ -6,7 +6,7 @@ status: doing
 milestone: M0
 area: foundation
 requirements: []
-updated: 2026-09-12
+updated: 2026-09-14
 ---
 
 # T-001 — Scaffold the monorepo
@@ -20,8 +20,8 @@ with the feature-sliced structure and its import boundaries already enforced.
 
 ### Workspace
 - [x] pnpm workspace: `apps/backend`, `apps/web`, `apps/mobile` — `packages/*` not created yet
-- [ ] Turborepo pipeline: `dev`, `build`, `lint`, `typecheck`, `test`
-- [ ] Shared tsconfig bases in `packages/config`; `@/*` path alias per app
+- [x] Turborepo pipeline: `dev`, `build`, `lint`, `typecheck`, `test` — [[T-018]]
+- [x] Shared tsconfig bases in `packages/config` ([[T-018]]); `@/*` path alias per app
 
 ### Biome
 - [ ] Root `biome.jsonc` with format + recommended rules ([[Tech Stack]])
@@ -38,11 +38,11 @@ with the feature-sliced structure and its import boundaries already enforced.
       symlinks and `expo export` succeeds.
 - [ ] Both: `src/{assets,features,shared}` with one real feature slice (`identity`) as the pattern
       others copy
-- [x] Metro config for the monorepo — not needed yet; revisit when mobile consumes a workspace package
+- [x] Metro config for the monorepo — done in [[T-018]], when mobile started consuming `@sm/core`
 
 ### Shared packages
-- [ ] `@sm/core` exports one enum and one Zod schema, consumed by the API **and** both apps —
-      proves the wiring end to end
+- [x] `@sm/core` exports one enum and one Zod schema, consumed by the API **and** both apps —
+      proves the wiring end to end ([[T-018]])
 - [ ] `@sm/api` axios factory + SWR provider; platform-agnostic (no `window`, no `react-native`)
 - ~~`@sm/i18n`~~ — dropped, the product is Turkish only ([[ADR-0011]])
 
@@ -60,8 +60,8 @@ passes, web builds, mobile exports. Two scaffold bugs fixed on the way — the N
 `supertest/types` import needed a `.js` extension under ESM + `nodenext`, and `create-next-app`
 dropped a nested `pnpm-workspace.yaml` that shadowed the root one.
 
-Still open: Biome, Turborepo, the `packages/*` workspaces, the feature-sliced folders, and CI
-([[T-003]]).
+Still open: Biome, `@sm/api`, and CI ([[T-003]]). Turborepo, `packages/config` and `packages/core`
+landed in [[T-018]]; the feature-sliced folders exist in both apps as of [[T-016]] and [[T-017]].
 
 ## Done when
 

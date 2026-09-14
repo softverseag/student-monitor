@@ -24,8 +24,9 @@ updated: 2026-09-13
 - [x] NestJS app with the module skeleton from [[Architecture Overview]] — done incidentally by [[T-015]]
 - [x] Prisma connected; `docker-compose` for local Postgres — [[T-015]]
 - [x] First migration: `AppUser` — [[T-015]]; role profile tables still to come with [[T-006]]
-- [ ] **Zod validation pipe wired to `@sm/core`** — still open. `parseOnboardingInput` in
-      `features/users/dto` is the hand-rolled stopgap it replaces ([[T-017]])
+- [~] **Zod schema in `@sm/core`** — done in [[T-018]]; `parseOnboardingInput` now calls
+      `onboardingSchema.safeParse` and maps `issue.path` onto its Turkish copy. The **global
+      `ValidationPipe`** is still open: the schema is called from the service, not wired as a pipe
 - [x] Error format — `AllExceptionsFilter` in [[T-016]]. The 404-not-403 rule stays a call-site
       decision, deliberately not enforced by the filter
 - [ ] **Structured logging with no personal data in log lines** — still open; the app uses Nest's

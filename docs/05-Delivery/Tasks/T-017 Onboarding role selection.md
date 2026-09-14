@@ -63,7 +63,7 @@ should be the next task**, before [[T-006]] adds a third caller.
 ## Follow-ups
 
 - [ ] `@sm/core` + `@sm/api`, replacing both hand-rolled clients
-- [ ] Zod schema for onboarding in `@sm/core`, replacing `parseOnboardingInput` ([[T-002]])
+- [x] Zod schema for onboarding in `@sm/core`, replacing `parseOnboardingInput` — [[T-018]]
 - [ ] `PATCH /api/me` for display-name edits ([[FR-01|FR-01.4]])
 - [ ] Audit row when a role is set ([[FR-21]])
 - [ ] Route users toward the right client after onboarding (a coach on mobile, a parent on web)
