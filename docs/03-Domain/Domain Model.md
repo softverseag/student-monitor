@@ -136,4 +136,5 @@ See [[Pricing and Earnings]] for why this is several concepts and not one.
 
 ## Related
 
-[[Data Model]] · [[State Machines]] · [[Authorization Matrix]] · [[Pricing and Earnings]] · [[Progress and Filiz]]
+[[Entity Map]] · [[Data Model]] · [[State Machines]] · [[Authorization Matrix]] ·
+[[Pricing and Earnings]] · [[Progress and Filiz]]

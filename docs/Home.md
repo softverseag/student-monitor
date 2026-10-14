@@ -45,7 +45,7 @@ flowchart LR
 | `00-Meta` | [[Vault Guide]], [[Glossary]], note templates |
 | `01-Product` | vision, personas, scope, open questions, the original Turkish catalog |
 | `02-Requirements` | FR notes per functional area + business rules |
-| `03-Domain` | [[Domain Model]], [[State Machines]], [[Authorization Matrix]], [[Pricing and Earnings]], [[Progress and Filiz]] |
+| `03-Domain` | [[Domain Model]], [[Entity Map]], [[State Machines]], [[Authorization Matrix]], [[Pricing and Earnings]], [[Progress and Filiz]] |
 | `04-Architecture` | [[Architecture Overview]], [[Tech Stack]], [[Frontend Architecture]], [[Data Model]], [[API Conventions]], [[Security and Privacy]], ADRs |
 | `05-Delivery` | [[Roadmap]], [[Milestones]], [[Task Board]], task notes |
 | `06-Design` | [[UX Principles]], [[Screen Inventory]] |

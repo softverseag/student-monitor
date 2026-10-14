@@ -1,0 +1,263 @@
+erDiagram
+  %% ================= Identity =================
+  USER {
+    string id PK
+    string email
+    string role "COACH | STUDENT | PARENT - one role per account, ADR-0014"
+  }
+  COACH_PROFILE {
+    string userId FK
+    string inviteCode
+    string defaultLateCutoff "copied onto new work items, BR-027"
+    boolean financeEnabled "opt-in module, default off, BR-029"
+    boolean noShowBillable "per-coach setting, default open Q-04"
+  }
+  STUDENT_PROFILE {
+    string userId FK
+    int gradeLevel "BR-026"
+    json schoolHours "one setting, not calendar entries, FR-11"
+    json quietHours "defers reminders, never coach messages, FR-16"
+  }
+  PARENT_PROFILE {
+    string userId FK
+  }
+
+  USER ||--o| COACH_PROFILE : "role COACH"
+  USER ||--o| STUDENT_PROFILE : "role STUDENT"
+  USER ||--o| PARENT_PROFILE : "role PARENT"
+
+  %% ================= Relationships =================
+  COACH_STUDENT_LINK {
+    string id PK
+    string coachId FK
+    string studentId FK
+    string status "PENDING / ACTIVE / ENDED / DECLINED / EXPIRED"
+    string organizationId "nullable, reserved for institutions, K-12"
+    datetime startedAt
+    datetime endedAt "ENDED means coach read-only, BR-030"
+  }
+  PARENT_STUDENT_LINK {
+    string id PK
+    string parentId FK
+    string studentId FK
+    string status "max 2 ACTIVE per student, BR-004"
+    string approvedByCoachId "any active coach, BR-003"
+  }
+  INVITE {
+    string code PK
+    string kind "coach-to-student or parent-to-student"
+    datetime expiresAt "single use"
+  }
+  VISIBILITY_SETTINGS {
+    string coachStudentLinkId FK
+    boolean progress
+    boolean exams
+    boolean finance "effective only while financeEnabled, FR-20"
+  }
+
+  COACH_PROFILE ||--o{ COACH_STUDENT_LINK : "coaches"
+  STUDENT_PROFILE ||--o{ COACH_STUDENT_LINK : "several coaches at once, BR-001"
+  PARENT_PROFILE ||--o{ PARENT_STUDENT_LINK : "follows"
+  STUDENT_PROFILE ||--o{ PARENT_STUDENT_LINK : "max 2 active"
+  COACH_PROFILE ||--o{ INVITE : "issues"
+  INVITE |o--o| COACH_STUDENT_LINK : "produces on accept"
+  COACH_STUDENT_LINK ||--o| VISIBILITY_SETTINGS : "parent switches, K-29"
+
+  %% ================= Work =================
+  PLAN {
+    string id PK
+    string coachId FK
+    string label "free text, e.g. 12. sinif - YKS"
+    json tree "unit - topic - task, day offset + duration, FR-23"
+  }
+  PLAN_ASSIGNMENT {
+    string id PK
+    string planId FK
+    string studentId FK
+    date startDate
+    json removedTaskIds "per-student shortening"
+  }
+  WORK_ITEM {
+    string id PK
+    string type "TASK | ASSIGNMENT, ADR-0005"
+    string ownerCoachId FK "only owner manages, BR-007 BR-024"
+    string studentId FK
+    string subject "free text + autocomplete, K-25"
+    string topic "free text"
+    datetime dueAt
+    string lateCutoff "frozen at creation, BR-027"
+    boolean requiresApproval "exception to the dispute model, BR-006"
+    datetime submittedAt "lateness uses this, BR-009"
+    datetime approvedAt
+    string planAssignmentId FK "nullable - copied from a plan"
+    string resourceId FK "nullable - assignment picks from pool, FR-07"
+  }
+  WORK_ITEM_EVENT {
+    string workItemId FK
+    string action "created / submitted / approved / returned / resubmitted"
+    string actorId
+    boolean bulk "bulk approval audits per item, K-16"
+    datetime at "append-only"
+  }
+  SCHEDULED_REMINDER {
+    string workItemId FK
+    datetime sendAt "deferred by quiet hours"
+    string status
+  }
+
+  COACH_PROFILE ||--o{ PLAN : "owns - invisible to other coaches"
+  PLAN ||--o{ PLAN_ASSIGNMENT : "assign to many, FR-23"
+  STUDENT_PROFILE ||--o{ PLAN_ASSIGNMENT : "receives"
+  PLAN_ASSIGNMENT |o--o{ WORK_ITEM : "copies tasks - plan edits never propagate"
+  COACH_PROFILE ||--o{ WORK_ITEM : "assigns and manages"
+  STUDENT_PROFILE ||--o{ WORK_ITEM : "does and submits"
+  WORK_ITEM ||--o{ WORK_ITEM_EVENT : "append-only history"
+  WORK_ITEM ||--o{ SCHEDULED_REMINDER : "task-time reminder"
+  RESOURCE |o--o{ WORK_ITEM : "assignment resource"
+
+  %% ================= Lessons =================
+  LESSON {
+    string id PK
+    string coachId FK "only coaches request, BR-011"
+    string type "ONE_ON_ONE | GROUP | EXAM_ANALYSIS"
+    datetime scheduledAt
+    string status "REQUESTED / ACCEPTED / DECLINED / CANCELLED / COMPLETED"
+    string cancelledBy "either side, note optional, BR-012 BR-013"
+  }
+  LESSON_PARTICIPANT {
+    string lessonId FK
+    string studentId FK
+    string response "accept / decline, note optional"
+    string attendance "ATTENDED | NO_SHOW | CANCELLED - coach-marked, FR-10"
+  }
+
+  COACH_PROFILE ||--o{ LESSON : "requests"
+  LESSON ||--|{ LESSON_PARTICIPANT : "one per student - group lessons, BR-028"
+  STUDENT_PROFILE ||--o{ LESSON_PARTICIPANT : "attends"
+
+  %% ================= Exams and school =================
+  MOCK_EXAM_RESULT {
+    string id PK
+    string studentId FK
+    string approverCoachId FK "student-picked, BR-031"
+    string examType "TYT / AYT / LGS - extensible, BR-019"
+    string status "PENDING_APPROVAL | APPROVED | REJECTED"
+    decimal net "auto-calculated per type, BR-018"
+    decimal score "entered manually"
+  }
+  MOCK_EXAM_SUBJECT_RESULT {
+    string resultId FK
+    string subject "subject set varies per exam type, K-31"
+    int correct
+    int wrong
+    decimal net
+  }
+  REPORT_CARD {
+    string studentId FK
+    string schoolYear
+    int term "2 per year"
+    json grades "scale open, Q-22 - no approval flow, FR-24"
+  }
+
+  STUDENT_PROFILE ||--o{ MOCK_EXAM_RESULT : "enters"
+  COACH_PROFILE ||--o{ MOCK_EXAM_RESULT : "approves if selected"
+  MOCK_EXAM_RESULT ||--o{ MOCK_EXAM_SUBJECT_RESULT : "per subject"
+  STUDENT_PROFILE ||--o{ REPORT_CARD : "enters - coach and parent read-only"
+
+  %% ================= Resources and files =================
+  RESOURCE {
+    string id PK
+    string studentId FK
+    string bookName
+    string publisher
+    string subject
+    string origin "self-added or accepted recommendation"
+  }
+  RESOURCE_RECOMMENDATION {
+    string studentId FK
+    string coachId FK "recommending coach preserved, BR-024"
+    string resourceRef
+    datetime at
+  }
+  FILE {
+    string id PK
+    string coachId FK
+    string storageKey "PDF only, max 25 MB, content-validated, K-32"
+  }
+  FILE_SHARE {
+    string fileId FK
+    string studentId FK "student access survives link end, BR-030"
+  }
+
+  STUDENT_PROFILE ||--o{ RESOURCE : "pool - visible to all active coaches, BR-015"
+  COACH_PROFILE ||--o{ RESOURCE_RECOMMENDATION : "recommends"
+  STUDENT_PROFILE ||--o{ RESOURCE_RECOMMENDATION : "receives"
+  RESOURCE_RECOMMENDATION |o--o| RESOURCE : "accepting creates a pool item"
+  COACH_PROFILE ||--o{ FILE : "uploads - coach to student only"
+  FILE ||--o{ FILE_SHARE : "shared with"
+  STUDENT_PROFILE ||--o{ FILE_SHARE : "sees own shares only"
+
+  %% ================= Notifications and audit =================
+  NOTIFICATION {
+    string recipientId FK
+    string type "event-scoped recipients only, BR-007 BR-024"
+    json payload "never contains amounts, K-41"
+    boolean read
+  }
+  NOTIFICATION_TEMPLATE {
+    string coachId FK
+    string audience "STUDENT | PARENT, K-34"
+    string body "stored text, not AI - sends rate-limited"
+  }
+  AUDIT_EVENT {
+    string actorId
+    string action
+    string resourceType
+    string resourceId
+    datetime at "append-only, never backfilled, FR-21"
+  }
+
+  USER ||--o{ NOTIFICATION : "receives"
+  COACH_PROFILE ||--o{ NOTIFICATION_TEMPLATE : "owns"
+  USER ||--o{ AUDIT_EVENT : "actor of"
+
+  %% ===== Finance module - separate schema, opt-in (BR-029, K-39) =====
+  %% References into the app schema are ids only: no cross-schema FKs,
+  %% so the whole area can be wiped on module disable.
+  COACH_STUDENT_RATE {
+    string coachStudentLinkRef "id reference only, K-39"
+    string model "PER_LESSON | MONTHLY_FLAT, BR-021"
+    string feeType "ONE_ON_ONE | GROUP | EXAM_ANALYSIS, K-03"
+    int amountMinor "kurus - encrypted at rest, K-08"
+    date effectiveFrom "effective-dated, never updated in place, BR-023"
+    date effectiveTo "null = current"
+  }
+  TIMESHEET_ENTRY {
+    string lessonParticipantRef "per-lesson model only"
+    boolean billable "CANCELLED never - NO_SHOW per coach"
+  }
+  EARNING {
+    string coachStudentLinkRef
+    string timesheetEntryRef "null under monthly-flat"
+    string periodMonth
+    int amountSnapshotMinor "frozen at creation, BR-023"
+  }
+  PAYMENT {
+    string coachStudentLinkRef
+    date paidOn
+    int amountMinor "ledger credit, entered by the coach, FR-25"
+    string note
+  }
+  SUBSCRIPTION {
+    string coachId
+    string plan "v1 free beta with announced end, K-28"
+    string status
+    int activeStudentLimit "number open, Q-21"
+  }
+
+  COACH_STUDENT_LINK ||--o{ COACH_STUDENT_RATE : "priced per relationship, BR-020"
+  LESSON_PARTICIPANT ||--o| TIMESHEET_ENTRY : "when the lesson completes"
+  TIMESHEET_ENTRY |o--o| EARNING : "if billable"
+  COACH_STUDENT_LINK ||--o{ EARNING : "ledger debit"
+  COACH_STUDENT_LINK ||--o{ PAYMENT : "ledger credit"
+  COACH_PROFILE ||--o| SUBSCRIPTION : "pays the platform, FR-22"
