@@ -1,8 +1,9 @@
 ---
 id: ADR-0000
-title: 
+title:
 status: proposed
 date: 2026-09-12
+checkedBy:
 ---
 
 # ADR-0000 — Title

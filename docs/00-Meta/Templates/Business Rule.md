@@ -1,9 +1,10 @@
 ---
 id: BR-000
-source: "İK-000"
-area: 
+source: İK-000
+area:
 status: specified
 updated: 2026-09-12
+checkedBy:
 ---
 
 # BR-000 — Short imperative title

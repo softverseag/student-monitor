@@ -1,11 +1,12 @@
 ---
 id: FR-00
-title: 
-area: 
-source: "§"
+title:
+area:
+source: §
 status: draft
 priority: must
 updated: 2026-09-12
+checkedBy:
 ---
 
 # FR-00 — Title

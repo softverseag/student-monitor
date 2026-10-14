@@ -1,10 +1,13 @@
 ---
 id: BR-005
-aliases: [BR-005, İK-005]
-source: "İK-005"
+aliases:
+  - BR-005
+  - İK-005
+source: İK-005
 area: work
 status: specified
 updated: 2026-09-12
+checkedBy:
 ---
 
 # BR-005 — Tasks and assignments are tracked independently

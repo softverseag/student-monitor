@@ -1,12 +1,13 @@
 ---
 id: T-000
-title: 
+title:
 status: todo
 milestone: M1
-area: 
+area:
 requirements: []
-estimate: 
+estimate:
 updated: 2026-09-12
+checkedBy:
 ---
 
 # T-000 — Title
