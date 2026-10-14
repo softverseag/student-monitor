@@ -1,7 +1,7 @@
 ---
 title: State Machines
 status: draft
-updated: 2026-09-12
+updated: 2026-10-14
 ---
 
 # State Machines
@@ -25,7 +25,8 @@ stateDiagram-v2
 ```
 
 `ENDED` is terminal for that record; the pair may create a new link later. History survives
-([[BR-002]], [[BR-025]]).
+([[BR-002]], [[BR-025]]), and the coach's access becomes **read-only** — no new content, while the
+student keeps that coach's shared files and recommendations ([[BR-030]]).
 
 ## Parent–student link ([[FR-05]])
 
@@ -41,20 +42,27 @@ At most two links may be `ACTIVE` per student ([[BR-004]]).
 
 ## Work item — task and assignment ([[FR-06]], [[FR-07]])
 
+Since v2, completion follows the **dispute model** ([[BR-006]]): the machine has two paths, chosen
+by the item's `requiresApproval` flag at creation.
+
 ```mermaid
 stateDiagram-v2
   [*] --> OPEN: coach assigns
-  OPEN --> PENDING_APPROVAL: student submits
-  RETURNED --> PENDING_APPROVAL: student resubmits
-  PENDING_APPROVAL --> RETURNED: coach returns (note optional)
-  PENDING_APPROVAL --> COMPLETED_ON_TIME: coach approves, submitted <= due
-  PENDING_APPROVAL --> COMPLETED_LATE: coach approves, submitted > due
-  COMPLETED_ON_TIME --> [*]
-  COMPLETED_LATE --> [*]
+  OPEN --> COMPLETED: student submits (default — no approval step)
+  OPEN --> PENDING_APPROVAL: student submits (requiresApproval items)
+  PENDING_APPROVAL --> COMPLETED: assigning coach approves
+  PENDING_APPROVAL --> RETURNED: assigning coach returns (note optional)
+  COMPLETED --> RETURNED: assigning coach disputes later (note optional)
+  RETURNED --> COMPLETED: student resubmits (default)
+  RETURNED --> PENDING_APPROVAL: student resubmits (requiresApproval)
+  COMPLETED --> [*]
 ```
 
+`COMPLETED` splits into `COMPLETED_ON_TIME` / `COMPLETED_LATE` by comparing `submittedAt` against
+`dueAt + lateCutoff` — the cutoff frozen onto the item at creation ([[BR-027]]).
+
 **`OVERDUE` is not a state in this diagram on purpose.** It is a *view* of `OPEN` or `RETURNED` once
-`now > dueAt`. Deriving it avoids a scheduled job and can never be stale.
+`now > dueAt + lateCutoff`. Deriving it avoids a scheduled job and can never be stale.
 
 Guards:
 
@@ -62,9 +70,10 @@ Guards:
 | --- | --- |
 | assign | the coach, with an active link |
 | submit / resubmit | the student the item belongs to |
-| approve / return | **only the assigning coach** ([[BR-007]]) |
+| approve / return / dispute | **only the assigning coach** ([[BR-007]]); bulk approve audits per item ([[FR-06|FR-06.14]]) |
 
-The on-time/late branch uses `submittedAt`, never `approvedAt` ([[BR-009]]).
+The on-time/late branch uses `submittedAt`, never `approvedAt` ([[BR-009]]) — doubly important now
+that most items are never explicitly approved.
 
 ## Lesson ([[FR-09]], [[FR-10]])
 
@@ -78,26 +87,30 @@ stateDiagram-v2
   COMPLETED --> [*]
 ```
 
-Attendance is recorded against the outcome:
+A **group lesson** is one lesson record; each participant student has their own accept/decline,
+attendance and earning row ([[BR-028]]). Attendance is marked **only by the coach**, after the
+lesson, per participant:
 
-| Lesson outcome | Attendance | Billable (default) |
+| Lesson outcome | Attendance | Billable (per-lesson model) |
 | --- | --- | --- |
 | `COMPLETED`, student came | `ATTENDED` | yes |
-| `COMPLETED`, student absent | `NO_SHOW` | yes |
-| `CANCELLED` | `CANCELLED` | no |
+| `COMPLETED`, student absent | `NO_SHOW` | per-coach setting; default open ([[Open Questions|Q-04]]) |
+| `CANCELLED` | `CANCELLED` | **never** (v2 §8.3, decided) |
 
-Billability is configuration, not code ([[Open Questions|Q-03]], [[Open Questions|Q-04]]).
+Under the monthly-flat price model, billing comes from the period, not these rows ([[BR-021]]).
 
 ## Mock exam result ([[FR-15]])
 
 ```mermaid
 stateDiagram-v2
-  [*] --> PENDING_APPROVAL: student enters result
-  PENDING_APPROVAL --> APPROVED: coach approves
+  [*] --> PENDING_APPROVAL: student enters result, picks approver
+  PENDING_APPROVAL --> APPROVED: approver coach approves
+  PENDING_APPROVAL --> REJECTED: approver coach rejects
 ```
 
-Only `APPROVED` feeds statistics ([[BR-017]]). A rejection state may be added later
-([[Open Questions|Q-16]]).
+The approver is the coach the student selected ([[BR-031]]); no other coach can act on the result.
+Only `APPROVED` feeds statistics ([[BR-017]] — rule under review, [[Open Questions|Q-20]]). What
+follows `REJECTED` is open ([[Open Questions|Q-25]]).
 
 ## Subscription ([[FR-22]])
 

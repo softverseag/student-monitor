@@ -3,10 +3,10 @@ id: FR-05
 aliases: [FR-05]
 title: Parent Student Relationship
 area: relationships
-source: "§5"
+source: "§5 · v2 §4"
 status: specified
 priority: must
-updated: 2026-09-12
+updated: 2026-10-14
 ---
 
 # FR-05 — Parent–Student Relationship
@@ -23,8 +23,9 @@ a minor's data.
 
 - **FR-05.1** A parent can create their own account ([[FR-01]]).
 - **FR-05.2** Creating a parent account grants no access to any student's data.
-- **FR-05.3** A parent can start the process of being linked to a student.
-- **FR-05.4** Only the student's coach can approve a parent–student link ([[BR-003]]).
+- **FR-05.3** A parent starts the link by entering the **student's code** (v2 §4.2).
+- **FR-05.4** Only the student's coach can approve a parent–student link ([[BR-003]]). When the
+  student has several coaches, **any of them** may approve; the approver is recorded (v2 §4.2).
 - **FR-05.5** Until approved, the parent can access none of the student's protected data.
 - **FR-05.6** A student may have at most **2 active parents** at any time. The system prevents a
   third ([[BR-004]]).
@@ -44,9 +45,8 @@ a minor's data.
 
 ## Design notes
 
-- **Which coach approves when the student has several?** Any actively linked coach may approve; the
-  approval records *which* one did. This needs confirming with the client — added as
-  [[Open Questions|Q-05]] context.
+- **Which coach approves when the student has several?** Confirmed in v2 §4.2: any actively linked
+  coach, and the approval records which one did.
 - A parent link should be startable from either end: the parent enters the student's code, or the
   coach invites the parent directly. The coach's approval is required either way.
 - Two parents typically means mother and father; both should see the same thing.
@@ -61,4 +61,6 @@ a minor's data.
 
 ## Change log
 
+- 2026-10-14 — v2 integration: any active coach may approve (confirmed), parent initiates with the
+  student's code
 - 2026-09-12 — created from catalog §5

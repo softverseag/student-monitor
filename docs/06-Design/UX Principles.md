@@ -63,12 +63,12 @@ never let a layout depend on short strings. Dates and numbers still go through `
 
 ## Practical constraints
 
-- The schedule grid covers 06:00–24:00 minimum ([[FR-11|FR-11.2]]) and must be usable on a phone.
-  Multi-slot selection is a core interaction, not a shortcut ([[FR-11|FR-11.5]]).
+- The v1 schedule is a read-only day/week timeline ([[FR-11]]); the editable 06:00–24:00 grid with
+  multi-slot selection is v1.1 (K-36).
 - Late-night use is normal: a dark theme is not optional polish.
 - Connectivity is imperfect. Submitting should feel instant and reconcile afterwards.
-- Notifications carry the product; a badly timed push gets the app muted forever
-  ([[Open Questions|Q-11]]).
+- Notifications carry the product; a badly timed push gets the app muted forever. Task reminders
+  respect the student's quiet hours; coach messages always deliver ([[FR-16]]).
 
 ## Related
 

@@ -159,7 +159,9 @@ Append-only, written in the same transaction as the change ([[FR-21]]).
 ## Open
 
 - Do we need a shared resource catalogue, or is per-student free text enough for v1? ([[FR-12]])
-- Recurrence representation for schedule entries ([[Open Questions|Q-15]]).
+- `schedule_entry` is deferred with the v1.1 grid (K-36); v1's timeline is a projection
+  ([[FR-11]]). New v2 tables to absorb once [[Open Questions|Q-26]] settles: plans, report cards,
+  payments, visibility switches, reminders — see [[Source - Backend Plan (TR)]] §5.
 - Whether `work_item` needs a separate `submission` table for multiple attempts, or whether the
   event log is sufficient. Leaning event log.
 

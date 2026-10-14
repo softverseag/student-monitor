@@ -1,6 +1,6 @@
 ---
 title: Home
-updated: 2026-09-12
+updated: 2026-10-14
 ---
 
 # Student Monitor — Documentation Vault
@@ -9,25 +9,28 @@ Coaching platform for Turkish exam preparation (YKS / LGS), used alongside regul
 **coaches (koç)**, **students (öğrenci)** and **parents (veli)**.
 
 > [!info] How to read this vault
-> The client's requirement catalog is in Turkish and lives untouched in
-> [[Source - Requirement Catalog (TR)]]. Everything else is written in English, with
+> The client's source documents are in Turkish and live untouched: the original
+> [[Source - Requirement Catalog (TR)]] and, since October 2026, [[Source - Requirements v2 (TR)]],
+> [[Source - Decision Log (TR)]] and [[Source - Backend Plan (TR)]] — see
+> [[Requirements v2 Delta]] for what v2 changed. Everything else is written in English, with
 > [[Glossary]] mapping every domain term TR ↔ EN ↔ code identifier.
 
 ## Start here
 
 - [[Vault Guide]] — conventions, IDs, statuses, how to add a note
 - [[Product Vision]] — what this is and who it is for
+- [[Requirements v2 Delta]] — **what the October 2026 requirement update changed**
 - [[Scope and MVP]] — what we build first, what we defer
 - [[Open Questions]] — decisions the client still owes us
-- [[Requirements Index]] — all 22 functional areas
-- [[Business Rules Index]] — the 26 hard rules (İK-001..İK-026)
+- [[Requirements Index]] — all 25 functional areas
+- [[Business Rules Index]] — the 31 hard rules (İK-001..İK-031)
 
 ## Map
 
 ```mermaid
 flowchart LR
-  SRC["Source Catalog (TR)"] --> FR["FR-01..FR-22<br/>Requirements"]
-  SRC --> BR["BR-001..BR-026<br/>Business Rules"]
+  SRC["Source Catalog (TR)<br/>+ Requirements v2 (TR)"] --> FR["FR-01..FR-25<br/>Requirements"]
+  SRC --> BR["BR-001..BR-031<br/>Business Rules"]
   FR --> DOM["Domain Model<br/>State Machines<br/>Authorization Matrix"]
   BR --> DOM
   DOM --> ARCH["Architecture + ADRs"]
@@ -52,6 +55,9 @@ flowchart LR
 
 - [x] Requirements captured from the client catalog and given IDs
 - [x] Domain model and authorization matrix drafted
+- [x] October 2026 requirement update (v2) integrated → [[Requirements v2 Delta]]
+- [ ] Roadmap/milestones reconciled with the v2 scope and build order
+- [ ] Architecture conflicts from the v2 technical plan resolved → [[Open Questions|Q-26]]
 - [ ] Open questions answered by the client → [[Open Questions]]
 - [ ] Repo scaffolded (M0) → [[Roadmap]]
 - [ ] First vertical slice: auth + coach–student link (M1)

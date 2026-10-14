@@ -3,15 +3,16 @@ id: FR-14
 aliases: [FR-14]
 title: Progress Reporting
 area: progress
-source: "§18, §19, §20, §21"
+source: "§18, §19, §20, §21 · v2 §14"
 status: specified
 priority: must
-updated: 2026-09-12
+updated: 2026-10-14
 ---
 
 # FR-14 — Progress Reporting (Daily, Weekly, Monthly)
 
-> **Source:** catalog §18, §19, §20, §21 · **Rules:** [[BR-005]], [[BR-010]], [[BR-025]]
+> **Source:** catalog §18, §19, §20, §21 · [[Source - Requirements v2 (TR)|v2]] §14 ·
+> **Decisions:** K-26 · **Rules:** [[BR-005]], [[BR-010]], [[BR-025]]
 
 ## Intent
 
@@ -45,13 +46,20 @@ four of six assignments last week") and what a parent actually wants to see.
 - **FR-14.10** Monthly reporting separately calculates: tasks on time, tasks late, tasks
   overdue/incomplete, assignments on time, assignments late, assignments overdue/incomplete.
 - **FR-14.11** An overall monthly progress value can be produced.
-- **FR-14.12** The exact progress formula is defined separately ([[Open Questions|Q-02]]).
+- **FR-14.12** The exact progress formula is **still open** in v2 (A-09, [[Open Questions|Q-02]]).
+
+### Topic progress (v2 §14.4, K-26)
+
+- **FR-14.13** Topic progress is **not a separate module**: a topic's percentage is derived from the
+  completion rate of plan tasks attached to that topic ([[FR-23|FR-23.9]]). It counts only
+  plan-born tasks — a known, accepted limit.
 
 ## Acceptance criteria
 
 - [ ] The six monthly figures are reported independently and sum correctly against the raw records.
 - [ ] Late-completed work never appears inside the "not completed" figure.
-- [ ] Pending-approval work is visible as its own category, not silently counted either way.
+- [ ] Pending-approval work (requires-approval items only, [[BR-006]]) is visible as its own
+      category, not silently counted either way.
 - [ ] A day with no assigned work reports "nothing due", not 0%.
 - [ ] Weeks start Monday and days end at local midnight `Europe/Istanbul`.
 
@@ -76,4 +84,6 @@ four of six assignments last week") and what a parent actually wants to see.
 
 ## Change log
 
+- 2026-10-14 — v2 integration: topic progress derived from plan tasks (K-26); monthly formula
+  remains open (A-09); pending category narrowed to requires-approval items
 - 2026-09-12 — created from catalog §18–§21

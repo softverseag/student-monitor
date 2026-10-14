@@ -3,15 +3,16 @@ id: FR-12
 aliases: [FR-12]
 title: Resource Pool and Recommendations
 area: resources
-source: "§16"
+source: "§16 · v2 §11"
 status: specified
 priority: should
-updated: 2026-09-12
+updated: 2026-10-14
 ---
 
 # FR-12 — Resource Pool and Recommendations
 
-> **Source:** catalog §16, §16.1, §16.2 · **Rules:** [[BR-015]], [[BR-024]]
+> **Source:** catalog §16, §16.1, §16.2 · [[Source - Requirements v2 (TR)|v2]] §11 ·
+> **Rules:** [[BR-015]], [[BR-024]]
 
 ## Intent
 
@@ -22,11 +23,14 @@ recommendation is the coach's advice on top of it.
 ## Requirements
 
 - **FR-12.1** Every student has their own resource pool.
-- **FR-12.2** The pool records the educational resources the student uses or follows.
+- **FR-12.2** The pool records the educational resources the student uses or follows. The student
+  fills it with at least: **book name, publisher, subject** (v2 §11).
 - **FR-12.3** Resource types include at least: book, question bank, mock exam source, document,
   digital resource, other material. **The type list must be extensible** without a schema change.
-- **FR-12.4** An actively linked coach can view their student's resource pool ([[BR-015]]). This is
-  a separate permission from the schedule privacy rule ([[BR-014]]) — the pool *is* visible.
+- **FR-12.4** **All** of the student's actively linked coaches can view the pool ([[BR-015]]). This
+  is a separate permission from the schedule privacy rule ([[BR-014]]) — the pool *is* visible.
+- **FR-12.4a** When creating an assignment, the coach can pick the resource **from the student's
+  pool** ([[FR-07|FR-07.5]], v2 §11).
 - **FR-12.5** A coach can recommend a resource to their student.
 - **FR-12.6** A recommendation carries at least: the student, the recommending coach, the resource,
   and the time of the recommendation.
@@ -41,6 +45,11 @@ recommendation is the coach's advice on top of it.
 - [ ] Adding a new resource type requires data, not a migration.
 - [ ] A student can accept a recommendation into their pool, and the origin is retained.
 - [ ] A coach who is no longer linked loses access to the pool.
+
+## Out of scope (v1)
+
+- **In-resource progress tracking** (which page/test the student is on) — `[V1.1]` (v2 §11). The
+  pool holds only the book's identity in v1.
 
 ## Design notes
 
@@ -58,4 +67,6 @@ recommendation is the coach's advice on top of it.
 
 ## Change log
 
+- 2026-10-14 — v2 integration: pool fields fixed (book, publisher, subject), assignments pick from
+  the pool, in-resource progress deferred to v1.1
 - 2026-09-12 — created from catalog §16

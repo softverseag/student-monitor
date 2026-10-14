@@ -4,13 +4,14 @@ aliases: [BR-019, İK-019]
 source: "İK-019"
 area: exams
 status: specified
-updated: 2026-09-12
+updated: 2026-10-14
 ---
 
 # BR-019 — Net and score rules must be changeable per exam type
 
-**Rule.** The data model must not depend on one fixed net/score formula. Later versions must be able
-to calculate net, score and other derived values differently per exam type.
+**Rule.** The data model must not depend on one fixed net/score formula. Net is calculated
+automatically **per exam type** from v1 on (extended in v2, K-30: e.g. YKS deducts wrong ÷ 4), the
+subject list varies per exam type (K-31), and new exam types must be addable without a schema change.
 
 **Why.** YKS deducts a quarter-point per wrong answer, LGS a third; exam structures change by
 ministry decision. A formula baked into the schema becomes a migration every time.

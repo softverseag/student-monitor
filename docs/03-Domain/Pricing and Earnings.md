@@ -1,26 +1,41 @@
 ---
 title: Pricing and Earnings
 status: draft
-updated: 2026-09-12
+updated: 2026-10-14
 ---
 
-# Pricing and Earnings (Fiyat · Puantaj · Hakediş)
+# Pricing and Earnings (Fiyat · Puantaj · Hakediş · Cari Hesap)
 
 The financial model, in one place, because it is the part most likely to be implemented as "a price
 column and a SUM" — which would break [[BR-023]] on the first price change.
 
-## Three concepts, not one
+The whole area is the **opt-in finance module**: off by default, severable, truly deletable
+([[BR-029]], [[FR-25]]). Amounts never reach logs, notification bodies, analytics or search
+indexes (K-41).
+
+## The concepts
 
 | Concept | Turkish | What it is | Changes when |
 | --- | --- | --- | --- |
-| **Rate** | Fiyat | what this coach charges this student, valid from a date | the coach renegotiates |
+| **Rate** | Fiyat | what this coach charges this student, per model and lesson type, valid from a date | the coach renegotiates |
 | **Timesheet entry** | Puantaj | a lesson that counts, and whether it is billable | attendance is recorded |
-| **Earning** | Hakediş | the money owed for that lesson, with a frozen rate | the timesheet entry is created |
+| **Earning** | Hakediş | the money owed (ledger **debit**), with a frozen rate | the source record is created |
+| **Payment** | Tahsilat | money the coach recorded as collected (ledger **credit**) | the coach enters one |
+| **Statement** | Ekstre | monthly view: debt, collected, balance | derived |
 
 Collapsing them loses the ability to answer "why is this month 12,000 TL?" — which is the only
 question a coach will actually ask.
 
-## The pipeline
+## Two price models ([[BR-021]], K-02/K-05)
+
+- **Per-lesson (ders başı):** earnings come from billable lesson records — the pipeline below. A
+  separate amount per lesson type: one-on-one / group / exam analysis (K-03). A group lesson yields
+  one earning row per participant at that student's rate ([[BR-028]]).
+- **Monthly flat (aylık sabit):** earnings come from the period + an active relationship; the
+  calendar provides continuity reporting and dispute evidence, not the amount. The engine produces
+  *periods*; the period's amount is computed per model.
+
+## The per-lesson pipeline
 
 ```mermaid
 flowchart LR
@@ -38,6 +53,8 @@ flowchart LR
 ```
 CoachStudentRate
   id, coachId, studentId
+  model          -- PER_LESSON | MONTHLY_FLAT
+  feeType        -- ONE_ON_ONE | GROUP | EXAM_ANALYSIS (per-lesson model)
   amountMinor, currency
   effectiveFrom, effectiveTo   -- null = current
   createdBy, createdAt
@@ -68,18 +85,19 @@ Redundant, cheap, and it protects the one number a coach will notice immediately
 
 Every recalculation writes an audit entry ([[FR-21]]) — money moving silently is a support ticket.
 
-## Billing rules (defaults, configurable)
+## Billing rules (per-lesson model)
 
 | Attendance | Billable | Rationale |
 | --- | --- | --- |
 | `ATTENDED` | yes | obvious |
-| `NO_SHOW` | yes | the coach held the slot and was there |
-| `CANCELLED` | no | v1 simplification |
+| `NO_SHOW` | per-coach setting | decided in v2; default value open ([[Open Questions|Q-04]], A-11) |
+| `CANCELLED` | **never** | decided in v2 §8.3, regardless of who cancelled |
 
-Open: whether cancellation billing should depend on who cancelled and how much notice was given
-([[Open Questions|Q-03]], [[Open Questions|Q-04]]). Both are likely to become real rules once
-coaches use this — a student cancelling an hour before is not the same as a coach cancelling a week
-ahead. Keep the rule table shaped so `cancelledBy` and notice period can join it later.
+## The ledger (cari hesap, K-06)
+
+Earnings are debits, manually recorded payments are credits, the difference is the balance. The view
+is a **monthly statement**: period debt, collected in period, balance ([[FR-25]]). Without the
+credit side the debt figure only grows and nobody looks at the screen.
 
 ## What the coach sees
 
@@ -107,4 +125,5 @@ Nothing. Not a price, not an amount, not a hint of one in a lesson detail respon
 
 ## Related
 
-[[FR-18]] · [[FR-19]] · [[BR-020]] · [[BR-021]] · [[BR-022]] · [[BR-023]] · [[ADR-0004]]
+[[FR-18]] · [[FR-19]] · [[FR-25]] · [[BR-020]] · [[BR-021]] · [[BR-022]] · [[BR-023]] ·
+[[BR-028]] · [[BR-029]] · [[ADR-0004]]

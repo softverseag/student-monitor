@@ -78,7 +78,7 @@ total — then raises the price and watches the past not change.
 **Exit:** a parent logs in and sees exactly the categories the coach opened, including the money,
 and nothing else.
 
-- Coach-controlled sharing settings ([[FR-20]], [[Open Questions|Q-05]])
+- Coach-controlled visibility switches: progress / exams / finance ([[FR-20]])
 - Parent dashboard: progress, attendance, financial
 - Coach → parent notifications and templates ([[FR-16]])
 

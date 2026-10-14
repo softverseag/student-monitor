@@ -23,18 +23,22 @@ will at some point not run.
 
 ## Decision
 
-Store **facts**: `dueAt`, `submittedAt`, `approvedAt`, `finalState` (set once, at approval), plus the
-append-only event log. Derive the displayed status:
+Store **facts**: `dueAt`, `lateCutoff` (frozen at creation, [[BR-027]]), `requiresApproval`,
+`submittedAt`, `approvedAt`, plus the append-only event log. Derive the displayed status.
+
+*As amended 2026-10-14 for the v2 dispute model ([[BR-006]]):*
 
 ```
-if approvedAt:        finalState              (COMPLETED_ON_TIME | COMPLETED_LATE)
-elif submittedAt:     PENDING_APPROVAL
-elif returned:        RETURNED
-elif now > dueAt:     OVERDUE
-else:                 OPEN
+if completed:                    COMPLETED_ON_TIME | COMPLETED_LATE
+   # completed = submitted && (!requiresApproval || approvedAt), minus any later return
+elif submittedAt:                PENDING_APPROVAL   (requiresApproval items only)
+elif returned:                   RETURNED
+elif now > dueAt + lateCutoff:   OVERDUE
+else:                            OPEN
 ```
 
-`finalState` is computed once from `submittedAt <= dueAt` and never recomputed.
+On-time vs late is computed from `submittedAt <= dueAt + lateCutoff` and gives the same answer
+forever; `approvedAt` plays no part in it.
 
 ## Consequences
 

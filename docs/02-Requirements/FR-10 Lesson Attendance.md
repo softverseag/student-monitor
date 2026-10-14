@@ -3,15 +3,16 @@ id: FR-10
 aliases: [FR-10]
 title: Lesson Attendance
 area: lessons
-source: "§15"
+source: "§15 · v2 §8.5"
 status: specified
 priority: must
-updated: 2026-09-12
+updated: 2026-10-14
 ---
 
 # FR-10 — Lesson Attendance
 
-> **Source:** catalog §15 · **Rules:** [[BR-021]]
+> **Source:** catalog §15 · [[Source - Requirements v2 (TR)|v2]] §8.5 · **Decisions:** K-11 ·
+> **Rules:** [[BR-021]], [[BR-028]]
 
 ## Intent
 
@@ -33,9 +34,12 @@ happening?".
 - **FR-10.3** Each attendance record is linked to student, coach, lesson and date.
 - **FR-10.4** Attendance records are one of the data sources for the timesheet/earnings system
   ([[FR-19]], [[BR-021]]).
-- **FR-10.5** Attendance is recorded by the coach.
+- **FR-10.5** Attendance is recorded **only by the coach**, after the lesson (v2 §8.5).
 - **FR-10.6** A corrected attendance record keeps its history — who changed it and when
   ([[FR-21]]) — because it changes money.
+- **FR-10.7** In a group lesson, attendance is recorded **per participant** ([[BR-028]]).
+- **FR-10.8** Attendance is **independent of the finance module and always on** (K-11): it is
+  pedagogical data first, and it keeps working for coaches who never enable finance ([[FR-25]]).
 
 ## Acceptance criteria
 
@@ -59,4 +63,6 @@ happening?".
 
 ## Change log
 
+- 2026-10-14 — v2 integration: coach-only marking after the lesson, per-participant attendance for
+  group lessons, explicitly finance-independent (K-11)
 - 2026-09-12 — created from catalog §15

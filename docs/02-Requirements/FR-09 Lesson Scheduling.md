@@ -3,15 +3,16 @@ id: FR-09
 aliases: [FR-09]
 title: Lesson Scheduling
 area: lessons
-source: "§11, §12"
+source: "§11, §12 · v2 §8"
 status: specified
 priority: must
-updated: 2026-09-12
+updated: 2026-10-14
 ---
 
 # FR-09 — Lesson Scheduling and Cancellation
 
-> **Source:** catalog §11.1–11.3, §12 · **Rules:** [[BR-011]], [[BR-012]], [[BR-013]]
+> **Source:** catalog §11.1–11.3, §12 · [[Source - Requirements v2 (TR)|v2]] §8 · **Decisions:**
+> K-03, K-04 · **Rules:** [[BR-011]], [[BR-012]], [[BR-013]], [[BR-028]]
 
 ## Intent
 
@@ -26,8 +27,10 @@ coach drives scheduling, the student consents.
 - **FR-09.1** **Only a coach** can create a lesson request. A student cannot request a lesson from a
   coach ([[BR-011]]).
 - **FR-09.2** A coach can propose a lesson/meeting for a specific date and time to a linked student.
-- **FR-09.3** A lesson request carries at least: student, coach, date, time, lesson/meeting details,
+- **FR-09.3** A lesson request carries at least: student, coach, date, time, **lesson type**, topic,
   status.
+- **FR-09.3a** Lesson types are at minimum: **one-on-one (birebir)**, **group (grup)** and **exam
+  analysis (deneme analizi)** (v2 §8.1, K-03). Each type can be priced separately ([[FR-18]]).
 
 ### Student response
 
@@ -43,8 +46,15 @@ coach drives scheduling, the student consents.
 - **FR-09.10** A cancellation may carry an explanation — **optional** ([[BR-013]]).
 - **FR-09.11** The system records at least: who initiated the cancellation, when, and the
   explanation if given.
-- **FR-09.12** A cancelled lesson is **not** counted as a delivered lesson. Its effect on
-  earnings is governed by an explicit business rule ([[FR-19]], [[Open Questions|Q-03]]).
+- **FR-09.12** A cancelled lesson is **not** counted as a delivered lesson and is **never billed**
+  (v2 §8.3 — decided; regardless of who cancelled).
+
+### Group lessons (v2 §8.4, [[BR-028]])
+
+- **FR-09.13** A group lesson creates **one** calendar record with multiple participant students.
+- **FR-09.14** Each participant gets their **own** accept/decline response, their own attendance
+  record ([[FR-10]]) and their own earning row ([[FR-19]]).
+- **FR-09.15** The fee is per student at that student's group rate — never split ([[BR-028]]).
 
 ## Acceptance criteria
 
@@ -53,7 +63,9 @@ coach drives scheduling, the student consents.
 - [ ] Cancelling records the initiator; both a coach-initiated and a student-initiated cancellation
       are distinguishable afterwards.
 - [ ] Declining and cancelling both work with an empty note.
-- [ ] A cancelled lesson never produces a billable timesheet entry under the default rule.
+- [ ] A cancelled lesson never produces a billable timesheet entry — under any rule.
+- [ ] A group lesson with three participants shows once in the coach's calendar and produces three
+      independent participant records; one decline leaves the other two confirmed.
 
 ## State machine
 
@@ -70,8 +82,11 @@ Attendance is recorded against `COMPLETED` — see [[FR-10]] and [[State Machine
 
 ## Open questions
 
-- [[Open Questions|Q-03]] — does a cancelled lesson earn anything, and does the initiator matter?
-- [[Open Questions|Q-14]] — recurring lessons.
+- [[Open Questions|Q-03]] — **answered** (v2 §8.3): a cancelled lesson is never billed, initiator
+  irrelevant.
+- [[Open Questions|Q-14]] — recurring lessons (still unaddressed in v2).
+- [[Open Questions|Q-23]] — should two coaches be blocked from booking the same student at the same
+  time? (A-05)
 
 ## Related
 
@@ -79,4 +94,6 @@ Attendance is recorded against `COMPLETED` — see [[FR-10]] and [[State Machine
 
 ## Change log
 
+- 2026-10-14 — v2 integration: lesson types (one-on-one / group / exam analysis), group lessons with
+  per-participant records ([[BR-028]]), cancellation billing decided (never billed)
 - 2026-09-12 — created from catalog §11, §12

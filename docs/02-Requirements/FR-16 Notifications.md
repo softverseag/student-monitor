@@ -3,15 +3,16 @@ id: FR-16
 aliases: [FR-16]
 title: Notifications
 area: notifications
-source: "§25, §26, §31"
+source: "§25, §26, §31 · v2 §15"
 status: specified
 priority: must
-updated: 2026-09-12
+updated: 2026-10-14
 ---
 
 # FR-16 — Notifications
 
-> **Source:** catalog §25, §26, §31 · **Rules:** [[BR-007]], [[BR-024]]
+> **Source:** catalog §25, §26, §31 · [[Source - Requirements v2 (TR)|v2]] §15 · **Decisions:**
+> K-34, K-35 · **Rules:** [[BR-007]], [[BR-024]]
 
 ## Intent
 
@@ -23,20 +24,29 @@ unbearable if they go to the wrong person.
 
 ### Event notifications (§25)
 
-- **FR-16.1** The system notifies the relevant users on significant events, at minimum:
-  new task/assignment, completion request, task/assignment approval, return, lesson request, lesson
-  acceptance, lesson decline, lesson cancellation, mock exam approval request, mock exam approval,
-  resource recommendation.
+- **FR-16.1** The system notifies the relevant users on significant events, at minimum (v2 §15.1):
+  new task/assignment, completion notification, approval, return, lesson request, lesson acceptance,
+  lesson decline, lesson cancellation, mock exam approval request, mock exam approval/rejection,
+  resource recommendation, parent-link approval.
 - **FR-16.2** Notifications go **only to users involved in the event** — never to a student's other
   coaches ([[BR-007]], [[BR-024]]).
+
+### Task-time reminders (v2 §15.2, K-35)
+
+- **FR-16.2a** An automatic reminder is sent at a task's scheduled time.
+- **FR-16.2b** The student configures their own reminder preferences and **quiet hours**; a reminder
+  falling into quiet hours is deferred until they end.
+- **FR-16.2c** Notifications the coach sends are delivered regardless of quiet hours.
 
 ### Coach-sent notifications (§26)
 
 - **FR-16.3** A coach can send manual notifications to their linked students.
 - **FR-16.4** A coach can select multiple students for one send.
-- **FR-16.5** A coach can create, edit and reuse **notification templates**.
+- **FR-16.5** A coach can create, edit and reuse **notification templates**. A template carries a
+  **target audience** field: student or parent (K-34).
 - **FR-16.6** This is explicitly **not** an AI prompt system — templates are stored text with
   placeholders at most.
+- **FR-16.6a** Manual sends are **rate-limited** to prevent abuse (v2 §15.3).
 
 ### Coach → parent (§31)
 
@@ -57,16 +67,21 @@ unbearable if they go to the wrong person.
 
 - One `Notification` row per recipient per event, with `type` + structured `payload` — never a
   pre-rendered string, or translations and deep links become impossible later.
-- Channels: in-app feed plus push (Expo). E-mail/SMS are open ([[Open Questions|Q-11]]).
-- **Quiet hours matter here.** Students study late and coaches send at midnight; a push at 02:00
-  gets the app muted, permanently. Consider a default send window and per-user preferences.
+- Channels: in-app feed plus push. The client plan assumes Web Push/VAPID on a PWA, which collides
+  with our Expo mobile app — the delivery mechanism is part of [[Open Questions|Q-26]]. Note the
+  client's accepted risk either way: on iOS, web push works only after the app is added to the home
+  screen (v2 §23.2).
+- Reminders imply infrastructure: a scheduled-job runner and a `scheduled_reminder`-style table —
+  this is the mechanism that makes students open the app at all (K-35).
 - Templates want placeholders (`{{student}}`, `{{dueDate}}`) — cheap to add, and the reason a coach
   uses the feature twice.
 - Bulk send is a background job, not a request-scoped loop.
 
 ## Open questions
 
-- [[Open Questions|Q-11]] — channels and quiet hours.
+- [[Open Questions|Q-11]] — **answered** (K-35, v2 §15.2): in-app + push, quiet hours exist and are
+  student-configured; coach messages bypass them. Delivery mechanism depends on
+  [[Open Questions|Q-26]].
 
 ## Related
 
@@ -74,4 +89,6 @@ unbearable if they go to the wrong person.
 
 ## Change log
 
+- 2026-10-14 — v2 integration: task-time reminders with student quiet hours (K-35), template
+  audience field (K-34), send rate limit, event list extended
 - 2026-09-12 — created from catalog §25, §26, §31

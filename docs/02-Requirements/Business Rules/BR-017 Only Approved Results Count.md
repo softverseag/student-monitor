@@ -4,10 +4,16 @@ aliases: [BR-017, İK-017]
 source: "İK-017"
 area: exams
 status: specified
-updated: 2026-09-12
+updated: 2026-10-14
 ---
 
 # BR-017 — Unapproved results enter no statistic
+
+> [!warning] Under review — [[Open Questions|Q-20]]
+> v2 reopened this rule (İK-017, open item A-01): either keep it as written, or let results enter
+> statistics immediately with an "unverified" marker, mirroring the dispute model of [[BR-006]].
+> **Until decided, this rule stands as written.** Build statistics behind the single scope below so
+> flipping the decision touches one place.
 
 **Rule.** Results not approved by a coach are excluded from **every** performance statistic:
 average, best result, development, past performance, per-subject performance.

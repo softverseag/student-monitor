@@ -1,6 +1,6 @@
 ---
 title: Glossary
-updated: 2026-09-12
+updated: 2026-10-14
 ---
 
 # Glossary — Turkish ↔ English ↔ Code
@@ -26,8 +26,13 @@ The canonical naming source. Code uses the **Code** column, exactly.
 | Görev | Task | `WorkItem(type=TASK)` | |
 | Ödev | Assignment / homework | `WorkItem(type=ASSIGNMENT)` | tracked separately from tasks ([[BR-005]]) |
 | Son tarih | Due date | `dueAt` | |
-| Tamamlama talebi | Completion request | `submittedAt` | does **not** close the item ([[BR-006]]) |
+| Tamamlama bildirimi | Completion notification | `submittedAt` | completes immediately by default — dispute model ([[BR-006]]) |
+| Onay gerekli | Requires approval | `requiresApproval` | per-item flag; the exception to the dispute model |
 | Onay | Approval | `approvedAt`, `approvedBy` | |
+| Toplu onay | Bulk approval | `bulk` (audit flag) | per-item audit rows ([[FR-06|FR-06.14]]) |
+| Gecikme saati | Late cutoff | `lateCutoff` | copied onto the item and frozen ([[BR-027]]) |
+| Çizelge / Plan | Study plan | `Plan` | unit → topic → task tree; copies on assignment ([[FR-23]]) |
+| Plan ataması | Plan assignment | `PlanAssignment` | per student, with start date and removed tasks |
 | Geri gönderme | Return / send back | `RETURNED`, `returnNote` | note optional ([[BR-008]]) |
 | Zamanında tamamlandı | Completed on time | `COMPLETED_ON_TIME` | |
 | Geç tamamlandı | Completed late | `COMPLETED_LATE` | |
@@ -39,11 +44,14 @@ The canonical naming source. Code uses the **Code** column, exactly.
 | Turkish | English | Code | Notes |
 | --- | --- | --- | --- |
 | Ders / Görüşme | Lesson / coaching session | `Lesson` | |
+| Ders türü | Lesson type | `LessonType` | `ONE_ON_ONE` / `GROUP` / `EXAM_ANALYSIS` (birebir / grup / deneme analizi) |
+| Grup dersi katılımcısı | Group lesson participant | `LessonParticipant` | own attendance + earning row ([[BR-028]]) |
 | Ders talebi | Lesson request | `LessonRequest` | coach-only ([[BR-011]]) |
 | Ders iptali | Lesson cancellation | `CANCELLED`, `cancelledBy` | either side ([[BR-012]]) |
 | Devam kaydı | Attendance record | `Attendance` | `ATTENDED` / `NO_SHOW` / `CANCELLED` |
-| Program | Schedule | `ScheduleEntry` | student-private ([[BR-014]]) |
-| Okul | School | `SCHOOL` | schedule entry kind |
+| Program | Schedule | `ScheduleEntry` | student-private ([[BR-014]]); v1 is a read-only timeline |
+| Zaman şeridi | Timeline | — | read-only day/week projection of lessons + tasks ([[FR-11]]) |
+| Okul saatleri | School hours | `schoolHours` | one setting, not calendar entries |
 | Boş | Free / empty | — | absence of an entry, never stored |
 
 ## Study material
@@ -63,21 +71,27 @@ The canonical naming source. Code uses the **Code** column, exactly.
 | Turkish | English | Code | Notes |
 | --- | --- | --- | --- |
 | Deneme | Mock exam / practice exam | `MockExam` | |
-| Deneme sonucu | Mock exam result | `MockExamResult` | approval required ([[BR-016]]) |
-| Sınav türü | Exam type | `examType` | TYT, AYT, YDT, LGS, other |
-| Net | Net score | `net` | correct − wrong/k, k varies by exam type |
-| Puan | Points / scaled score | `score` | manual in v1 ([[BR-018]]) |
+| Deneme sonucu | Mock exam result | `MockExamResult` | approval required ([[BR-016]]); approver picked by the student ([[BR-031]]) |
+| Sınav türü | Exam type | `examType` | TYT, AYT, YDT, LGS, other; subject list varies per type |
+| Net | Net score | `net` | auto-calculated: correct − wrong/k, k per exam type ([[BR-018]], [[BR-019]]) |
+| Puan | Points / scaled score | `score` | entered manually ([[BR-018]]) |
 | Doğru / Yanlış / Boş | Correct / wrong / blank | `correct`, `wrong`, `blank` | |
+| Okul karnesi | School report card | `ReportCard` | student-entered, read-only for coach/parent ([[FR-24]]) |
 
 ## Money
 
 | Turkish | English | Code | Notes |
 | --- | --- | --- | --- |
 | Fiyat | Rate / price | `CoachStudentRate` | per coach–student pair ([[BR-020]]) |
+| Fiyat modeli | Price model | `PriceModel` | `PER_LESSON` (ders başı) / `MONTHLY_FLAT` (aylık sabit) ([[BR-021]]) |
 | Fiyat geçmişi | Rate history | `effectiveFrom` / `effectiveTo` | never rewrite the past ([[BR-023]]) |
 | Puantaj | Timesheet | `TimesheetEntry` | which lessons count |
-| Hakediş | Earnings / accrual | `Earning` | amount + frozen rate snapshot |
-| Abonelik | Subscription | `Subscription` | coach pays the platform |
+| Hakediş | Earnings / accrual | `Earning` | debit side; amount + frozen rate snapshot |
+| Tahsilat | Payment / collection | `Payment` | credit side; coach enters manually ([[FR-25]]) |
+| Cari hesap / Ekstre | Ledger / monthly statement | `LedgerStatement` | debt, collected, balance per month ([[FR-25]]) |
+| Finans modülü | Finance module | `financeEnabled` | opt-in, default off, truly deletable ([[BR-029]]) |
+| Görünürlük anahtarı | Visibility switch | `VisibilitySettings` | progress / exams / finance, per link ([[FR-20]]) |
+| Abonelik | Subscription | `Subscription` | coach pays the platform; v1 is a free beta ([[FR-22]]) |
 
 ## Progress
 
@@ -87,7 +101,10 @@ The canonical naming source. Code uses the **Code** column, exactly.
 | İlerleme | Progress | `progress` | tasks and assignments computed separately |
 | Günlük / Haftalık / Aylık | Daily / weekly / monthly | `DAILY` / `WEEKLY` / `MONTHLY` | |
 | Bildirim | Notification | `Notification` | |
-| Bildirim şablonu | Notification template | `NotificationTemplate` | reusable coach text, not AI |
+| Bildirim şablonu | Notification template | `NotificationTemplate` | reusable coach text + audience field, not AI |
+| Hatırlatma | Reminder | `ScheduledReminder` | fires at task time ([[FR-16]]) |
+| Sessiz saatler | Quiet hours | `quietHours` | student-set; defers reminders, never coach messages |
+| Konu ilerlemesi | Topic progress | — | derived from plan tasks, no own module ([[FR-14|FR-14.13]]) |
 
 ## Turkish exam context (for non-Turkish contributors)
 

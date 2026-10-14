@@ -1,19 +1,24 @@
 ---
 title: Scope and MVP
 status: draft
-updated: 2026-09-12
+updated: 2026-10-14
 ---
 
 # Scope and MVP
 
-The catalog describes the full product. **Not all of it ships in v1.** This note is the agreed
-cut line; check it before starting work. Changing it is a product decision, not an implementation
-detail.
+The catalog describes the full product. **Not all of it ships in v1.** This note is the agreed cut
+line; check it before starting work. Changing it is a product decision, not an implementation detail.
+
+The cut line was redrawn by the October 2026 requirement set ([[Source - Requirements v2 (TR)]] §22,
+[[Source - Decision Log (TR)]]): exams, resources, files, report cards, plans and the optional
+finance module moved **into** v1; the editable schedule grid, curriculum module, QR linking and
+payment integration moved **out**.
 
 ## The core loop we must nail first
 
-> A coach assigns work → the student does it and submits → the coach approves or returns it →
-> both sides see honest progress.
+> A coach prepares a plan and assigns work → the student does it and says done → **the system
+> believes the student** ([[BR-006]]); the coach spot-checks, returns or requires approval where it
+> matters → both sides see honest progress.
 
 Everything else — lessons, money, exams, parents — hangs off that loop. If the loop is not
 frictionless on a phone, nothing else matters.
@@ -24,54 +29,75 @@ frictionless on a phone, nothing else matters.
 | --- | --- | --- |
 | Accounts, login, roles | [[FR-01]], [[FR-02]] | nothing works without it |
 | Student grade level | [[FR-03]] | cheap, needed for context |
-| Coach–student link (invite code + request, end relationship) | [[FR-04]] | the product is the relationship |
-| Parent link with coach approval, max 2 | [[FR-05]] | the parent is the one paying |
-| Tasks | [[FR-06]] | the core loop |
-| Assignments | [[FR-07]] | same engine, different type |
-| Filiz progress character | [[FR-08]] | the reason a student opens the app daily |
-| Lesson request / accept / decline / cancel | [[FR-09]] | drives both calendar and money |
-| Attendance | [[FR-10]] | the input to earnings |
-| Student private schedule | [[FR-11]] | the student's own reason to stay |
-| Daily + weekly progress | [[FR-14]] | proves the loop is working |
-| Per-student pricing, effective-dated | [[FR-18]] | required by earnings |
-| Timesheet + earnings + coach total | [[FR-19]] | the coach's strongest pull |
-| Parent read-only view | [[FR-20]] | closes the trust loop |
-| Event notifications (in-app + push) | [[FR-16]] | the loop stalls without them |
+| Coach–student link (invite code + link, request, end relationship) | [[FR-04]] | the product is the relationship |
+| Parent link with coach approval, max 2 | [[FR-05]] | closes the family loop |
+| Tasks + assignments (dispute model, bulk approval) | [[FR-06]], [[FR-07]] | the core loop |
+| **Study plans — prepare once, assign to many** | [[FR-23]] | the client calls it v1's most important module; it justifies the subscription |
+| Filiz progress character (thresholds decided) | [[FR-08]] | the reason a student opens the app daily |
+| Lesson request / accept / decline / cancel, 3 lesson types, group lessons | [[FR-09]] | drives both calendar and money |
+| Attendance (always on, finance-independent) | [[FR-10]] | the input to earnings and the parent's first question |
+| Read-only student timeline + school-hours setting | [[FR-11]] | the student's day at a glance, without the grid's cost |
+| Mock exam tracking (auto net, coach approval) | [[FR-15]] | the most-watched number in exam prep |
+| Resource pool + recommendations | [[FR-12]] | feeds assignments; small |
+| File sharing (PDF, 25 MB, coach → student) | [[FR-13]] | one less reason to fall back to WhatsApp |
+| School report card | [[FR-24]] | 1–2 days of work, the parent's favourite data (K-33) |
+| Daily + weekly + monthly progress, topic % from plans | [[FR-14]] | proves the loop is working |
+| Event notifications, task-time reminders with quiet hours, templates with audience | [[FR-16]] | the only mechanism that makes students open the app (K-35) |
 | Coach follow-up view | [[FR-17]] | how a coach handles 30 students |
-| Audit trail | [[FR-21]] | required by [[BR-025]], cheap now, expensive later |
+| **Finance module (opt-in): pricing, earnings, ledger, statements** | [[FR-18]], [[FR-19]], [[FR-25]] | the coach's strongest pull — made optional so wary coaches still adopt |
+| Parent read-only view behind 3 switches | [[FR-20]] | closes the trust loop |
+| Free beta with enforced student limit | [[FR-22]] | so v1.1 package tiers mean something (K-28) |
+| Audit trail from day one | [[FR-21]] | append-only, cannot be backfilled |
 
-## v1 — deliberately deferred
+## Deferred to v1.1 (v2 §22 — each line is a deliberate trade)
 
-| Area | Requirement | Reason |
-| --- | --- | --- |
-| Mock exam tracking + approval | [[FR-15]] | valuable but self-contained; ships right after the loop is stable |
-| Resource pool + recommendations | [[FR-12]] | same |
-| File sharing | [[FR-13]] | storage, quota and retention policy are unanswered ([[Open Questions\|Q-06]]) |
-| Monthly progress report | [[FR-14]] | the formula is undecided ([[Open Questions\|Q-02]]) — daily/weekly ship first |
-| Subscription and paywall | [[FR-22]] | packages undecided ([[Open Questions\|Q-10]]); run unlimited until we have coaches |
-| Notification templates + bulk send | [[FR-16]] | manual single-student messages are enough at first |
-| QR-code linking | [[FR-04]] | invite code and link cover it; QR is a thin add-on later |
-| Recurring lessons | [[FR-09]] | [[Open Questions\|Q-14]] |
+| Area | Reason |
+| --- | --- |
+| Payment / subscription billing integration | pricing undecided; free beta first ([[Open Questions|Q-10]]) |
+| Excel plan import | the plan editor covers the job ([[FR-23]]) |
+| Editable student calendar grid | the coach cannot see it ([[BR-014]]), so high cost, no commercial return (K-36) |
+| Independent curriculum/topic module | content-production cost; derived from plan tasks instead (K-26) |
+| QR-code linking | invite code and link cover it |
+| In-resource progress tracking (page/test position) | pool holds only the book's identity in v1 |
+| Virus scanning of uploads | deliberately deferred risk; content-type validation ships in v1 ([[FR-13]]) |
+| End-to-end finance encryption (key held by the coach) | 3–4 weeks of work; validate coach resistance first (K-08) |
+| Admin / support panel | direct DB access in v1 (v2 §1) |
+| Institution / multi-coach organisation accounts | expectations *conflict* with the individual-coach model; a nullable `organizationId` is kept in the data model (K-12) |
 
 ## Explicitly out of scope
 
-- Payments between coach and parent. We *calculate* what is owed; we do not move money.
-- Chat / messaging. Notifications are one-way. Coaches already have WhatsApp, and a chat feature
-  buys us a moderation problem involving minors.
-- AI anything — the catalog calls this out for templates (§26); it holds for the whole v1.
+- Payments between coach and parent. We *calculate* what is owed; we do not move money (K-01).
+- Chat / messaging. Notifications are one-way. **Accepted risk** (v2 §23.2): coaching conversation
+  lives in WhatsApp and may drag task talk with it; revisit after beta feedback.
+- AI anything — templates are stored text, not prompts (§26); it holds for the whole v1.
 - Content: no question banks, no videos, no curriculum.
 - Coach discovery / marketplace.
-- Web version of the student experience beyond a basic responsive view — students are on mobile.
+
+## Accepted risks (v2 §23.2)
+
+1. **No messaging** — see above.
+2. **iOS push on a PWA** works only after add-to-home-screen; student adoption depends on reminders,
+   so install guidance matters. (Mechanism depends on [[Open Questions|Q-26]].)
+3. **Student adoption is coach-dependent** — if the coach does not insist, no data is entered and
+   Filiz stays empty; keep invite friction minimal.
+4. **KVKK ordering is backwards** — students sign themselves up but are mostly minors, and parental
+   links wait on coach approval. Must be resolved before the first real user
+   ([[Open Questions|Q-12]]).
+5. **Adult–minor interaction** — complaint/blocking mechanics and file-content oversight are needed
+   for legal responsibility.
 
 ## Platform split for v1
+
+> [!warning] Under review — [[Open Questions|Q-26]]
+> The v2 technical plan assumes a **single responsive PWA** (K-27) instead of the Expo mobile app,
+> and self-managed JWT instead of Clerk. Until that conflict is resolved, the existing ADRs and the
+> split below stand.
 
 | App | Audience | Scope |
 | --- | --- | --- |
 | **Mobile** (Expo) | students, and coaches for quick approvals | full student experience; coach approvals, follow-up list, lesson requests |
-| **Web** (Next.js) | coaches, parents | full coach experience (assigning in bulk, earnings, follow-up); parent view |
+| **Web** (Next.js) | coaches, parents | full coach experience (plans, bulk assigning, earnings, follow-up); parent view |
 | **API** (NestJS) | all | one backend, all authorization here ([[BR-024]]) |
-
-Parents get the web app first; a parent mobile view follows if they ask for it.
 
 ## Cut-line principles
 
@@ -79,7 +105,8 @@ Parents get the web app first; a parent mobile view follows if they ask for it.
 2. If a business rule is still open ([[Open Questions]]), ship the part that does not depend on it.
 3. Anything that writes history ships early, even if the reporting on top comes later — we can
    backfill reports, not events.
+4. The finance module must be severable: off by default, deletable on exit ([[BR-029]]).
 
 ## Related
 
-[[Roadmap]] · [[Milestones]] · [[Requirements Index]]
+[[Roadmap]] · [[Milestones]] · [[Requirements Index]] · [[Requirements v2 Delta]]

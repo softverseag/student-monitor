@@ -3,15 +3,16 @@ id: FR-20
 aliases: [FR-20]
 title: Parent Information Access
 area: parent
-source: "§30"
+source: "§30 · v2 §17"
 status: specified
 priority: must
-updated: 2026-09-12
+updated: 2026-10-14
 ---
 
 # FR-20 — Parent Information Access
 
-> **Source:** catalog §30 · **Rules:** [[BR-003]], [[BR-022]]
+> **Source:** catalog §30 · [[Source - Requirements v2 (TR)|v2]] §17 · **Decisions:** K-10, K-29 ·
+> **Rules:** [[BR-003]], [[BR-022]]
 
 ## Intent
 
@@ -24,9 +25,20 @@ that the work is happening and the money is accounted for — not a management c
   their linked student.
 - **FR-20.2** The purpose on the parent side is general follow-up and information, not student
   management.
-- **FR-20.3** Data that may be surfaced to a parent includes: overall work progress, completed and
-  missing work, lesson attendance, mock exam development, information shared by the coach, price,
-  and timesheet/earnings.
+- **FR-20.3** The coach controls visibility with exactly **three switches**, set per coach–student
+  relationship (K-29, v2 §17.1):
+
+  | Switch | Opens to the parent |
+  | --- | --- |
+  | **Progress** | weekly/daily progress, completed and missing work, lesson continuity, coach note |
+  | **Exams** | approved mock exam results and development ([[BR-017]]) |
+  | **Finance** | lesson price, debt, paid, balance, lesson breakdown — only effective while the coach's finance module is on ([[FR-25]]) |
+
+  A closed switch means that area **does not appear at all** in the parent's view — not greyed out,
+  absent.
+- **FR-20.3a** A parent never sees, regardless of switches (v2 §17.2): task/assignment details, the
+  student's personal calendar, the coach's private notes, or other coaches' price and earnings data.
+- **FR-20.3b** The parent sees the student's school report card ([[FR-24]]).
 - **FR-20.4** Price and earnings are parent-facing financial information and are **never**
   student-facing ([[BR-022]]).
 - **FR-20.5** A parent sees only students they are actively and approvedly linked to ([[BR-003]]).
@@ -46,10 +58,9 @@ that the work is happening and the money is accounted for — not a management c
 
 ## Design notes
 
-- **Sharing granularity is open** ([[Open Questions|Q-05]]). Proposal: per-category toggles set by
-  the coach on the coach–student relationship — progress / attendance / exams / financial — all off
-  until the coach turns them on. A single master switch is simpler but forces the coach to choose
-  between "everything" and "nothing", which they will not do.
+- Three switches, not seven: the client cut the prototype's 7 toggles because the cost is the
+  **combination count** — 128 states each needing a sensible parent screen vs 8 (K-29). Exams kept
+  its own switch because results are sensitive.
 - Two parents share the same view; there is no per-parent configuration.
 - The parent view is weekly-cadence, not daily. Design for a summary, not a feed.
 - Consider a monthly digest notification — the parent behaviour we want is "read the summary", not
@@ -57,12 +68,16 @@ that the work is happening and the money is accounted for — not a management c
 
 ## Open questions
 
-- [[Open Questions|Q-05]] — sharing granularity.
+- [[Open Questions|Q-05]] — **answered** (K-29): three switches — progress / exams / finance, all
+  off by default.
 
 ## Related
 
-[[FR-05]] · [[FR-14]] · [[FR-15]] · [[FR-18]] · [[FR-19]] · [[Authorization Matrix]]
+[[FR-05]] · [[FR-14]] · [[FR-15]] · [[FR-18]] · [[FR-19]] · [[FR-24]] · [[FR-25]] ·
+[[Authorization Matrix]]
 
 ## Change log
 
+- 2026-10-14 — v2 integration: three visibility switches (K-29), hard never-visible list, report
+  card visible, finance switch tied to the finance module
 - 2026-09-12 — created from catalog §30

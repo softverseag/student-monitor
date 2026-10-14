@@ -1,14 +1,14 @@
 ---
 title: Progress and Filiz
 status: draft
-updated: 2026-09-12
+updated: 2026-10-14
 ---
 
 # Progress and Filiz
 
-How completion turns into numbers, and numbers into a character. Every threshold on this page is a
-**placeholder** until [[Open Questions|Q-01]] and [[Open Questions|Q-02]] are answered — which is
-precisely why they all live in one module.
+How completion turns into numbers, and numbers into a character. The Filiz thresholds were fixed in
+v2 (K-24) but remain configuration in one module; the monthly formula is still open
+([[Open Questions|Q-02]]).
 
 ## Where progress comes from
 
@@ -19,11 +19,15 @@ For a period and a `type` (task or assignment):
 
 | Bucket | Definition |
 | --- | --- |
-| `onTime` | approved, `submittedAt <= dueAt` |
-| `late` | approved, `submittedAt > dueAt` |
-| `pending` | submitted, not yet decided |
-| `missing` | past due, never submitted (`OVERDUE`) |
+| `onTime` | completed, `submittedAt <= dueAt + lateCutoff` ([[BR-027]]) |
+| `late` | completed, `submittedAt > dueAt + lateCutoff` |
+| `pending` | submitted `requiresApproval` item, not yet decided ([[BR-006]]) |
+| `missing` | past due + cutoff, never submitted (`OVERDUE`) |
 | `open` | not yet due, not submitted |
+
+Under the dispute model, a default item is *completed* the moment it is submitted; only
+`requiresApproval` items can be `pending`. A later return moves the item back out of the completed
+buckets.
 
 `due` = `onTime + late + pending + missing` — that is, items whose due date falls in the period.
 Items not yet due are excluded from the denominator, or a student is penalised at 09:00 for work due
@@ -37,14 +41,19 @@ progress(day, type) = (onTime + pending) / due       -- due > 0
 
 **Pending counts as done.** A student who submitted everything should not watch Filiz wilt while
 their coach is asleep. If the coach later returns the item, the day's progress drops — correct, and
-attributable.
+attributable. (Only `requiresApproval` items can be pending at all under [[BR-006]].)
 
-| Stage | Placeholder threshold |
-| --- | --- |
-| 1 — seed (tohum) | 0% |
-| 2 — sprout (filiz) | > 0% and < 50% |
-| 3 — growing (fidan) | ≥ 50% and < 100% |
-| 4 — thriving (ağaç) | 100% |
+Thresholds — decided in v2 (K-24), kept as configuration:
+
+| Stage | Threshold | Feel (v2 §14.3) |
+| --- | --- | --- |
+| 1 | 0–24% | üzgün (sad) |
+| 2 | 25–74% | idare eder (getting by) |
+| 3 | 75–99% | mutlu (happy) |
+| 4 | 100% | kutlama (celebration) |
+
+Tone is **gentle and encouraging, one variant** — no guilt mechanics; the audience is minors (K-23).
+Animation only in the daily view; weekly/monthly show a static image.
 
 Two independent instances — one for tasks, one for assignments ([[BR-005]]). They are shown side by
 side and never averaged.
@@ -84,9 +93,15 @@ overall = (onTime + 0.5 × late) / due
 with tasks and assignments weighted equally. It has the right shape — late is worth something,
 missing is worth nothing — but the weights are a product decision, not an engineering one.
 
+## Topic progress (v2 §14.4)
+
+A topic's percentage = completed plan tasks / all plan tasks for that topic and student
+([[FR-14|FR-14.13]], [[FR-23]]). No separate module, no manual marking; it only counts plan-born
+tasks.
+
 ## Implementation
 
-One module in `packages/shared`:
+One module in `packages/core` (domain rules live in `@sm/core`):
 
 ```
 progress/

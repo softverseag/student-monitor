@@ -12,8 +12,8 @@ updated: 2026-09-12
 **Rule.** Once a lesson is confirmed, both the coach and the student can cancel it. The initiator,
 the time, and any explanation are recorded.
 
-**Why.** Life happens on both sides. Who cancelled matters — for trust, and potentially for money
-([[Open Questions|Q-03]]).
+**Why.** Life happens on both sides. Who cancelled matters for trust and the record — though not
+for money: a cancelled lesson is never billed (v2 §8.3).
 
 **Enforcement.** `cancel()` accepts either party; `cancelledBy`, `cancelledAt` and `cancelNote` are
 persisted, and an audit row is written.

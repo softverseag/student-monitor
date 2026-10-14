@@ -27,8 +27,10 @@ Open it as an Obsidian vault, or just read the Markdown.
 | --- | --- |
 | Entry point / map | `docs/Home.md` |
 | Original client requirements (Turkish, **never edit**) | `docs/01-Product/Source - Requirement Catalog (TR).md` |
-| Functional requirements FR-01..FR-22 | `docs/02-Requirements/` |
-| Business rules BR-001..BR-026 (İK-001..İK-026) | `docs/02-Requirements/Business Rules/` |
+| **October 2026 requirement update** (Turkish, **never edit**) | `docs/01-Product/Source - Requirements v2 (TR).md`, `Source - Decision Log (TR).md`, `Source - Backend Plan (TR).md` |
+| What the v2 update changed, and where it landed | `docs/01-Product/Requirements v2 Delta.md` |
+| Functional requirements FR-01..FR-25 | `docs/02-Requirements/` |
+| Business rules BR-001..BR-031 (İK-001..İK-031) | `docs/02-Requirements/Business Rules/` |
 | Domain model, state machines, authorization matrix | `docs/03-Domain/` |
 | Architecture + ADRs | `docs/04-Architecture/` |
 | Roadmap, milestones, tasks | `docs/05-Delivery/` |
@@ -54,7 +56,10 @@ see `docs/05-Delivery/Tasks/T-001 Scaffold the monorepo.md`.
 - **Web**: Next.js 16 App Router + React 19, **Tailwind v4** (`@import "tailwindcss"` in
   `globals.css`, no `tailwind.config`), Turbopack.
 - **Mobile**: Expo SDK 57 + Expo Router 7 at `src/app/`, React Native 0.86, typed routes and the
-  React Compiler both on.
+  React Compiler both on. Runs as a **development build** (`expo-dev-client`), not Expo Go — a fresh
+  machine needs Xcode and one `pnpm --filter mobile exec expo run:ios` before `pnpm dev:mobile`
+  works against the simulator; rebuild only when the native side changes. See
+  `docs/04-Architecture/Decisions/ADR-0016 Development Builds Not Expo Go.md`.
 - **Frontend data/state** (not installed yet): SWR, Zustand, react-native-mmkv on mobile /
   `localStorage` on web behind one storage adapter.
 - **No i18n layer.** The product is Turkish only — copy is written directly in components as string
@@ -177,13 +182,18 @@ Turkish is the product language; **English is the code language**. Do not invent
 | Sınıf seviyesi | `gradeLevel` | |
 | Görev | `Task` | `WorkItem` with `type = TASK` |
 | Ödev | `Assignment` | `WorkItem` with `type = ASSIGNMENT` |
-| Tamamlama talebi | `submission` / `submittedAt` | student says "done" |
-| Onay | `approval` / `approvedAt` | coach closes it |
+| Çizelge / Plan | `Plan` / `PlanAssignment` | reusable unit→topic→task tree; copies on assign (FR-23) |
+| Tamamlama bildirimi | `submission` / `submittedAt` | student says "done" — completes immediately by default (BR-006) |
+| Onay gerekli | `requiresApproval` | per-item flag, the exception to the dispute model |
+| Gecikme saati | `lateCutoff` | frozen onto the item at creation (BR-027) |
+| Onay | `approval` / `approvedAt` | only for `requiresApproval` items / disputes |
 | Geri gönderme | `RETURNED` / `returnNote` | note is optional |
-| Ders / Görüşme | `Lesson` | |
+| Ders / Görüşme | `Lesson` | typed: `ONE_ON_ONE` / `GROUP` / `EXAM_ANALYSIS` |
 | Ders talebi | `LessonRequest` | only a coach may create one |
-| Devam kaydı | `Attendance` | `ATTENDED` / `NO_SHOW` / `CANCELLED` |
-| Program etkinliği | `ScheduleEntry` | student-private |
+| Grup dersi katılımcısı | `LessonParticipant` | own attendance + earning per student (BR-028) |
+| Devam kaydı | `Attendance` | `ATTENDED` / `NO_SHOW` / `CANCELLED`; always on, finance-independent |
+| Program etkinliği | `ScheduleEntry` | student-private; v1 shows a read-only timeline (FR-11) |
+| Okul karnesi | `ReportCard` | student-entered school grades, no approval (FR-24) |
 | Kaynak | `Resource` | |
 | Kaynak havuzu | `ResourcePool` | per student |
 | Kaynak önerisi | `ResourceRecommendation` | keeps the recommending coach |
@@ -193,10 +203,14 @@ Turkish is the product language; **English is the code language**. Do not invent
 | Bildirim | `Notification` | |
 | Bildirim şablonu | `NotificationTemplate` | not an AI prompt system |
 | Dosya paylaşımı | `FileShare` | |
-| Öğrenci fiyatlandırması | `CoachStudentRate` | effective-dated |
+| Öğrenci fiyatlandırması | `CoachStudentRate` | effective-dated; `model`: `PER_LESSON` / `MONTHLY_FLAT` |
 | Puantaj | `TimesheetEntry` | one per billable lesson |
-| Hakediş | `Earning` | amount with a frozen rate snapshot |
-| Abonelik | `Subscription` | coach pays us; unrelated to lesson prices |
+| Hakediş | `Earning` | ledger debit; amount with a frozen rate snapshot |
+| Tahsilat | `Payment` | ledger credit, entered manually by the coach (FR-25) |
+| Cari hesap / Ekstre | `LedgerStatement` | monthly: debt, collected, balance (FR-25) |
+| Görünürlük anahtarı | `VisibilitySettings` | parent switches: progress / exams / finance (FR-20) |
+| Sessiz saatler | `quietHours` | student-set; defers reminders, never coach messages |
+| Abonelik | `Subscription` | coach pays us; unrelated to lesson prices; v1 = free beta |
 | Filiz | `Filiz` / `ProgressStage` | keep the brand name, 4 stages |
 
 ## Invariants — do not break these
@@ -206,20 +220,26 @@ These come straight from the client's rules. Each links to a note in
 
 1. **Authorize on the backend.** Hiding a button is not authorization. Every query is scoped by the
    caller's active links. (BR-024, FR-02)
-2. **Multi-coach isolation.** Coach A can never read or manage content owned by Coach B for the same
-   student — tasks, assignments, lessons, files, recommendations, notifications, prices, earnings.
-   Every coach-created row carries `coachId` and every read filters on it. (BR-024)
-3. **A student "done" never closes work.** `submittedAt` sets `PENDING_APPROVAL`; only the *assigning*
-   coach approves or returns it. The approval request goes to that coach only. (BR-006, BR-007)
-4. **Lateness uses `submittedAt`, never `approvedAt`.** A coach approving late does not make the
-   student late. (BR-009)
+2. **Multi-coach isolation — the see/manage split.** Coach B may *see* Coach A's tasks/assignments
+   for a shared student (labelled, read-only) but can never manage them; Coach A's lessons, files,
+   notifications, prices and earnings are entirely invisible to Coach B. Every coach-created row
+   carries `coachId`; management and money/file/lesson reads filter on it. (BR-024)
+3. **Completion follows the dispute model.** A student's "done" completes the item *immediately* and
+   it enters statistics; the assigning coach can send it back later, which reverts the stats.
+   Exception: items flagged `requiresApproval` wait as `PENDING_APPROVAL` for the *assigning* coach.
+   Approve/return authority and the completion notification belong to that coach only. Bulk approval
+   exists (audited per item); bulk return does not. (BR-006 — reversed in v2, BR-007)
+4. **Lateness uses `submittedAt` against `dueAt + lateCutoff`, never `approvedAt`.** The cutoff is
+   copied from the coach's default onto the item at creation and frozen. (BR-009, BR-027)
 5. **Late-completed ≠ never-completed.** They are separate statistics, always. (BR-010)
 6. **Only a coach creates lesson requests.** Students accept or decline; they cannot request lessons.
    (BR-011)
 7. **The student's personal schedule is private.** A coach sees only the lessons from their own
    coaching relationship — never school hours, personal events or free slots. (BR-014)
 8. **Unapproved mock-exam results are invisible to statistics.** Averages, bests, trends and
-   per-subject analysis use approved results only. (BR-016, BR-017)
+   per-subject analysis use approved results only. (BR-016, BR-017 — **under review**, Q-20: build
+   all statistics behind one approved-results scope so the decision touches one place. The student
+   picks which coach approves, BR-031.)
 9. **Students never see money.** Price and earnings are visible to the owning coach and the
    student's approved parents only. (BR-022)
 10. **Past earnings are frozen.** A rate change applies from its effective date forward; a lesson
@@ -227,13 +247,20 @@ These come straight from the client's rules. Each links to a note in
     BR-023)
 11. **A parent link is inactive until the student's coach approves it**, and a student may have at
     most 2 active parents. (BR-003, BR-004)
-12. **Nothing is hard-deleted.** Ending a coach-student relationship, completing work or passing a
-    deadline never destroys history; access rules change, records do not. (BR-025, FR-21)
+12. **Nothing is hard-deleted** — with one defined exception: a coach disabling the finance module
+    may truly delete their finance data (BR-029). Everything else: ending a relationship, completing
+    work or passing a deadline never destroys history; access rules change, records do not
+    (after a link ends the coach is read-only, BR-030). (BR-025, FR-21)
 13. **Return notes and cancellation notes are optional.** Never make them required. (BR-008, BR-013)
-14. **Progress rules are configuration, not constants.** Filiz thresholds and the monthly progress
-    formula are undecided; keep them in one replaceable module in `packages/shared`. (FR-08, FR-14)
+14. **Progress rules are configuration, not constants.** Filiz thresholds are now decided
+    (0–24 / 25–74 / 75–99 / 100, daily) but stay a replaceable module; the monthly formula is still
+    undecided (Q-02). Net formulas per exam type live in the same kind of single pure module.
+    (FR-08, FR-14, BR-019)
 15. **Task progress and assignment progress are computed separately** and never influence each
     other's Filiz. (BR-005, FR-08)
+16. **Money and finance are an opt-in module.** Default off per coach; everything else must work
+    fully without it. Amounts never appear in logs, notification bodies, analytics events or search
+    indexes. (BR-029, FR-25)
 
 ## Conventions
 
