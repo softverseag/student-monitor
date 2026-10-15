@@ -1,6 +1,6 @@
 ---
 title: Home
-updated: 2026-10-14
+updated: 2026-10-15
 ---
 
 # Student Monitor — Documentation Vault
@@ -17,6 +17,8 @@ Coaching platform for Turkish exam preparation (YKS / LGS), used alongside regul
 
 ## Start here
 
+- [[Kasa Haritası (TR)]] — **where everything lives**: note-by-note and heading-by-heading map of
+  this vault, in Turkish. Read it first if you do not know your way around yet
 - [[Vault Guide]] — conventions, IDs, statuses, how to add a note
 - [[Product Vision]] — what this is and who it is for
 - [[Requirements v2 Delta]] — **what the October 2026 requirement update changed**
