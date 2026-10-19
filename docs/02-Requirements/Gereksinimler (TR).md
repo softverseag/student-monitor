@@ -95,12 +95,21 @@ kesinleşir.
 - **FR-01.8** Kullanıcı kendi hesabını silebilir. Kimlik bilgileri silinir, geçmiş kayıt
   **anonimleştirilerek korunur** ([[BR-025]], [[ADR-0013]]).
 - **FR-01.9** Kayıttan sonra rol bir kez seçilir ve **hayat boyu değişmez** ([[ADR-0014]]).
+  **Tartışmaya açıldı — [[Open Questions|Q-27]]:** "hesap başına tek rol" tamam, ama **kalıcı
+  olması** lansman için fazla iddialı. Muhtemel esnetme: hesap **boşken** (hiç bağ, hiç içerik yok)
+  rol değiştirilebilsin. Karar gelene kadar madde yazıldığı gibi geçerli.
 
 **Dikkat.** Şifre sıfırlama bir e-postanın kayıtlı olup olmadığını sızdırmamalı. Silinmiş bir
 hesabın token'ı çalışmamalı — sessizce yeniden yaratılmamalı.
 
 **Açık.** [[Open Questions|Q-12]] reşit olmayan kullanıcıda KVKK rızasını kim verir ·
-[[Open Questions|Q-19]] hesap silmede bekleme süresi olmalı mı.
+[[Open Questions|Q-19]] hesap silmede bekleme süresi olmalı mı ·
+[[Open Questions|Q-27]] rol gerçekten kalıcı mı olmalı.
+
+> [!check] Okundu — 2026-10-19, Batuhan Elmas
+> FR-01 baştan sona okundu. **FR-01.9 dışındaki** her madde olduğu gibi kabul edildi; FR-01.9
+> ikinci okumada itiraza uğradı ve [[Open Questions|Q-27]] olarak açıldı. İngilizce notta
+> `checkedBy` alanı ve gerekçeli not var.
 
 ### FR-02 — Roller ve yetkilendirme
 
@@ -1122,6 +1131,7 @@ denetim kaydı yazılır.
 | [[Open Questions\|Q-24]] | Dosya saklama süresi (A-07) | FR-13 |
 | [[Open Questions\|Q-25]] | Reddedilen deneme sonucunun akıbeti (A-08) | FR-15 |
 | [[Open Questions\|Q-26]] | Bildirim teslim mekanizması / müşterinin teknik planıyla çelişkiler | FR-16 |
+| [[Open Questions\|Q-27]] | Rol hayat boyu sabit mi kalmalı, yoksa hesap boşken değiştirilebilir mi | FR-01, ADR-0014 |
 
 Cevabı bilinmeyen bir kuralı **kodda uydurma** — [[Open Questions]]'a satır ekle.
 

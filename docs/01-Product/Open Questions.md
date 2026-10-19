@@ -1,7 +1,7 @@
 ---
 title: Open Questions
 status: open
-updated: 2026-10-14
+updated: 2026-10-19
 ---
 
 # Open Questions
@@ -29,6 +29,7 @@ new ones; its open items `A-01`..`A-11` are tracked below with their `A` number 
 | Q-24 | File retention: how long are files kept, what happens on relationship end beyond [[BR-030]], per-coach quota? (A-07) | [[FR-13]] | **open** | kept indefinitely, student access per [[BR-030]] |
 | Q-25 | A rejected mock exam result — can the student correct and resubmit, or is it dead? (A-08) | [[FR-15]] | **open** | rejected is terminal; student enters a new result |
 | Q-26 | The v2 technical plan conflicts with accepted ADRs: single PWA (K-27) vs our Expo mobile app ([[ADR-0009]], [[ADR-0010]]); self-managed JWT + Resend (K-38) vs Clerk ([[ADR-0012]]); Neon/Heroku/R2 hosting; separate `worker` process; repo location (A-10). Which stack decisions stand? | [[Tech Stack]], [[Architecture Overview]] | **open** | existing ADRs stand until explicitly superseded |
+| Q-27 | Is the role really fixed **for life** ([[ADR-0014]])? A day-one mistap is unrecoverable: there is no admin to fix it ([[Open Questions\|Q-18]], v1.1) and deleting the account discards all history ([[ADR-0013]]). **A:** changeable while the account is still *empty* — no links, no content (**recommended**, see the review note on [[ADR-0014]]). **B:** changeable any time, history stays attached to the capacity that created it. **C:** support-only, blocked on Q-18. | [[FR-01]], [[T-017]] | **open** | [[ADR-0014]] stands — role fixed at onboarding, and `role` keeps being written in exactly one place |
 
 ## Answered
 
@@ -39,7 +40,7 @@ new ones; its open items `A-01`..`A-11` are tracked below with their `A` number 
 | Q-05 | Parent sharing granularity | 2026-10 (K-29) | **Three switches** per coach–student link: progress / exams / finance, all off by default; a closed area is invisible. See [[FR-20]]. |
 | Q-06 | File formats, size | 2026-10 (K-32) | **PDF only, 25 MB, coach → student only**, content-based validation. Retention still open → Q-24. |
 | Q-07 | Access after a relationship ends | 2026-10 (K-18) | **Coach: read-only, no new content. Student: keeps shared files and recommendations.** Now [[BR-030]]. |
-| Q-08 | Can one person hold several roles? | 2026-09-13 | **One role per account**, fixed at onboarding — [[ADR-0014]]. |
+| Q-08 | Can one person hold several roles? | 2026-09-13 | **One role per account**, fixed at onboarding — [[ADR-0014]]. *"One role" stands; **"fixed for life" reopened 2026-10-19 as Q-27**.* |
 | Q-09 | Exam types and net formulas | 2026-10 (K-30, K-31) | **Net auto-calculated per exam type** (YKS ÷4, LGS ÷3), score manual, per-type variable subject structure. See [[FR-15]], [[BR-018]], [[BR-019]]. |
 | Q-11 | Notification channels, quiet hours | 2026-10 (K-35) | **In-app + push; task-time reminders respect student-set quiet hours; coach messages always deliver.** Delivery mechanism depends on Q-26. |
 | Q-15 | Recurring schedule entries | 2026-10 (K-36) | **Moot in v1**: the editable grid is deferred; school hours are a single setting; the timeline is read-only. See [[FR-11]]. |

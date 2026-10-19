@@ -8,9 +8,37 @@ date: 2026-09-13
 
 # ADR-0014 — One role per account, fixed at onboarding
 
+> [!warning] The "fixed for life" half is under review — [[Open Questions|Q-27]]
+> Raised 2026-10-19 while reading [[FR-01]]: *one role per account* is not in dispute, but making
+> it **permanent** is too strong a bet for day one. The cost falls entirely on the user who taps
+> the wrong button in their first thirty seconds, and this decision's own "Consequences" section
+> already calls that unrecoverable.
+>
+> **Until Q-27 is decided, this ADR stands as written** — including the rule that keeps it cheap to
+> relax: `role` is written in exactly one place.
+>
+> **Recommended relaxation (option A in Q-27):** allow a role change while the account is still
+> **empty** — no coach–student or parent–student links, no content, nothing earned. That is
+> surgical, because it targets precisely the failure this ADR accepts (a day-one mistap) and
+> nothing else:
+>
+> - The hard question the "One role, changeable later" alternative was rejected on — *what happens
+>   to work, links and earnings created under the old role?* — **does not arise**, because an empty
+>   account has none.
+> - `role` stays a single column; no "acting as" dimension, no switcher.
+> - Enforcement stays in one place: `completeOnboarding` already gates on
+>   `updateMany … where onboardedAt: null` and answers 409. The relaxed rule is the same write with
+>   an emptiness check instead of the `onboardedAt` check.
+> - It does not depend on [[Open Questions|Q-18]] (no admin role until v1.1) — it is self-service.
+>
+> What it still needs before it can supersede this ADR: agreement on what counts as "empty", and an
+> audit row when the role changes ([[FR-21]] — already a [[T-017]] follow-up). Options B and C are
+> in [[Open Questions|Q-27]].
+
 ## Status
 
-accepted — answers [[Open Questions|Q-08]]
+accepted — answers [[Open Questions|Q-08]]; the permanence half reopened as
+[[Open Questions|Q-27]] (2026-10-19)
 
 ## Context
 
@@ -67,11 +95,16 @@ version is the smaller bet.
 The one thing that keeps this option open: **`role` is written in exactly one place.** Keep it that
 way.
 
+That reversibility is now being spent rather than merely held: [[Open Questions|Q-27]] asks whether
+permanence should be relaxed before launch instead of after. Note that the two moves are
+independent — letting a user *correct* their single role is not the same change as letting an
+account *hold* several, and only the second one touches the policy layer.
+
 ## Alternatives considered
 
 | Option | Why not |
 | --- | --- |
-| One role, changeable later | avoids the day-one trap, but nothing answers what happens to work, links and earnings created under the old role — and an audit trail for it ([[FR-21]]) does not exist yet |
+| One role, changeable later | avoids the day-one trap, but nothing answers what happens to work, links and earnings created under the old role — and an audit trail for it ([[FR-21]]) does not exist yet. **Reopened as [[Open Questions\|Q-27]]:** restricting the change to an *empty* account sidesteps the unanswered part entirely |
 | Several roles per account | truest to the domain, but role stops being a column, every policy check gains an "acting as" dimension, and the UI needs a switcher. Revisit when there is evidence people actually need it |
 | Infer role from the first relationship | magical and ambiguous — a person with no links yet has no role, and the landing state in [[FR-01|FR-01.7]] depends on knowing it |
 

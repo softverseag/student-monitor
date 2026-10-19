@@ -15,11 +15,17 @@ checkedBy:
 
 > **Source:** catalog §3.1, §3.2 · **Rules:** [[BR-001]]
 
-> [!check] Reviewed and approved — 2026-10-19, Batuhan Elmas
-> Read in full against the Turkish retelling in [[Gereksinimler (TR)]] (`### FR-01`). The
-> requirements below are **accepted as they stand**; no wording or scope change requested.
+> [!check] Reviewed — 2026-10-19, Batuhan Elmas · approved with one reservation
+> Read in full against the Turkish retelling in [[Gereksinimler (TR)]] (`### FR-01`). Every
+> requirement is accepted as it stands **except FR-01.9**.
 >
-> The two open questions ([[Open Questions|Q-12]] minor consent under KVKK,
+> **Reservation on FR-01.9 — the role being fixed for life is too strong a bet for launch.** Raised
+> on a second pass, after the first read-through had already signed the note off. Tracked as
+> [[Open Questions|Q-27]], with the reasoning and the recommended relaxation on [[ADR-0014]]. The
+> requirement is **not** changed here and the shipped behaviour is not changed: the ADR stands
+> until it is superseded.
+>
+> The two pre-existing open questions ([[Open Questions|Q-12]] minor consent under KVKK,
 > [[Open Questions|Q-19]] a grace period before account deletion) are **acknowledged and
 > deliberately left open** — we will come back to them and settle them later. Neither blocks
 > FR-01 as specified, and neither changes anything already implemented
@@ -49,6 +55,9 @@ and, where required, approved.
   the historical record is anonymised and kept, never destroyed ([[BR-025]], [[ADR-0013]]).
 - **FR-01.9** After registering, a user chooses their role and a display name once. The role is
   fixed for the life of the account and cannot be changed afterwards ([[ADR-0014]]).
+  **Under review — [[Open Questions|Q-27]]:** *one role per account* is settled, but permanence is
+  not. The likely relaxation is a role change while the account is still empty; until it is
+  decided, this requirement stands as written and ships as implemented.
 
 ## Acceptance criteria
 
@@ -83,6 +92,8 @@ guessed at in code.
 
 - [[Open Questions|Q-12]] — who consents for a minor's account under KVKK?
 - [[Open Questions|Q-19]] — should account deletion have a grace period rather than being immediate?
+- [[Open Questions|Q-27]] — should FR-01.9's role really be permanent, or changeable while the
+  account is still empty? Raised in the 2026-10-19 review; [[ADR-0014]] stands meanwhile.
 
 ## Related
 
@@ -90,6 +101,9 @@ guessed at in code.
 
 ## Change log
 
+- 2026-10-19 — FR-01.9's permanence challenged on a second pass and reopened as
+  [[Open Questions|Q-27]]; the requirement and the shipped behaviour are unchanged, [[ADR-0014]]
+  carries the reasoning and the recommended relaxation
 - 2026-10-19 — reviewed and approved by Batuhan Elmas (`checkedBy`); requirements unchanged, Q-12
   and Q-19 left open on purpose
 - 2026-09-13 — FR-01.9 (onboarding) added and implemented; Q-08 answered by [[ADR-0014]]; [[T-017]]

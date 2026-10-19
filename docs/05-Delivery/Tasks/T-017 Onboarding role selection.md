@@ -47,7 +47,9 @@ just submitted. A layout reads our database, which is correct the instant the wr
   migration. Onboarding is the natural place to ask for it eventually.
 - **No `PATCH /api/me`** yet, so a display name cannot be edited after onboarding ([[FR-01|FR-01.4]]).
 - **No way back from a wrong choice.** The form warns, but a user who picks the wrong role needs an
-  admin who does not exist ([[Open Questions|Q-18]]). Flagged in [[ADR-0014]].
+  admin who does not exist ([[Open Questions|Q-18]]). Flagged in [[ADR-0014]] — and **reopened on
+  2026-10-19 as [[Open Questions|Q-27]]**, which asks whether this gap should be closed before
+  launch rather than accepted.
 - **Web and mobile ship untested** — neither app has a test runner.
 
 ## The API-client debt
@@ -65,5 +67,9 @@ should be the next task**, before [[T-006]] adds a third caller.
 - [ ] `@sm/core` + `@sm/api`, replacing both hand-rolled clients
 - [x] Zod schema for onboarding in `@sm/core`, replacing `parseOnboardingInput` — [[T-018]]
 - [ ] `PATCH /api/me` for display-name edits ([[FR-01|FR-01.4]])
-- [ ] Audit row when a role is set ([[FR-21]])
+- [ ] Audit row when a role is set ([[FR-21]]) — a prerequisite for [[Open Questions|Q-27]] if the
+      role becomes changeable
+- [ ] Depending on [[Open Questions|Q-27]]: let a user change their role while the account is still
+      empty. Same write path as `completeOnboarding`, emptiness check in place of the
+      `onboardedAt: null` check — do not add a second writer of `role`
 - [ ] Route users toward the right client after onboarding (a coach on mobile, a parent on web)
