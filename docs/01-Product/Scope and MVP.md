@@ -109,4 +109,7 @@ frictionless on a phone, nothing else matters.
 
 ## Related
 
+[[Kapsam ve MVP (TR)]] — this note in Turkish, for client conversations. A companion, not a source:
+where the two disagree, this one wins.
+
 [[Roadmap]] · [[Milestones]] · [[Requirements Index]] · [[Requirements v2 Delta]]

@@ -73,6 +73,7 @@ kasa kazanır; iki not birbiriyle çelişirse zincirde **aşağıda** olan yanl�
 | KVKK, reşit olmayan kullanıcı, veri saklama | [[Security and Privacy]] | `## KVKK`, `## Age and consent` |
 | Kullanılmayan teknolojiler ve sebepleri | [[Tech Stack]] | `## Deliberately not used in v1` |
 | Bu özellik v1'de var mı | [[Scope and MVP]] | `## v1 — in scope`, `## Deferred to v1.1`, `## Explicitly out of scope` |
+| Aynısı Türkçe | [[Kapsam ve MVP (TR)]] | `## v1 — kapsam içinde`, `## v1.1'e ertelenenler`, `## Tamamen kapsam dışı` |
 | Bildiğimiz ama kabul ettiğimiz riskler | [[Scope and MVP]] | `## Accepted risks (v2 §23.2)` |
 | Hangi uygulama kimin için | [[Scope and MVP]] | `## Platform split for v1` |
 | Hangi işin sırası ne, neden o sırada | [[Roadmap]] | `## Why this order` |
