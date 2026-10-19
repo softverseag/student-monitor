@@ -19,15 +19,20 @@ updated: 2026-09-12
 
 | Needed by | Questions |
 | --- | --- |
-| **M1** | Q-08 multi-role, Q-12 consent for minors, Q-07 access after a link ends |
+| **M1** | **Q-27 role permanence** → decide from [[Q-27 Role Permanence - Decision Brief]] · Q-12 consent for minors *(deadline: before the first real user)* · ~~Q-08 multi-role~~ and ~~Q-07 access after a link ends~~ — both answered |
 | **M3** | Q-01 Filiz thresholds, Q-11 notification channels and quiet hours |
 | **M5** | Q-03 / Q-04 cancellation and no-show billing |
 | **M6** | Q-05 parent sharing granularity |
 | **M7** | Q-06 file limits, Q-09 exam types, Q-16 exam reject status |
 | **M8** | Q-02 monthly formula, Q-10 subscription packages |
 
+> [!warning] The M3–M8 rows below predate the October 2026 update
+> The v2 decision log answered ten of these (Q-01, Q-03, Q-05, Q-06, Q-09, Q-11, Q-16 among them).
+> [[Open Questions]] is the current list; this table needs one pass to match it.
+
 ## Steps
 
+- [ ] Re-cut this table against [[Open Questions]] — several rows are already answered
 - [ ] Group the questions into one or two client conversations, in milestone order
 - [ ] Record answers in [[Open Questions]] with the date and who decided
 - [ ] Update the affected FR notes and open follow-up tasks

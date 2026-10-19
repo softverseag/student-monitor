@@ -32,8 +32,11 @@ date: 2026-09-13
 > - It does not depend on [[Open Questions|Q-18]] (no admin role until v1.1) — it is self-service.
 >
 > What it still needs before it can supersede this ADR: agreement on what counts as "empty", and an
-> audit row when the role changes ([[FR-21]] — already a [[T-017]] follow-up). Options B and C are
-> in [[Open Questions|Q-27]].
+> audit row when the role changes ([[FR-21]] — already a [[T-017]] follow-up).
+>
+> **All four options, their costs and the case for each are written up in
+> [[Q-27 Role Permanence - Decision Brief]]** — one page, awaiting a joint decision. Read that
+> rather than reconstructing the argument from here.
 
 ## Status
 

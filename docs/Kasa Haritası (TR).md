@@ -116,6 +116,7 @@ tablosu) · `## Current state` (nerede olduğumuzun checkbox listesi).
 | [[Personas]] | Üç kişi (koç Elif, öğrenci Mert, veli Ayşe) ve `## Access at a glance` erişim özeti |
 | [[Scope and MVP]] | **Kapsam kesme çizgisi.** Çekirdek döngü · v1'de olanlar · v1.1'e ertelenenler · tamamen kapsam dışı · kabul edilen riskler · platform dağılımı · kesme ilkeleri |
 | [[Open Questions]] | Cevabı beklenen `Q-xx` kararları, her birinin neyi blokladığı ve **o ana kadar ne yapacağımız**; `## Answered` kapanmış olanlar |
+| [[Q-27 Role Permanence - Decision Brief]] | Tek bir açık sorunun tam dosyası: durum, neyin tartışıldığı, dört seçenek ve maliyetleri, öneri ve karşı argümanı, seçilirse çıkacak iş. Sonunda doldurulacak bir `## Decision` bloğu var. Bir `Q-xx` karar masasına geldiğinde kullanılacak kalıp |
 | [[Requirements v2 Delta]] | Ekim 2026 güncellemesinin özeti: başlık değişiklik (dispute modeli) · kural değişiklikleri · yeni FR'lar · güncellenen FR'lar · açılan/kapanan sorular · **mimariyle çelişenler** |
 | `Source - Requirement Catalog (TR)` | Müşterinin ilk kataloğu, 37 numaralı bölüm. **Donmuş, asla düzenlenmez.** |
 | `Source - Requirements v2 (TR)` | Ekim 2026 gereksinim seti, 23 bölüm. Donmuş. |

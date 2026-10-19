@@ -21,8 +21,9 @@ checkedBy:
 >
 > **Reservation on FR-01.9 — the role being fixed for life is too strong a bet for launch.** Raised
 > on a second pass, after the first read-through had already signed the note off. Tracked as
-> [[Open Questions|Q-27]], with the reasoning and the recommended relaxation on [[ADR-0014]]. The
-> requirement is **not** changed here and the shipped behaviour is not changed: the ADR stands
+> [[Open Questions|Q-27]]; the full argument, the four options and their costs are in
+> **[[Q-27 Role Permanence - Decision Brief]]**, awaiting a joint decision with @bursadev. The
+> requirement is **not** changed here and the shipped behaviour is not changed: [[ADR-0014]] stands
 > until it is superseded.
 >
 > The two pre-existing open questions ([[Open Questions|Q-12]] minor consent under KVKK,
@@ -93,7 +94,8 @@ guessed at in code.
 - [[Open Questions|Q-12]] — who consents for a minor's account under KVKK?
 - [[Open Questions|Q-19]] — should account deletion have a grace period rather than being immediate?
 - [[Open Questions|Q-27]] — should FR-01.9's role really be permanent, or changeable while the
-  account is still empty? Raised in the 2026-10-19 review; [[ADR-0014]] stands meanwhile.
+  account is still empty? Raised in the 2026-10-19 review; [[ADR-0014]] stands meanwhile. Decide
+  from [[Q-27 Role Permanence - Decision Brief]].
 
 ## Related
 

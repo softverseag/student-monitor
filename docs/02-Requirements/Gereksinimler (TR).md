@@ -97,7 +97,9 @@ kesinleşir.
 - **FR-01.9** Kayıttan sonra rol bir kez seçilir ve **hayat boyu değişmez** ([[ADR-0014]]).
   **Tartışmaya açıldı — [[Open Questions|Q-27]]:** "hesap başına tek rol" tamam, ama **kalıcı
   olması** lansman için fazla iddialı. Muhtemel esnetme: hesap **boşken** (hiç bağ, hiç içerik yok)
-  rol değiştirilebilsin. Karar gelene kadar madde yazıldığı gibi geçerli.
+  rol değiştirilebilsin. Dört seçenek, maliyetleri ve her birinin savunması tek sayfada:
+  [[Q-27 Role Permanence - Decision Brief]] — karar ortakla birlikte verilecek. Karar gelene kadar
+  madde yazıldığı gibi geçerli.
 
 **Dikkat.** Şifre sıfırlama bir e-postanın kayıtlı olup olmadığını sızdırmamalı. Silinmiş bir
 hesabın token'ı çalışmamalı — sessizce yeniden yaratılmamalı.
