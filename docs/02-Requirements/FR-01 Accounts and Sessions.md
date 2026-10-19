@@ -6,12 +6,26 @@ area: identity
 source: "§3.1, §3.2"
 status: in-progress
 priority: must
-updated: 2026-09-13
+updated: 2026-10-19
+checkedBy:
+  - Batuhan Elmas
 ---
 
 # FR-01 — Accounts and Sessions
 
 > **Source:** catalog §3.1, §3.2 · **Rules:** [[BR-001]]
+
+> [!check] Reviewed and approved — 2026-10-19, Batuhan Elmas
+> Read in full against the Turkish retelling in [[Gereksinimler (TR)]] (`### FR-01`). The
+> requirements below are **accepted as they stand**; no wording or scope change requested.
+>
+> The two open questions ([[Open Questions|Q-12]] minor consent under KVKK,
+> [[Open Questions|Q-19]] a grace period before account deletion) are **acknowledged and
+> deliberately left open** — we will come back to them and settle them later. Neither blocks
+> FR-01 as specified, and neither changes anything already implemented
+> ([[ADR-0013]], [[ADR-0014]]).
+>
+> First note to use the `checkedBy` field — see [[Vault Guide]].
 
 ## Intent
 
@@ -64,6 +78,9 @@ user's password. See [[Authorization Matrix]].
 
 ## Open questions
 
+Both reviewed on 2026-10-19 and consciously left open — to be picked up in a later pass, not
+guessed at in code.
+
 - [[Open Questions|Q-12]] — who consents for a minor's account under KVKK?
 - [[Open Questions|Q-19]] — should account deletion have a grace period rather than being immediate?
 
@@ -73,6 +90,8 @@ user's password. See [[Authorization Matrix]].
 
 ## Change log
 
+- 2026-10-19 — reviewed and approved by Batuhan Elmas (`checkedBy`); requirements unchanged, Q-12
+  and Q-19 left open on purpose
 - 2026-09-13 — FR-01.9 (onboarding) added and implemented; Q-08 answered by [[ADR-0014]]; [[T-017]]
 - 2026-09-13 — FR-01.8 (account deletion) added and implemented; see [[ADR-0013]], [[T-016]]
 - 2026-09-12 — created from catalog §3.1–3.2

@@ -53,6 +53,22 @@ Reference them from code and commits: `feat(tasks): approval flow (FR-06.5, BR-0
 
 **ADRs** — `proposed`, `accepted`, `superseded by `ADR-xxxx``.
 
+## `checkedBy` — who has read and approved a note
+
+A list of people who have read the note **in full** and approve it as it stands. It is orthogonal to
+`status:`: `status` says how far the work has got, `checkedBy` says who has actually signed off on
+the text. Present on FR / BR / ADR / Task notes.
+
+- Add your name only after reading the whole note, not after skimming or after editing one line.
+- A name here means "I accept these requirements". It does **not** mean the open questions are
+  answered — list those under `## Open questions` and say in the `## Change log` that they were
+  consciously left open.
+- Record the review in the `## Change log` on the same day, so the reason survives even if the
+  frontmatter is later rewritten. A visible `> [!check]` callout under the source line is the
+  friendly version for whoever opens the note next.
+- Reviews do not expire, but they do go stale: if a later change alters what the note asks for,
+  clear the names and get it re-read.
+
 ## Adding a note
 
 Copy from `00-Meta/Templates/`:
