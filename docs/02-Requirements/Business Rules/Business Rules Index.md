@@ -73,4 +73,7 @@ Each of these deserves a test that fails loudly, written before the feature.
 
 ## Related
 
+[[Gereksinimler (TR)]] — all 31 rules restated in Turkish (`## İş kuralları`), alongside the 25 FRs.
+A companion for client conversations; these notes remain the source.
+
 [[Requirements Index]] · [[Authorization Matrix]] · [[Source - Requirement Catalog (TR)]]

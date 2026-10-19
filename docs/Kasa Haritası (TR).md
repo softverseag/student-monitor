@@ -48,6 +48,8 @@ kasa kazanır; iki not birbiriyle çelişirse zincirde **aşağıda** olan yanl�
 | Arıyorsun | Not | Başlık |
 | --- | --- | --- |
 | Bir özelliğin ne yapması gerektiği, madde madde | [[Requirements Index]] → ilgili `FR-xx` | `## Requirements` |
+| Aynı şey ama Türkçe, tek sayfada | [[Gereksinimler (TR)]] | ilgili `### FR-xx` başlığı |
+| 31 iş kuralının Türkçesi | [[Gereksinimler (TR)]] | `# Bölüm 2 — İş kuralları` |
 | "Bitti" sayılma ölçütü | ilgili `FR-xx` | `## Acceptance criteria` |
 | Bir özellikte kimin yetkisi var | ilgili `FR-xx` | `## Authorization` / `## Requirements` |
 | Bir özelliğin v1'de olmayan kısmı | ilgili `FR-xx` | `## Out of scope (v1)` |
@@ -150,6 +152,10 @@ Tam liste ve durumları: [[Requirements Index]].
 `work`, `lessons`, `schedule`, `resources`, `exams`, `money`, `authorization`, `identity`, `platform`.
 Giriş: [[Business Rules Index]] — oradaki `## The five that will bite us` en sık ihlal edilecek beşini
 ayırıyor.
+
+**Türkçe karşılığı:** [[Gereksinimler (TR)]] bu klasörün tamamını tek sayfada anlatıyor — 25 FR'ın
+her biri kendi `### FR-xx` başlığında, 31 kural `# Bölüm 2` altında, sonda da tüm `Q-xx`'lerin
+listesi. Müşteriyle spec'i konuşurken açılacak not bu; karar yine İngilizce notlarda.
 
 ### `03-Domain` — kavramlar ve formüller
 

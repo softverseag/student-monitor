@@ -26,6 +26,8 @@ Coaching platform for Turkish exam preparation (YKS / LGS), used alongside regul
 - [[Open Questions]] — decisions the client still owes us
 - [[Requirements Index]] — all 25 functional areas
 - [[Business Rules Index]] — the 31 hard rules (İK-001..İK-031)
+- [[Gereksinimler (TR)]] — **all 25 requirements and 31 rules on one page, in Turkish**. The
+  companion to [[Kasa Haritası (TR)]]: use it to talk the spec through with the client
 
 ## Map
 

@@ -11,6 +11,11 @@ updated: 2026-09-12
   [[Source - Requirement Catalog (TR)]].
 - **English** — every note in this vault, all code identifiers, commits, tests.
 - [[Glossary]] is the bridge. If a Turkish term has no entry there, add one before using it in code.
+- **Two deliberate exceptions**, both marked `(TR)` in the filename and both *retellings* that decide
+  nothing: [[Kasa Haritası (TR)]] (where everything lives) and [[Gereksinimler (TR)]] (all 25 FRs and
+  31 BRs on one page). They exist so the spec can be walked through with a Turkish-speaking client.
+  Where such a note disagrees with the note it summarises, **the summarised note wins** and the
+  `(TR)` note is out of date. Do not add a third without the same justification.
 
 ## ID scheme
 

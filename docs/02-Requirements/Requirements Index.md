@@ -122,4 +122,7 @@ Use this to check nothing from the client's first document got lost.
 
 ## Related
 
+[[Gereksinimler (TR)]] — this whole folder (all 25 FRs and 31 BRs) retold on one page in Turkish,
+for client conversations. It is a companion, not a source: where the two disagree, these notes win.
+
 [[Business Rules Index]] · [[Domain Model]] · [[Scope and MVP]] · [[Roadmap]]
