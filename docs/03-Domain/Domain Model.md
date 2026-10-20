@@ -39,7 +39,7 @@ caller through an **active link**, they cannot see it ([[BR-024]]).
 | Concept | Notes |
 | --- | --- |
 | `User` | credentials, contact, role |
-| `Coach` / `Student` / `Parent` | role profiles; `Student` holds `gradeLevel` and exam track ([[FR-03]]) |
+| `Coach` / `Student` / `Parent` | role profiles; `Student` holds `gradeLevel` (5–12, `MEZUN`) and `examTrack` (fixed list, includes `BELIRSIZ`) — neither is auto-updated ([[FR-03]]) |
 
 One role per user in v1 ([[Open Questions|Q-08]]).
 

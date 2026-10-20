@@ -151,12 +151,29 @@ ne vermeli, hangi kaynak mantıklı.
 - Sınıf seviyesi profilde tutulur; aktif bağlı her koç görebilir, hem öğrenci hem bağlı koç
   güncelleyebilir.
 - Görev, ödev, ders, kaynak ve denemelere **bağlam olarak** verilir — o kayıtlara kopyalanmaz.
-- Profil ayrıca **hazırlanılan sınav alanını** tutar (TYT/AYT alanı, LGS) — sınıf tek başına bunu
-  belirlemiyor.
+- Profil ayrıca **hazırlanılan sınav alanını** tutar — sınıf tek başına bunu belirlemiyor. Liste
+  sabit (20 Ekim 2026'da karara bağlandı): `LGS` · `YKS – Sayısal` · `YKS – Eşit Ağırlık` ·
+  `YKS – Sözel` · `YKS – Dil` · `Henüz belli değil`.
+- **Sınıf seviyesi asla otomatik güncellenmez** (20 Ekim 2026). Eylülde çalışan bir iş yok, uygulama
+  da sormuyor. Öğrenci veya bağlı koç elle değiştirir.
 
 **Dikkat.** Desteklenecek seviyeler **5–12 ve mezun**. Naif bir 1–12 enum'u, Türkiye'de ciddi bir
 kitle olan mezun adayları dışarıda bırakır. Değerler serbest metin değil, kontrollü liste olmalı —
-yoksa raporda gruplanamaz. Seviye her eylül değişir; sessizce eskimesin, sorarak güncellensin.
+yoksa raporda gruplanamaz.
+
+**Sınav alanı listesi neden böyle.** `Henüz belli değil` gerçek bir durum: 9 ve 10. sınıftaki öğrenci
+genelde alanını seçmemiş olur. Bu değer olmazsa koç formu geçmek için rastgele bir alan işaretler ve
+kimse düzeltmez — kaynak önerisi ([[FR-12]]) ve raporlama bozulur. Etiketler `AYT` değil `YKS` diye
+yazılıyor, çünkü alan seçimi yalnızca AYT'ye ait olsa da TYT'yi her YKS adayı giriyor; `AYT – Sayısal`
+yazmak "TYT burada yok" gibi okunur.
+
+**TYT ile AYT ayrımı profilde değil, deneme kaydında.** Net formülü sınav tipine göre değişiyor
+([[FR-15]], [[BR-019]]). Profil sadece "hangi AYT alanı" sorusunu cevaplıyor.
+
+**Otomatik güncellememenin bedeli — kabul edildi.** Her eylül bir grup öğrenci, biri düzeltene kadar
+geçen yılki sınıfıyla görünecek. Kabul edildi, çünkü alternatifi olan otomatik bir sınıf artırma tam
+da en kritik yerde yanlış tahmin ediyor: 12. sınıftaki öğrenci mezun da olabilir, bir yıl daha
+hazırlanabilir de. Koç sınıfı profilde görüyor ve düzeltebiliyor; yani hata görünür ve ucuz.
 
 ## İlişkiler
 

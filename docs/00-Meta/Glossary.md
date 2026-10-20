@@ -17,7 +17,8 @@ The canonical naming source. Code uses the **Code** column, exactly.
 | Koç–Öğrenci İlişkisi | Coach–student relationship | `CoachStudentLink` | many-to-many, endable |
 | Veli–Öğrenci İlişkisi | Parent–student relationship | `ParentStudentLink` | needs coach approval ([[BR-003]]) |
 | Davet kodu | Invite code | `InviteCode` | also link / QR |
-| Sınıf seviyesi | Grade level | `gradeLevel` | e.g. 12 |
+| Sınıf seviyesi | Grade level | `gradeLevel` | 5–12 and `MEZUN`; never auto-updated ([[FR-03]]) |
+| Sınav alanı | Exam track | `examTrack` | `LGS` · `YKS_SAYISAL` · `YKS_ESIT_AGIRLIK` · `YKS_SOZEL` · `YKS_DIL` · `BELIRSIZ` ([[FR-03]]) |
 
 ## Work
 

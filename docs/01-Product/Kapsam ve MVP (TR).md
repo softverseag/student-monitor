@@ -100,11 +100,11 @@ pürüzsüz değilse gerisinin anlamı yok.**
 20 Ekim 2026'da karara bağlandı — [[ADR-0017]]. Tek PWA planı (K-27) reddedildi;
 [[Open Questions|Q-26]]'nın kimlik doğrulama tarafı (Clerk mi, kendi JWT'miz mi) hâlâ açık.
 
-| Uygulama | Kitle | Kapsam |
-| --- | --- | --- |
-| **Mobil** (Expo) | **üç rol de** — koç, öğrenci, veli | ürünün kendisi. Tam öğrenci ve koç deneyimi; velinin tek salt-okunur ekranı |
-| **Web** (Next.js) | **yalnızca koç** | uygulamanın tanıtım sitesi + girişli koç portalı; var olma sebebi çizelge hazırlamanın ([[FR-23]]) klavye ve büyük ekran istemesi |
-| **API** (NestJS) | hepsi | tek backend, **tüm yetkilendirme burada** ([[BR-024]]) |
+| Uygulama          | Kitle                              | Kapsam                                                                                                                            |
+| ----------------- | ---------------------------------- | --------------------------------------------------------------------------------------------------------------------------------- |
+| **Mobil** (Expo)  | **üç rol de** — koç, öğrenci, veli | ürünün kendisi. Tam öğrenci ve koç deneyimi; velinin tek salt-okunur ekranı                                                       |
+| **Web** (Next.js) | **yalnızca koç**                   | uygulamanın tanıtım sitesi + girişli koç portalı; var olma sebebi çizelge hazırlamanın ([[FR-23]]) klavye ve büyük ekran istemesi |
+| **API** (NestJS)  | hepsi                              | tek backend, **tüm yetkilendirme burada** ([[BR-024]])                                                                            |
 
 Kolay yanlış anlaşılan iki sonuç:
 
