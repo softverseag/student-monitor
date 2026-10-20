@@ -1,7 +1,7 @@
 ---
 title: Pricing and Earnings
 status: draft
-updated: 2026-10-14
+updated: 2026-10-20
 ---
 
 # Pricing and Earnings (Fiyat · Puantaj · Hakediş · Cari Hesap)
@@ -12,6 +12,11 @@ column and a SUM" — which would break [[BR-023]] on the first price change.
 The whole area is the **opt-in finance module**: off by default, severable, truly deletable
 ([[BR-029]], [[FR-25]]). Amounts never reach logs, notification bodies, analytics or search
 indexes (K-41).
+
+> [!warning] Not built in v1
+> The finance module was deferred to **v1.1** on 2026-10-20 ([[Scope and MVP]]) — legal/KVKK caution
+> and no urgent coach need. This note stays as the design of record so the build does not start from
+> a blank page; nothing here ships in v1.
 
 ## The concepts
 

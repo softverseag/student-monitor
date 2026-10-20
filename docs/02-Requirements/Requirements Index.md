@@ -1,6 +1,6 @@
 ---
 title: Requirements Index
-updated: 2026-10-14
+updated: 2026-10-20
 ---
 
 # Requirements Index
@@ -37,17 +37,19 @@ SORT id ASC
 | [[FR-15]] | Mock Exam Tracking | §22–§24 · v2 §10 | must | ✅ |
 | [[FR-16]] | Notifications | §25, §26, §31 · v2 §15 | must | ✅ |
 | [[FR-17]] | Coach Student Monitoring | §27 | must | ✅ |
-| [[FR-18]] | Student Pricing | §28 | must | ✅ |
-| [[FR-19]] | Timesheet and Earnings | §29 | must | ✅ |
+| [[FR-18]] | Student Pricing | §28 | must | ⏳ v1.1 |
+| [[FR-19]] | Timesheet and Earnings | §29 | must | ⏳ v1.1 |
 | [[FR-20]] | Parent Information Access | §30 | must | ✅ |
 | [[FR-21]] | Audit Trail | §34 | must | ✅ |
 | [[FR-22]] | Subscription and Billing | §35 | should | ✅ |
 | [[FR-23]] | Study Plans (Çizelge) | v2 §7 | must | ✅ |
 | [[FR-24]] | School Report Card | v2 §13 | should | ✅ |
-| [[FR-25]] | Finance Module and Ledger | v2 §16 | must | ✅ |
+| [[FR-25]] | Finance Module and Ledger | v2 §16 | must | ⏳ v1.1 |
 
 ✅ in v1 · ⏳ deferred — see [[Scope and MVP]]. The v1 cut changed substantially in v2: exams,
-resources and files moved *into* v1, the editable schedule grid moved *out*.
+resources and files moved *into* v1, the editable schedule grid moved *out*. On 2026-10-20 the whole
+**finance area left v1** ([[FR-18]], [[FR-19]], [[FR-25]]); the notes stay specified, only the build
+waits.
 
 ## v2 section → requirement map
 

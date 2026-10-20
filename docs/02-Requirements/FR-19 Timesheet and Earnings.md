@@ -4,15 +4,21 @@ aliases: [FR-19]
 title: Timesheet and Earnings
 area: money
 source: "§29 · v2 §16.3"
-status: specified
+status: deferred
 priority: must
-updated: 2026-10-14
+updated: 2026-10-20
 ---
 
 # FR-19 — Timesheet (Puantaj) and Earnings (Hakediş)
 
 > **Source:** catalog §29 · [[Source - Requirements v2 (TR)|v2]] §16.3 · **Decisions:** K-05 ·
 > **Rules:** [[BR-021]], [[BR-022]], [[BR-023]], [[BR-028]], [[BR-029]]
+
+> [!warning] Deferred to v1.1 — not built in v1
+> The product owner took the **entire finance module out of v1** on 2026-10-20: handling other
+> people's money carries legal and KVKK exposure worth slowing down for, and coaches already track
+> fees their own way, so it is not urgent. v1 proves the coaching loop instead. This note stays
+> **specified and unimplemented** — the thinking is done, the build is not. See [[Scope and MVP]].
 
 ## Intent
 
@@ -97,6 +103,7 @@ Lesson (ATTENDED)  ──►  TimesheetEntry  ──►  Earning
 
 ## Change log
 
+- 2026-10-20 — **deferred to v1.1** with the rest of the finance module (legal/KVKK caution, no urgent coach need). Scope decision, not a requirement change — the requirements below still stand. See [[Scope and MVP]].
 - 2026-10-14 — v2 integration: earnings source per price model (K-05), per-participant group rows
   ([[BR-028]]), cancellation billing decided, no-show billing per-coach, gated behind the finance
   module

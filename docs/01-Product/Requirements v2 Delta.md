@@ -75,11 +75,12 @@ Details: [[Open Questions]].
 ## Conflicts with the existing architecture — not silently adopted
 
 The technical plan makes choices that contradict accepted ADRs. Per our working rule, **existing
-ADRs stand until explicitly superseded**; the conflict is parked as [[Open Questions|Q-26]]:
+ADRs stand until explicitly superseded**; the conflict was parked as [[Open Questions|Q-26]]. The
+platform row closed on 2026-10-20 ([[ADR-0017]]); the rest is still parked:
 
 | v2 plan says | We currently have | Where |
 | --- | --- | --- |
-| Single responsive **PWA**, no store apps (K-27) | Expo mobile app + Next.js web | [[ADR-0009]], [[ADR-0010]], `apps/mobile` |
+| ~~Single responsive **PWA**, no store apps (K-27)~~ **resolved 2026-10-20 — rejected** | Expo mobile app for all three roles + a coach-only web portal | [[ADR-0017]] |
 | Self-managed **JWT** + Resend e-mail (K-38) | **Clerk** identity | [[ADR-0012]] |
 | Neon Postgres, Heroku/Render, Cloudflare R2, separate `worker` process | local Postgres via Docker; deployment undecided | [[Tech Stack]] |
 | Repo `kocluk-app` under `softverseag` or personal account (A-10) | this repo (`student-monitor`) | — |

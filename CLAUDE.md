@@ -11,9 +11,9 @@ Three roles, one shared backend:
 
 | Role | Turkish | What they do |
 | --- | --- | --- |
-| Coach | Koç | Assigns tasks/assignments, schedules lessons, approves mock-exam results, recommends resources, shares files, sets a per-student price, tracks earnings. **The paying customer.** |
+| Coach | Koç | Assigns tasks/assignments, schedules lessons, approves mock-exam results, recommends resources, shares files. Pricing and earnings are **v1.1** (see Scope). **The paying customer.** |
 | Student | Öğrenci | Does the work, submits completion requests, keeps a private schedule, logs mock-exam results, keeps a resource pool. **Free.** |
-| Parent | Veli | Read-only follow-up: progress, attendance, exam development, and the financial side (price + earnings). **Free.** |
+| Parent | Veli | Read-only follow-up: progress, attendance, exam development. The financial side (price + earnings) is **v1.1**. **Free.** |
 
 A student may work with **several coaches at once**. Everything a coach creates belongs to that
 coach and must stay isolated from the student's other coaches.
@@ -73,8 +73,8 @@ Layout:
 
 ```
 apps/backend    NestJS backend
-apps/web        Next.js web app       (coaches, parents)
-apps/mobile     Expo React Native app (students, coach quick actions)
+apps/web        Next.js web app       (marketing site + coach-only portal — ADR-0017)
+apps/mobile     Expo React Native app (the product: coaches, students, parents — ADR-0017)
 packages/core   domain types, enums, Zod schemas, progress + earnings rules   (exists)
 packages/api    axios client, endpoint modules, SWR hooks and cache keys      (not yet)
 packages/config tsconfig bases; Biome config to follow                        (exists)
@@ -258,9 +258,18 @@ These come straight from the client's rules. Each links to a note in
     (FR-08, FR-14, BR-019)
 15. **Task progress and assignment progress are computed separately** and never influence each
     other's Filiz. (BR-005, FR-08)
-16. **Money and finance are an opt-in module.** Default off per coach; everything else must work
-    fully without it. Amounts never appear in logs, notification bodies, analytics events or search
-    indexes. (BR-029, FR-25)
+16. **Money and finance are an opt-in module — and not in v1 at all.** The whole finance area
+    (FR-18, FR-19, FR-25) was deferred to v1.1 on 2026-10-20. Do not build it; do not build around
+    its absence either. When it arrives: default off per coach, everything else works fully without
+    it, and amounts never appear in logs, notification bodies, analytics events or search indexes.
+    (BR-029, FR-25, `docs/01-Product/Scope and MVP.md`)
+
+17. **Mobile is the product; web is a coach-only portal.** All three roles live in the Expo app; the
+    Next.js app is a marketing site plus a signed-in coach portal whose reason to exist is authoring
+    plans on a keyboard. **Nothing is web-only** — every coach feature ships on mobile too. The
+    coach-only web sign-in is a product surface, never an authorization boundary: the API stays
+    role-neutral and relationship-scoped, so never gate data on which client called.
+    (ADR-0017, BR-024)
 
 ## Conventions
 
@@ -288,3 +297,4 @@ These come straight from the client's rules. Each links to a note in
 - Prefer asking in `Open Questions.md` over inventing business rules — several are genuinely still open
   (Filiz thresholds, monthly formula, cancellation billing, subscription packages).
 - Not every requirement will be built. Check `docs/01-Product/Scope and MVP.md` before starting work.
+  Most recently: the finance module and the editable calendar grid are out of v1.

@@ -1,7 +1,7 @@
 ---
 title: Milestones
 status: draft
-updated: 2026-09-12
+updated: 2026-10-20
 ---
 
 # Milestones
@@ -63,7 +63,12 @@ records attendance; the coach cannot see any of the student's other calendar ent
 - Student schedule with multi-slot selection ([[FR-11]])
 - Privacy filtering verified by test ([[BR-014]])
 
-## M5 — Money
+## M5 — Money `[v1.1]`
+
+> [!warning] Out of v1 — deferred 2026-10-20
+> The finance module leaves v1 ([[Scope and MVP]]): legal/KVKK exposure worth slowing down for, and
+> coaches already track fees their own way. The milestone is kept as written so it is ready to pick
+> up; it simply is not in the v1 sequence, and M6 now follows M4.
 
 **Exit:** a coach sets a price, holds four lessons, sees the month's earnings per student and in
 total — then raises the price and watches the past not change.
@@ -75,11 +80,12 @@ total — then raises the price and watches the past not change.
 
 ## M6 — Parent view
 
-**Exit:** a parent logs in and sees exactly the categories the coach opened, including the money,
-and nothing else.
+**Exit:** a parent opens the app and sees exactly the categories the coach opened — and nothing else.
 
-- Coach-controlled visibility switches: progress / exams / finance ([[FR-20]])
-- Parent dashboard: progress, attendance, financial
+- Coach-controlled visibility switches: **progress / exams** in v1; the finance switch ships with
+  M5 in v1.1 ([[FR-20]])
+- Parent surface is **one read-only mobile screen** — progress, attendance, current state. No parent
+  web view ([[ADR-0017]])
 - Coach → parent notifications and templates ([[FR-16]])
 
 ## M7 — Exams, resources, files

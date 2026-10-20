@@ -30,6 +30,7 @@ SORT id ASC
 | [[ADR-0014]] | One role per account, fixed at onboarding | accepted |
 | [[ADR-0015]] | Workspace packages ship compiled output, orchestrated by Turborepo | accepted |
 | [[ADR-0016]] | Mobile runs as a development build, not in Expo Go | accepted |
+| [[ADR-0017]] | Mobile is the product, web is a coach-only portal | accepted |
 
 All of these are reversible except [[ADR-0004]] and [[ADR-0008]], which get baked into historical
 data and are therefore worth arguing about now. [[ADR-0009]] is cheap to reverse on day one and

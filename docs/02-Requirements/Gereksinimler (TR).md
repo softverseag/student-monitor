@@ -1,7 +1,7 @@
 ---
 title: Gereksinimler (TR)
 status: draft
-updated: 2026-10-19
+updated: 2026-10-20
 ---
 
 # Gereksinimler — ne yapacağız, sade Türkçe
@@ -61,14 +61,14 @@ Aşağıda "v2" diye geçen her yer o güncellemeden geliyor.
 | FR-15 | Deneme takibi | zorunlu | ✅ |
 | FR-16 | Bildirimler | zorunlu | ✅ |
 | FR-17 | Koçun öğrenci takibi | zorunlu | ✅ |
-| FR-18 | Öğrenci bazlı fiyatlandırma | zorunlu | ✅ |
-| FR-19 | Puantaj ve hakediş | zorunlu | ✅ |
+| FR-18 | Öğrenci bazlı fiyatlandırma | zorunlu | ⏳ v1.1 |
+| FR-19 | Puantaj ve hakediş | zorunlu | ⏳ v1.1 |
 | FR-20 | Veli bilgi erişimi | zorunlu | ✅ |
 | FR-21 | Denetim kaydı (durum/işlem geçmişi) | zorunlu | ✅ |
 | FR-22 | Abonelik ve ticari model | olmalı | ✅ |
 | FR-23 | Çalışma çizelgeleri (plan) | zorunlu | ✅ |
 | FR-24 | Okul karnesi | olmalı | ✅ |
-| FR-25 | Finans modülü ve cari hesap | zorunlu | ✅ |
+| FR-25 | Finans modülü ve cari hesap | zorunlu | ⏳ v1.1 |
 
 Neredeyse hepsi `specified` durumda: **spec hazır, kod henüz yok.** Gerçek ilerleme
 [[Task Board]]'da görünür, FR'ların status'unda değil. Neyin v1'de olduğu [[Scope and MVP]]'de
@@ -662,9 +662,9 @@ getirmenin en hızlı yolu.
 imkânsızlaşır. Hatırlatmalar altyapı demek: zamanlanmış iş çalıştırıcı + `scheduled_reminder` benzeri
 tablo. Toplu gönderim arka plan işi, istek içi döngü değil.
 
-**Açık.** Teslim mekanizması [[Open Questions|Q-26]]'ya bağlı: müşteri planı PWA üzerinde Web
-Push/VAPID varsayıyor, bu bizim Expo mobil uygulamamızla çakışıyor. Kabul edilmiş risk: iOS'ta web
-push ancak uygulama ana ekrana eklenirse çalışıyor.
+**Karara bağlandı (20 Ekim 2026).** Gerçek bir mobil uygulama çıkarıyoruz ([[ADR-0017]]), bu yüzden
+push **native** — PWA üzerinde Web Push/VAPID değil. "iOS'ta push ancak ana ekrana eklenirse çalışır"
+riski böylece ortadan kalktı; tek PWA planının kaybetmesinin başlıca sebebi de buydu.
 
 ### FR-17 — Koçun öğrenci takibi
 
@@ -687,6 +687,12 @@ Katalog bu gereksinimin belirli bir dashboard tasarımını dayatmadığını a�
 **bilgi**, yerleşim değil.
 
 ## Para
+
+> [!warning] v1.1'e ertelendi — v1'de yapılmıyor
+> **20 Ekim 2026:** finans modülünün tamamı v1'den çıktı. Gerekçe: başkasının parasına dokunmak
+> hukuki ve KVKK riski taşıyor, acele edilmemeli; ayrıca koçlar ücreti zaten kendi usulüyle takip
+> ediyor, acil ihtiyaç değil. v1 bunun yerine koçluk döngüsünü kanıtlıyor. Aşağıdaki üç alan
+> **yazılı ve geçerli**, sadece v1'de kodlanmıyor ([[Kapsam ve MVP (TR)]]).
 
 > Bu üç alanın tamamı **opt-in finans modülünün** içinde ([[FR-25]], [[BR-029]]). Modül kapalıyken
 > hiç fiyat verisi yoktur ve ürünün geri kalanı eksiksiz çalışır.
@@ -821,13 +827,14 @@ işin yürüdüğüne ve paranın hesabının tutulduğuna dair haftalık bir i�
 değil.
 
 - Veli, koçun **kendisine açtığı** ilerleme bilgisini görür.
-- Koç görünürlüğü **tam üç anahtarla** yönetir, koç–öğrenci ilişkisi bazında (K-29):
+- Koç görünürlüğü **tam üç anahtarla** yönetir, koç–öğrenci ilişkisi bazında (K-29). **v1'de
+  bunların ilk ikisi var**; finans anahtarı modülüyle birlikte v1.1'de geliyor:
 
-  | Anahtar | Veliye ne açılır |
-  | --- | --- |
-  | **İlerleme** | haftalık/günlük ilerleme, tamamlanan ve eksik iş, ders sürekliliği, koç notu |
-  | **Denemeler** | onaylı deneme sonuçları ve gelişim ([[BR-017]]) |
-  | **Finans** | ders ücreti, borç, ödenen, bakiye, ders kırılımı — yalnızca koçun finans modülü açıkken |
+  | Anahtar | Veliye ne açılır | v1 |
+  | --- | --- | --- |
+  | **İlerleme** | haftalık/günlük ilerleme, tamamlanan ve eksik iş, ders sürekliliği, koç notu | ✅ |
+  | **Denemeler** | onaylı deneme sonuçları ve gelişim ([[BR-017]]) | ✅ |
+  | **Finans** | ders ücreti, borç, ödenen, bakiye, ders kırılımı — yalnızca koçun finans modülü açıkken | ⏳ v1.1 |
 
   Kapalı anahtar, o alanın **hiç görünmemesi** demek — soluk değil, **yok**.
 - Anahtarlardan bağımsız olarak veli **asla** şunları görmez: görev/ödev detayları, öğrencinin
@@ -1138,7 +1145,7 @@ denetim kaydı yazılır.
 | [[Open Questions\|Q-23]] | İki koç aynı öğrenciye aynı saati verebilir mi (A-05) | FR-09 |
 | [[Open Questions\|Q-24]] | Dosya saklama süresi (A-07) | FR-13 |
 | [[Open Questions\|Q-25]] | Reddedilen deneme sonucunun akıbeti (A-08) | FR-15 |
-| [[Open Questions\|Q-26]] | Bildirim teslim mekanizması / müşterinin teknik planıyla çelişkiler | FR-16 |
+| [[Open Questions\|Q-26]] | Müşterinin teknik planıyla çelişkiler — **platform tarafı kapandı** ([[ADR-0017]]), kimlik doğrulama ve barındırma tarafı açık | FR-16 |
 | [[Open Questions\|Q-27]] | Rol hayat boyu sabit mi kalmalı, yoksa hesap boşken değiştirilebilir mi | FR-01, ADR-0014 |
 
 Cevabı bilinmeyen bir kuralı **kodda uydurma** — [[Open Questions]]'a satır ekle.

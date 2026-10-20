@@ -4,15 +4,21 @@ aliases: [FR-25]
 title: Finance Module and Ledger
 area: money
 source: "v2 §16"
-status: specified
+status: deferred
 priority: must
-updated: 2026-10-14
+updated: 2026-10-20
 ---
 
 # FR-25 — Finance Module and Ledger (Cari Hesap)
 
 > **Source:** [[Source - Requirements v2 (TR)|v2]] §16 · **Decisions:** K-01, K-06–K-09, K-39, K-41 ·
 > **Rules:** [[BR-022]], [[BR-029]]
+
+> [!warning] Deferred to v1.1 — not built in v1
+> The product owner took the **entire finance module out of v1** on 2026-10-20: handling other
+> people's money carries legal and KVKK exposure worth slowing down for, and coaches already track
+> fees their own way, so it is not urgent. v1 proves the coaching loop instead. This note stays
+> **specified and unimplemented** — the thinking is done, the build is not. See [[Scope and MVP]].
 
 ## Intent
 
@@ -90,5 +96,6 @@ deletable** ([[BR-029]]): a scared coach can still use the rest of the product.
 
 ## Change log
 
+- 2026-10-20 — **deferred to v1.1** with the rest of the finance module (legal/KVKK caution, no urgent coach need). Scope decision, not a requirement change — the requirements below still stand. See [[Scope and MVP]].
 - 2026-10-14 — created from v2 §16 (ledger, module opt-in, encryption posture are new in the
   October 2026 requirement set)

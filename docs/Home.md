@@ -62,6 +62,7 @@ flowchart LR
 - [x] October 2026 requirement update (v2) integrated → [[Requirements v2 Delta]]
 - [ ] Roadmap/milestones reconciled with the v2 scope and build order
 - [ ] Architecture conflicts from the v2 technical plan resolved → [[Open Questions|Q-26]]
+      (platform half **done** 2026-10-20 → [[ADR-0017]]; auth and hosting still open)
 - [ ] Open questions answered by the client → [[Open Questions]]
 - [ ] Repo scaffolded (M0) → [[Roadmap]]
 - [ ] First vertical slice: auth + coach–student link (M1)
