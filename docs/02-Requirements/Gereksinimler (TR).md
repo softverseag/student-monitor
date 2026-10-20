@@ -170,10 +170,14 @@ yazmak "TYT burada yok" gibi okunur.
 **TYT ile AYT ayrımı profilde değil, deneme kaydında.** Net formülü sınav tipine göre değişiyor
 ([[FR-15]], [[BR-019]]). Profil sadece "hangi AYT alanı" sorusunu cevaplıyor.
 
-**Otomatik güncellememenin bedeli — kabul edildi.** Her eylül bir grup öğrenci, biri düzeltene kadar
-geçen yılki sınıfıyla görünecek. Kabul edildi, çünkü alternatifi olan otomatik bir sınıf artırma tam
-da en kritik yerde yanlış tahmin ediyor: 12. sınıftaki öğrenci mezun da olabilir, bir yıl daha
-hazırlanabilir de. Koç sınıfı profilde görüyor ve düzeltebiliyor; yani hata görünür ve ucuz.
+**Neden elle güncelleniyor.** Her eylül otomatik bir sınıf artırmak, bir üst sınıfa geçmeyen her
+öğrenci için yanlış sonuç verir. **Sınıfta kalan** öğrenci yanlış görünür. 12. sınıftaki öğrenci
+mezun olabilir, mezun olarak devam edebilir veya bırakabilir. Asıl gerekçe şu: **bugün aklımıza
+gelmeyen durumlar olacak.** Otomatik bir kural, henüz düşünmediğimiz durumlarda da doğru olmak
+zorunda; elle güncelleme ise sadece insanın doğru olmasını istiyor.
+
+**Bedeli — kabul edildi.** Her eylül bir grup öğrenci, biri düzeltene kadar geçen yılki sınıfıyla
+görünecek. Koç sınıfı profilde görüyor ve düzeltebiliyor; yani hata görünür ve ucuz.
 
 ## İlişkiler
 

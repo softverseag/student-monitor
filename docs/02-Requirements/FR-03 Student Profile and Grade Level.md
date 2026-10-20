@@ -63,10 +63,13 @@ exam they are preparing for, what a coach should assign, which resources make se
   sit the YKS — but not quite, which is why both are stored. Do not derive one from the other.
 - **TYT vs AYT is not a profile concept.** It belongs to the mock exam record, where the net formula
   differs per exam type ([[FR-15]], [[BR-019]]). The profile only answers "which AYT field".
-- **Accepted cost of FR-03.6:** every September a batch of students shows last year's grade until
-  someone edits it. Accepted because the alternative — auto-incrementing — guesses wrong exactly
-  where it matters most: a 12th grader may graduate, may repeat the year as *mezun*, or may stop.
-  A coach sees the grade on the student's profile and can fix it, so the error is visible and
+- **Why FR-03.6 is manual** (the owner's reasoning, 2026-10-20): a yearly `gradeLevel + 1` is wrong
+  for every student who does not move up. Some repeat the year. A 12th grader may graduate, may
+  carry on as *mezun*, or may stop. And the general point: **we cannot enumerate today every
+  situation a real student will be in**, so the rule stays dumb and a human stays in charge. An
+  automatic rule would have to be right about cases we have not thought of yet.
+- **Accepted cost:** every September a batch of students shows last year's grade until someone edits
+  it. A coach sees the grade on the student's profile and can fix it, so the error is visible and
   cheap to correct.
 
 ## Open questions
