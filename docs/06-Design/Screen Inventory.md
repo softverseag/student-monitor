@@ -26,7 +26,7 @@ navigation design** — grouping and layout are open.
 | Resource pool + recommendations | [[FR-12]] | M7 |
 | Files shared with me | [[FR-13]] | M7 |
 | Notifications | [[FR-16]] | M2 |
-| Profile — grade level | [[FR-03]] | M1 |
+| Profile — grade level **and exam track**, both edited by hand | [[FR-03]] | M1 |
 
 **Never on these screens:** any price, any amount, any earnings ([[BR-022]]).
 

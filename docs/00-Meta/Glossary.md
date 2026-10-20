@@ -1,6 +1,6 @@
 ---
 title: Glossary
-updated: 2026-10-14
+updated: 2026-10-20
 ---
 
 # Glossary — Turkish ↔ English ↔ Code
