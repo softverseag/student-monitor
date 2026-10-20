@@ -9,6 +9,11 @@ updated: 2026-09-12
 
 # BR-020 — Each coach sets their own price per student
 
+> [!info] v1.1 — the finance module is not built in v1
+> Deferred 2026-10-20 ([[Scope and MVP]]). The rule stands and is binding the moment the
+> module is built; there is simply nothing in v1 for it to govern.
+
+
 **Rule.** A coach can set a separate price for each student. The price belongs to the coach–student
 relationship, so a student working with several coaches has a different price with each.
 

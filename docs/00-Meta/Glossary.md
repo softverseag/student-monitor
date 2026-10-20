@@ -89,8 +89,8 @@ The canonical naming source. Code uses the **Code** column, exactly.
 | Hakediş | Earnings / accrual | `Earning` | debit side; amount + frozen rate snapshot |
 | Tahsilat | Payment / collection | `Payment` | credit side; coach enters manually ([[FR-25]]) |
 | Cari hesap / Ekstre | Ledger / monthly statement | `LedgerStatement` | debt, collected, balance per month ([[FR-25]]) |
-| Finans modülü | Finance module | `financeEnabled` | opt-in, default off, truly deletable ([[BR-029]]) |
-| Görünürlük anahtarı | Visibility switch | `VisibilitySettings` | progress / exams / finance, per link ([[FR-20]]) |
+| Finans modülü | Finance module | `financeEnabled` | opt-in, default off, truly deletable ([[BR-029]]); **v1.1**, not built in v1 |
+| Görünürlük anahtarı | Visibility switch | `VisibilitySettings` | progress / exams per link; finance joins in v1.1 ([[FR-20]]) |
 | Abonelik | Subscription | `Subscription` | coach pays the platform; v1 is a free beta ([[FR-22]]) |
 
 ## Progress

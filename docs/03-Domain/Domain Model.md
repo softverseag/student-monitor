@@ -50,7 +50,7 @@ One role per user in v1 ([[Open Questions|Q-08]]).
 | `CoachStudentLink` | the unit of access. Has a lifecycle and an end date, never deleted ([[FR-04]]) |
 | `InviteCode` | single-use, expiring, produces a link on acceptance |
 | `ParentStudentLink` | requires coach approval; max 2 active ([[BR-003]], [[BR-004]]) |
-| `VisibilitySettings` | the three switches the coach opened to parents: progress / exams / finance ([[FR-20]], K-29) |
+| `VisibilitySettings` | the switches the coach opened to parents: progress / exams in v1, finance with the module in v1.1 ([[FR-20]], K-29) |
 
 ### Work
 
@@ -96,10 +96,14 @@ and a school subject (`Subject`). Keep them apart in code or the confusion is pe
 | `MockExamSubjectResult` | per-subject correct/wrong; **net auto-calculated per exam type**, score manual ([[BR-018]], [[BR-019]]); variable subject set per type |
 | `ReportCard` | student-entered per-term school grades, read-only to coach and parent ([[FR-24]]) |
 
-### Money
+### Money — `[v1.1]`
 
 The whole money area is the **opt-in finance module**, default off and truly deletable
 ([[BR-029]], [[FR-25]]).
+
+> [!info] Not in v1
+> Deferred 2026-10-20 ([[Scope and MVP]]). These concepts stay here as the design of record; no
+> table, endpoint or screen for them ships in v1.
 
 | Concept | Notes |
 | --- | --- |

@@ -119,7 +119,11 @@ created_by, created_at
 
 Never updated in place. See [[Pricing and Earnings]].
 
-### timesheet_entry / earning — **invariant**
+### timesheet_entry / earning — **invariant** · `[v1.1]`
+
+> Finance tables are **not created in v1** — the module moved to v1.1 on 2026-10-20
+> ([[Scope and MVP]]). Kept here because [[BR-023]]'s snapshot shape is the part worth deciding
+> before anyone writes the migration.
 
 ```
 timesheet_entry(id, lesson_id, coach_id, student_id, lesson_date, billable, rule_applied)

@@ -35,8 +35,8 @@ REST over JSON. Predictable, boring, and shaped so that authorization mistakes a
 /students/:id/exam-results         GET POST
 /exam-results/:id/approve          POST
 
-/students/:id/rate                 GET PUT    coach + parent only
-/coaches/me/earnings               GET        ?month=&studentId=
+/students/:id/rate                 GET PUT    coach + parent only        [v1.1]
+/coaches/me/earnings               GET        ?month=&studentId=      [v1.1]
 /notifications                     GET PATCH
 ```
 

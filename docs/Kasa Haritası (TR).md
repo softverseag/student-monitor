@@ -61,7 +61,7 @@ kasa kazanır; iki not birbiriyle çelişirse zincirde **aşağıda** olan yanl�
 | Hangi veri hangi varlığa ait | [[Domain Model]] | `## Aggregates`, `## Invariants` |
 | Filiz eşikleri ve ilerleme formülü | [[Progress and Filiz]] | `## Daily progress and Filiz`, `## The empty denominator` |
 | Aylık ilerleme neden hâlâ yok | [[Progress and Filiz]] | `## Monthly` → [[Open Questions\|Q-02]] |
-| Para nasıl hesaplanıyor | [[Pricing and Earnings]] | `## The per-lesson pipeline`, `## Billing rules` |
+| Para nasıl hesaplanıyor **(v1.1, v1'de yok)** | [[Pricing and Earnings]] | `## The per-lesson pipeline`, `## Billing rules` |
 | Fiyat zammı geçmişi neden bozmuyor | [[Pricing and Earnings]] | `## Effective-dated rates`, `## Why the snapshot as well` |
 | Parayı kim görüyor | [[Pricing and Earnings]] | `## What the coach/parent/student sees` |
 | Tablolar ve kolonlar | [[Data Model]] | `## Key tables`, `## Conventions` |
@@ -87,7 +87,7 @@ kasa kazanır; iki not birbiriyle çelişirse zincirde **aşağıda** olan yanl�
 | v2'deki hangi madde nereye düştü | [[Requirements Index]] | `## v2 section → requirement map` |
 | İlk katalogdaki § nereye düştü | [[Requirements Index]] | `## Catalog section → requirement map` |
 | Türkçe terimin kod karşılığı | [[Glossary]] | konu başlıkları (roller, iş, ders, para…) |
-| Ekran listesi | [[Screen Inventory]] | `## Student (mobile)`, `## Coach (web…)`, `## Parent (web)` |
+| Ekran listesi | [[Screen Inventory]] | `## Student (mobile)`, `## Coach (mobile…)`, `## Parent (mobile)`, `## Public web (marketing)` |
 | Tasarım/ton kararları | [[UX Principles]] | `## Principles`, `## Practical constraints` |
 | Kullanıcı profilleri | [[Personas]] | `## Access at a glance` |
 | Neden bu ürün, iş modeli | [[Product Vision]] | `## Why it can win`, `## Business model` |
@@ -146,7 +146,7 @@ Alanlar: `FR-01` hesaplar · `FR-02` yetki · `FR-03` öğrenci profili · `FR-0
 `FR-10` devam · `FR-11` program · `FR-12` kaynaklar · `FR-13` dosyalar · `FR-14` ilerleme
 raporları · `FR-15` denemeler · `FR-16` bildirimler · `FR-17` koç takibi · `FR-18` fiyatlandırma ·
 `FR-19` puantaj/hakediş · `FR-20` veli erişimi · `FR-21` denetim kaydı · `FR-22` abonelik ·
-`FR-23` çizelgeler · `FR-24` okul karnesi · `FR-25` finans modülü.
+`FR-23` çizelgeler · `FR-24` okul karnesi · `FR-25` finans modülü **(v1.1)**.
 Tam liste ve durumları: [[Requirements Index]].
 
 **31 adet `BR-xxx` notu** — `Business Rules/` altında, her biri tek kural, tek dosya. Frontmatter'da
@@ -203,7 +203,7 @@ workspace paketleri (0015) · development build (0016).
 ### `06-Design`
 
 [[UX Principles]] — kime tasarlıyoruz · ilkeler · pratik kısıtlar.
-[[Screen Inventory]] — öğrenci (mobil) / koç (web) / veli (web) ekranları + her ekranın ihtiyaç
+[[Screen Inventory]] — öğrenci / koç / veli ekranları **(hepsi mobil)** + tanıtım sitesi ve koç web portalı ([[ADR-0017]]) + her ekranın ihtiyaç
 duyduğu ortak durumlar (boş, yükleniyor, hata).
 
 ### `99-Archive`

@@ -87,17 +87,19 @@ stateDiagram-v2
   COMPLETED --> [*]
 ```
 
-A **group lesson** is one lesson record; each participant student has their own accept/decline,
-attendance and earning row ([[BR-028]]). Attendance is marked **only by the coach**, after the
-lesson, per participant:
+A **group lesson** is one lesson record; each participant student has their own accept/decline and
+attendance — plus, from v1.1, their own earning row ([[BR-028]]). Attendance is marked **only by the
+coach**, after the lesson, per participant:
 
-| Lesson outcome | Attendance | Billable (per-lesson model) |
+| Lesson outcome | Attendance | Billable (per-lesson model) — `[v1.1]` |
 | --- | --- | --- |
 | `COMPLETED`, student came | `ATTENDED` | yes |
 | `COMPLETED`, student absent | `NO_SHOW` | per-coach setting; default open ([[Open Questions|Q-04]]) |
 | `CANCELLED` | `CANCELLED` | **never** (v2 §8.3, decided) |
 
 Under the monthly-flat price model, billing comes from the period, not these rows ([[BR-021]]).
+**The billable column is v1.1** — attendance itself ships in v1 and is finance-independent
+([[FR-10]], [[Scope and MVP]]).
 
 ## Mock exam result ([[FR-15]])
 

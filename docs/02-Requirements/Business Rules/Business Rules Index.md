@@ -41,18 +41,21 @@ SORT id ASC
 | [[BR-017]] | İK-017 | Unapproved results enter no statistic (**under review**, [[Open Questions\|Q-20]]) | exams |
 | [[BR-018]] | İK-018 | The score is entered manually; the net is calculated | exams |
 | [[BR-019]] | İK-019 | Net formulas vary per exam type; auto-calculated from v1 | exams |
-| [[BR-020]] | İK-020 | Each coach sets their own price per student | money |
-| [[BR-021]] | İK-021 | Earnings derive from the source records of the price model | money |
-| [[BR-022]] | İK-022 | Only the coach and authorised parents see money | money |
-| [[BR-023]] | İK-023 | Changing the price never rewrites past earnings | money |
+| [[BR-020]] | İK-020 | Each coach sets their own price per student | money ⏳ |
+| [[BR-021]] | İK-021 | Earnings derive from the source records of the price model | money ⏳ |
+| [[BR-022]] | İK-022 | Only the coach and authorised parents see money | money ⏳ |
+| [[BR-023]] | İK-023 | Changing the price never rewrites past earnings | money ⏳ |
 | [[BR-024]] | İK-024 | One coach cannot manage another coach's content (see/manage split) | authorization |
 | [[BR-025]] | İK-025 | Historical records are preserved (exception: [[BR-029]]) | platform |
 | [[BR-026]] | İK-026 | Every student's grade level is tracked and visible to linked coaches | identity |
 | [[BR-027]] | İK-027 | The late cutoff is copied onto the work item and frozen | work |
-| [[BR-028]] | İK-028 | Group lesson fees are per student and never split | money |
-| [[BR-029]] | İK-029 | The finance module is opt-in and its data is truly deletable | money |
+| [[BR-028]] | İK-028 | Group lesson fees are per student and never split | money ⏳ |
+| [[BR-029]] | İK-029 | The finance module is opt-in and its data is truly deletable | money ⏳ |
 | [[BR-030]] | İK-030 | After the relationship ends, the coach's access is read-only | relationships |
 | [[BR-031]] | İK-031 | The student picks the coach who approves an exam result | exams |
+
+⏳ = the rule is written but **not built in v1** — the finance module moved to v1.1 on 2026-10-20
+([[Scope and MVP]]).
 
 ## The five that will bite us
 

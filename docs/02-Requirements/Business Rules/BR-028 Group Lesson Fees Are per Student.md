@@ -4,10 +4,15 @@ aliases: [BR-028, İK-028]
 source: "İK-028"
 area: money
 status: specified
-updated: 2026-10-14
+updated: 2026-10-20
 ---
 
 # BR-028 — Group lesson fees are per student and never split
+
+> [!info] v1.1 — the finance module is not built in v1
+> Deferred 2026-10-20 ([[Scope and MVP]]). The rule stands and is binding the moment the
+> module is built; there is simply nothing in v1 for it to govern.
+
 
 **Rule.** A group lesson is **one** calendar record, but attendance and earnings are produced **per
 participant**, each at that student's own group-lesson rate. There is no fee splitting.

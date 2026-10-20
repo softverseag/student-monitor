@@ -1,7 +1,7 @@
 ---
 title: Screen Inventory
 status: draft
-updated: 2026-09-12
+updated: 2026-10-20
 ---
 
 # Screen Inventory
@@ -30,7 +30,11 @@ navigation design** — grouping and layout are open.
 
 **Never on these screens:** any price, any amount, any earnings ([[BR-022]]).
 
-## Coach (web, key actions mirrored on mobile)
+## Coach (mobile is complete; the web portal mirrors it)
+
+Every screen here exists on mobile. The web portal ([[ADR-0017]]) carries the same screens on a
+bigger canvas, starting with plan authoring — the one job a phone genuinely makes worse. Nothing is
+web-only.
 
 | Screen | Requirements | Milestone |
 | --- | --- | --- |
@@ -38,26 +42,37 @@ navigation design** — grouping and layout are open.
 | Students list + invite | [[FR-04]] | M1 |
 | Student detail — work, lessons, progress, exams, resources | several | M2+ |
 | Assign work (bulk, multi-student) | [[FR-06]] [[FR-07]] | M2 |
+| **Plan library — create, duplicate, edit the unit→topic→task tree** | [[FR-23]] | M2 |
+| **Assign a plan — several students, each with a start date** | [[FR-23]] | M2 |
 | Approvals queue | [[FR-06]] | M2 |
 | Lessons calendar — propose, cancel, attendance | [[FR-09]] [[FR-10]] | M4 |
-| Pricing per student + history | [[FR-18]] | M5 |
-| Earnings — per student and pool total | [[FR-19]] | M5 |
+| ~~Pricing per student + history~~ | [[FR-18]] | ⏳ v1.1 (M5) |
+| ~~Earnings — per student and pool total~~ | [[FR-19]] | ⏳ v1.1 (M5) |
 | Parent approvals + sharing settings | [[FR-05]] [[FR-20]] | M1, M6 |
 | Notifications + templates (student and parent) | [[FR-16]] | M3, M6 |
 | Mock exam approvals | [[FR-15]] | M7 |
 | Files — upload and share | [[FR-13]] | M7 |
 | Subscription | [[FR-22]] | M8 |
 
-## Parent (web)
+## Parent (mobile)
+
+One read-only screen in v1 ([[ADR-0017]]) — parents have no web surface.
 
 | Screen | Requirements | Milestone |
 | --- | --- | --- |
 | Request access / pending state | [[FR-05]] | M1 |
 | Child summary — progress, attendance, exams | [[FR-20]] | M6 |
-| Financial — price and earnings per coach | [[FR-18]] [[FR-19]] | M6 |
+| ~~Financial — price and earnings per coach~~ | [[FR-18]] [[FR-19]] | ⏳ v1.1 (M5) |
 | Notifications from the coach | [[FR-16]] | M6 |
 
 **Never on these screens:** the coach's pool total across other families ([[FR-19|FR-19.9]]).
+
+## Public web (marketing)
+
+| Screen | Requirements | Milestone |
+| --- | --- | --- |
+| Landing page — what the app is, how to get it | — | M8 |
+| Sign in — **coaches only in v1**; students and parents are sent to the app | [[FR-01]], [[ADR-0017]] | M1 |
 
 ## Cross-cutting states every screen needs
 

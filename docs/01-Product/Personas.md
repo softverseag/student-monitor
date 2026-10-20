@@ -1,7 +1,7 @@
 ---
 title: Personas
 status: draft
-updated: 2026-09-12
+updated: 2026-10-20
 ---
 
 # Personas
@@ -18,10 +18,12 @@ message the three students who went quiet, reschedule two lessons.
 At month end she reconstructs which lessons happened, at what price, for whom.
 
 **What she needs:** a follow-up view that separates *done*, *waiting for me* and *missing*
-([[FR-17]]); bulk notifications with reusable templates ([[FR-16]]); earnings that compute themselves
-([[FR-19]]).
+([[FR-17]]); bulk notifications with reusable templates ([[FR-16]]); plans she builds once and
+assigns to many ([[FR-23]]). Earnings that compute themselves ([[FR-19]]) are **v1.1** — in v1 she
+keeps doing the month-end reconstruction by hand.
 
-**Platform:** web, on a laptop. Mobile for quick approvals.
+**Platform:** mobile for everything, a web portal when she wants a keyboard — chiefly for building
+plans ([[ADR-0017]]). Nothing is web-only.
 
 ## Mert — the student (öğrenci)
 
@@ -49,10 +51,12 @@ what do I owe this month.
 
 **Pain:** she has to ask the coach, and she gets an answer filtered through politeness.
 
-**What she needs:** a read-only summary the coach has chosen to share ([[FR-20]]), attendance, exam
-development, and the financial side — price and earnings, which her son must never see ([[BR-022]]).
+**What she needs:** a read-only summary the coach has chosen to share ([[FR-20]]), attendance and
+exam development. The financial side — price and earnings, which her son must never see
+([[BR-022]]) — is **v1.1**, so in v1 "what do I owe this month" is still a question she asks the
+coach directly.
 
-**Platform:** mobile or web, opened weekly, not daily.
+**Platform:** mobile, one screen, opened weekly, not daily. No parent web view ([[ADR-0017]]).
 
 ## Access at a glance
 
@@ -65,7 +69,7 @@ development, and the financial side — price and earnings, which her son must n
 | Cancel a confirmed lesson | ✅ | ✅ | ❌ |
 | See full personal schedule | ❌ ([[BR-014]]) | ✅ | ❌ |
 | Approve mock exam results | ✅ | ❌ | ❌ |
-| See price and earnings | ✅ own | ❌ ([[BR-022]]) | ✅ approved |
+| See price and earnings *(v1.1)* | ✅ own | ❌ ([[BR-022]]) | ✅ approved |
 | Approve a parent link | ✅ | ❌ | ❌ ([[BR-003]]) |
 
 Full detail: [[Authorization Matrix]].

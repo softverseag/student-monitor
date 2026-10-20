@@ -21,8 +21,8 @@ updated: 2026-09-12
 | --- | --- |
 | **M1** | **Q-27 role permanence** → decide from [[Q-27 Role Permanence - Decision Brief]] · Q-12 consent for minors *(deadline: before the first real user)* · ~~Q-08 multi-role~~ and ~~Q-07 access after a link ends~~ — both answered |
 | **M3** | Q-01 Filiz thresholds, Q-11 notification channels and quiet hours |
-| **M5** | Q-03 / Q-04 cancellation and no-show billing |
-| **M6** | Q-05 parent sharing granularity |
+| ~~**M5**~~ | Q-03 / Q-04 cancellation and no-show billing — **not needed for v1**, the finance module moved to v1.1 (2026-10-20) |
+| **M6** | Q-05 parent sharing granularity — answered; v1 ships two switches, finance follows in v1.1 |
 | **M7** | Q-06 file limits, Q-09 exam types, Q-16 exam reject status |
 | **M8** | Q-02 monthly formula, Q-10 subscription packages |
 

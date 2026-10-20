@@ -9,6 +9,12 @@ updated: 2026-09-12
 
 # BR-022 — Only the coach and authorised parents see money
 
+> [!info] v1 has no money, but this rule still shapes it
+> The finance module was deferred to v1.1 on 2026-10-20 ([[Scope and MVP]]), so no amount exists in
+> v1 to leak. The rule stays live as a design constraint: student-facing screens, payloads and
+> notification bodies must have no money-shaped hole waiting to be filled in later.
+
+
 **Rule.** Price and earnings information is visible only to the relevant coach and to the student's
 authorised parent(s). **The student can never see it.**
 

@@ -1,7 +1,7 @@
 ---
 title: Authorization Matrix
 status: draft
-updated: 2026-10-14
+updated: 2026-10-20
 ---
 
 # Authorization Matrix
@@ -46,19 +46,21 @@ Columns:
 | Mock exam result | R W, picks approver | R; approve/reject **if selected** ([[BR-031]]) | R; approve only if selected | R¹ (approved only) | — |
 | School report card ([[FR-24]]) | R W | R | R | R | — |
 | Progress / statistics | R (own) | R (own items) | R (own items) | R¹ | — |
-| Price | **—** | R W² | — | R¹ ² | — |
-| Timesheet / earnings | **—** | R² | — | R¹ ² | — |
-| Payment / ledger ([[FR-25]]) | **—** | R W² | — | R¹ ² | — |
-| Coach's pool total earnings | — | R (own)² | — | **—** | — |
+| Price ³ | **—** | R W² | — | R¹ ² | — |
+| Timesheet / earnings ³ | **—** | R² | — | R¹ ² | — |
+| Payment / ledger ([[FR-25]]) ³ | **—** | R W² | — | R¹ ² | — |
+| Coach's pool total earnings ³ | — | R (own)² | — | **—** | — |
 | Visibility switches ([[FR-20]]) | — | R W (own links) | — | — | — |
 | Reminder prefs / quiet hours | R W | — | — | — | — |
 | Notification | R (own) | R W (to own students) | — | R (own) | — |
 | Notification template | — | R W (own) | — | — | — |
 | Audit log | — | — | — | — | — (support only) |
 
-¹ Only if the coach has opened that switch to the parent — progress / exams / finance ([[FR-20]],
-K-29).
+¹ Only if the coach has opened that switch to the parent — progress / exams in v1, finance in v1.1
+([[FR-20]], K-29).
 ² Only while the coach's finance module is enabled ([[BR-029]], [[FR-25]]).
+³ **Not built in v1** — the finance module moved to v1.1 on 2026-10-20 ([[Scope and MVP]]). The row
+stays because the permissions are decided; no endpoint should exist in v1 to enforce them on.
 
 ## The five bolded cells
 
