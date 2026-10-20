@@ -58,7 +58,7 @@ pürüzsüz değilse gerisinin anlamı yok.**
 | Alan | Gerekçe |
 | --- | --- |
 | Ödeme / abonelik faturalandırma entegrasyonu | fiyatlar belirsiz; önce ücretsiz beta ([[Open Questions\|Q-10]]) |
-| Excel'den plan içe aktarma | plan editörü işi görüyor ([[FR-23]]) |
+| Excel'den plan içe aktarma | plan editörü + plan kopyalama işi görüyor; koçların dosyalarında ortak bir şekil yok ([[FR-23]]) |
 | Düzenlenebilir öğrenci takvim ızgarası | koç zaten göremiyor ([[BR-014]]) — yüksek maliyet, ticari getirisi yok (K-36) |
 | Bağımsız müfredat/konu modülü | içerik üretim maliyeti; bunun yerine plan görevlerinden türetiliyor (K-26) |
 | QR ile bağlanma | davet kodu ve linki yeterli |

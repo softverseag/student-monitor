@@ -327,6 +327,10 @@ ağacı — ve 30 öğrencinin her birine aynı haftayı yeniden yazmak yerine �
 - Planın seviye/etiketi serbest metin (ör. "12. sınıf · YKS") — müfredat taksonomisi yok (K-25).
 - Ders ve konu serbest metin, ama **koçun kendi geçmiş girdilerinden otomatik tamamlamalı**: "Türev"
   ile "Türev ve uygulamaları" ikiye ayrılırsa konu yüzdeleri çöpe gider.
+- Koç var olan bir planı **kopyalayarak** yeni bir plan üretebilir ve üzerinde düzenleme yapabilir.
+  Kopya tüm ağacı taşır ve orijinalden bağımsızdır; birini düzenlemek diğerini etkilemez. Plan
+  sınıfa, yaşa ve öğrencinin eksiğine göre değiştiği için varyasyon böyle üretilir: taban plan +
+  küçük sapma.
 
 **Atama**
 
@@ -344,7 +348,9 @@ ağacı — ve 30 öğrencinin her birine aynı haftayı yeniden yazmak yerine �
 - Planlar koça ait içeriktir: aynı öğrencinin diğer koçlarına görünmez ([[BR-024]]). Öğrenci sadece
   kendine atanan görevleri görür, plan kütüphanesini asla.
 
-**v1 dışı.** Excel'den plan içe aktarma `[V1.1]` · bağımsız müfredat modülü `[V1.1]`.
+**v1 dışı.** Excel'den plan içe aktarma `[V1.1]` · planın bir parçasını (tek ünite/konu) başka plana
+taşıma `[V1.1]`, tüm planı kopyalayıp gereksizi silmek v1'de yetiyor · bağımsız müfredat modülü
+`[V1.1]`.
 
 ## İlerleme
 
