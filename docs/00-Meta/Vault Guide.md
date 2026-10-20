@@ -11,6 +11,13 @@ updated: 2026-09-12
   [[Source - Requirement Catalog (TR)]].
 - **English** — every note in this vault, all code identifiers, commits, tests.
 - [[Glossary]] is the bridge. If a Turkish term has no entry there, add one before using it in code.
+- **Deliberate exceptions, marked `(TR)` in the filename.** They exist so the spec can be walked
+  through with a Turkish-speaking client: [[Kasa Haritası (TR)]] (where everything lives),
+  [[Gereksinimler (TR)]] (all 25 FRs and 31 BRs on one page), [[Kapsam ve MVP (TR)]] (the v1 cut
+  line). Rules for adding one: it must be a **retelling** of an existing note and decide nothing;
+  it must say so in a callout; and where it disagrees with the note it summarises, **the summarised
+  note wins** and the `(TR)` note is out of date. A `(TR)` note that is the only place something is
+  written down is a bug.
 
 ## ID scheme
 
@@ -47,6 +54,22 @@ Reference them from code and commits: `feat(tasks): approval flow (FR-06.5, BR-0
 **Tasks** — `todo`, `doing`, `blocked`, `review`, `done`.
 
 **ADRs** — `proposed`, `accepted`, `superseded by `ADR-xxxx``.
+
+## `checkedBy` — who has read and approved a note
+
+A list of people who have read the note **in full** and approve it as it stands. It is orthogonal to
+`status:`: `status` says how far the work has got, `checkedBy` says who has actually signed off on
+the text. Present on FR / BR / ADR / Task notes.
+
+- Add your name only after reading the whole note, not after skimming or after editing one line.
+- A name here means "I accept these requirements". It does **not** mean the open questions are
+  answered — list those under `## Open questions` and say in the `## Change log` that they were
+  consciously left open.
+- Record the review in the `## Change log` on the same day, so the reason survives even if the
+  frontmatter is later rewritten. A visible `> [!check]` callout under the source line is the
+  friendly version for whoever opens the note next.
+- Reviews do not expire, but they do go stale: if a later change alters what the note asks for,
+  clear the names and get it re-read.
 
 ## Adding a note
 

@@ -6,7 +6,7 @@ area: work
 source: "v2 §7"
 status: specified
 priority: must
-updated: 2026-10-14
+updated: 2026-10-20
 ---
 
 # FR-23 — Study Plans (Çizelge)
@@ -31,6 +31,11 @@ tasks — and assigns it to many students, instead of re-typing the same week fo
   (K-25).
 - **FR-23.4** Subject and topic values are free text with **autocomplete from the coach's own past
   entries**, so "Türev" does not fork into "Türev ve uygulamaları" and ruin topic percentages (K-25).
+- **FR-23.11** A coach can **duplicate an existing plan** into a new, independent plan and edit it.
+  The copy carries the whole tree; it is unlinked from the original, so editing either one never
+  touches the other. This is how per-student variation is produced — a base plan plus a small
+  deviation — since plans differ by grade, age and the individual student's weak spots, and there is
+  no standard shape to import from.
 
 ### Assigning
 
@@ -52,7 +57,15 @@ tasks — and assigns it to many students, instead of re-typing the same week fo
 
 ## Out of scope (v1)
 
-- **Excel plan import** — `[V1.1]` (v2 §7). The plan editor covers the job.
+- **Excel plan import** — `[V1.1]` (v2 §7). The plan editor covers the job. Reviewed 2026-10-20 and
+  kept out: coaches' sheets have no shared shape, the sheets are date-based while plans are day-offset
+  based, and a bulk import of free-text subjects/topics would poison the FR-23.4 autocomplete corpus
+  that topic percentages depend on. Plan duplication (FR-23.11) is the cheap answer to the same need.
+- **Bulk paste into the plan editor** (paste an indented/tab-separated list, parse it into the tree) —
+  considered 2026-10-20 as a lighter alternative to Excel import and **dropped**: plans vary per
+  student, so there is rarely a ready-made list to paste.
+- Moving part of a plan (a single unit or topic subtree) into another plan — `[V1.1]`. Duplicating the
+  whole plan and deleting what is not needed covers v1.
 - Independent curriculum module (subject → unit → topic lists with manual state) — `[V1.1]`.
 
 ## Acceptance criteria
@@ -64,6 +77,8 @@ tasks — and assigns it to many students, instead of re-typing the same week fo
 - [ ] A topic's progress percentage equals completed-plan-tasks / all-plan-tasks for that topic and
       student.
 - [ ] Coach B cannot read or assign Coach A's plans (404), even for a shared student.
+- [ ] Duplicating a plan produces a new plan with the same tree; editing the copy leaves the original
+      unchanged, and editing the original leaves the copy unchanged.
 
 ## Design notes
 
@@ -79,4 +94,7 @@ tasks — and assigns it to many students, instead of re-typing the same week fo
 
 ## Change log
 
+- 2026-10-20 — reviewed how a coach avoids rebuilding the same plan twice. Confirmed Excel import
+  stays `[V1.1]`, dropped bulk paste outright, and added plan duplication (FR-23.11) as the v1
+  answer. Moving a subtree between plans is `[V1.1]`.
 - 2026-10-14 — created from v2 §7 (new module in the October 2026 requirement set)

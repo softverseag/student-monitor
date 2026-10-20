@@ -1,6 +1,6 @@
 ---
 title: Home
-updated: 2026-10-14
+updated: 2026-10-15
 ---
 
 # Student Monitor — Documentation Vault
@@ -17,6 +17,8 @@ Coaching platform for Turkish exam preparation (YKS / LGS), used alongside regul
 
 ## Start here
 
+- [[Kasa Haritası (TR)]] — **where everything lives**: note-by-note and heading-by-heading map of
+  this vault, in Turkish. Read it first if you do not know your way around yet
 - [[Vault Guide]] — conventions, IDs, statuses, how to add a note
 - [[Product Vision]] — what this is and who it is for
 - [[Requirements v2 Delta]] — **what the October 2026 requirement update changed**
@@ -24,6 +26,8 @@ Coaching platform for Turkish exam preparation (YKS / LGS), used alongside regul
 - [[Open Questions]] — decisions the client still owes us
 - [[Requirements Index]] — all 25 functional areas
 - [[Business Rules Index]] — the 31 hard rules (İK-001..İK-031)
+- [[Gereksinimler (TR)]] — **all 25 requirements and 31 rules on one page, in Turkish**. The
+  companion to [[Kasa Haritası (TR)]]: use it to talk the spec through with the client
 
 ## Map
 

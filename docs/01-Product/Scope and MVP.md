@@ -54,7 +54,7 @@ frictionless on a phone, nothing else matters.
 | Area | Reason |
 | --- | --- |
 | Payment / subscription billing integration | pricing undecided; free beta first ([[Open Questions|Q-10]]) |
-| Excel plan import | the plan editor covers the job ([[FR-23]]) |
+| Excel plan import | the plan editor plus plan duplication covers the job; coaches' sheets share no shape ([[FR-23]]) |
 | Editable student calendar grid | the coach cannot see it ([[BR-014]]), so high cost, no commercial return (K-36) |
 | Independent curriculum/topic module | content-production cost; derived from plan tasks instead (K-26) |
 | QR-code linking | invite code and link cover it |
@@ -108,5 +108,8 @@ frictionless on a phone, nothing else matters.
 4. The finance module must be severable: off by default, deletable on exit ([[BR-029]]).
 
 ## Related
+
+[[Kapsam ve MVP (TR)]] — this note in Turkish, for client conversations. A companion, not a source:
+where the two disagree, this one wins.
 
 [[Roadmap]] · [[Milestones]] · [[Requirements Index]] · [[Requirements v2 Delta]]
