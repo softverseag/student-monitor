@@ -23,7 +23,7 @@ updated: 2026-09-12
 | **M3** | Q-01 Filiz thresholds, Q-11 notification channels and quiet hours |
 | ~~**M5**~~ | Q-03 / Q-04 cancellation and no-show billing — **not needed for v1**, the finance module moved to v1.1 (2026-10-20) |
 | **M6** | Q-05 parent sharing granularity — answered; v1 ships two switches, finance follows in v1.1 |
-| **M7** | Q-06 file limits, Q-09 exam types, Q-16 exam reject status |
+| **M7** | Q-06 file limits, Q-09 exam types, Q-16 exam reject status, **Q-28** a pending exam result whose approving coach ended the link (raised 2026-10-30 while answering Q-17) |
 | **M8** | Q-02 monthly formula, Q-10 subscription packages |
 
 > [!warning] The M3–M8 rows below predate the October 2026 update

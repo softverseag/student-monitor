@@ -1,7 +1,7 @@
 ---
 title: Open Questions
 status: open
-updated: 2026-10-19
+updated: 2026-10-30
 ---
 
 # Open Questions
@@ -20,7 +20,6 @@ new ones; its open items `A-01`..`A-11` are tracked below with their `A` number 
 | Q-12 | KVKK and minors: age gate at signup, under-18 parental consent flow, data controller, retention periods, deletion-request flow (A-06). **Must be resolved before the first real user.** | [[FR-01]], [[Security and Privacy]] | **open — deadline** | parental consent recorded at signup for under-18 |
 | Q-13 | Can a coach edit or delete a task after the student submitted it? | [[FR-06]] | **open** | no edit after submission; return instead |
 | Q-14 | Recurring lessons — does a coach schedule "every Tuesday 19:00", or one at a time? | [[FR-09]] | **open** | one at a time in v1 |
-| Q-17 | What happens to pending approvals when the relationship ends? | [[FR-04]] | **open** | frozen in place, counted as not completed |
 | Q-19 | Account deletion is immediate and irreversible ([[ADR-0013]]). Grace period for minors deleting in anger? | [[FR-01]] | **open** | immediate, no undo |
 | Q-20 | Do unapproved mock exam results enter statistics (İK-017, A-01)? Option A: excluded, as [[BR-017]] says. Option B: included immediately with an "unverified" marker, mirroring [[BR-006]]. | [[FR-15]], [[BR-017]] | **open** | option A — [[BR-017]] as written, behind one query scope |
 | Q-21 | The beta per-coach active-student limit — what number? (A-03) | [[FR-22]] | **open** | configuration value, suggest 30 until told otherwise |
@@ -30,6 +29,7 @@ new ones; its open items `A-01`..`A-11` are tracked below with their `A` number 
 | Q-25 | A rejected mock exam result — can the student correct and resubmit, or is it dead? (A-08) | [[FR-15]] | **open** | rejected is terminal; student enters a new result |
 | Q-26 | The v2 technical plan conflicts with accepted ADRs. **Platform half answered 2026-10-20** — see below. Still open: self-managed JWT + Resend (K-38) vs Clerk ([[ADR-0012]]); Neon/Heroku/R2 hosting; separate `worker` process; repo location (A-10). Which of those stand? | [[Tech Stack]], [[Architecture Overview]] | **open** (narrowed) | existing ADRs stand until explicitly superseded |
 | Q-27 | Is the role really fixed **for life** ([[ADR-0014]])? A day-one mistap is unrecoverable: there is no admin to fix it ([[Open Questions\|Q-18]], v1.1) and deleting the account discards all history ([[ADR-0013]]). **A:** changeable while the account is still *empty* — no links, no content (**recommended**, see the review note on [[ADR-0014]]). **B:** changeable any time, history stays attached to the capacity that created it. **C:** support-only, blocked on Q-18. **D:** keep it permanent, better warning copy. **Full write-up, options and costs: [[Q-27 Role Permanence - Decision Brief]] — awaiting @bursadev.** | [[FR-01]], [[T-017]] | **open** | [[ADR-0014]] stands — role fixed at onboarding, and `role` keeps being written in exactly one place |
+| Q-28 | A mock exam result sitting in `PENDING_APPROVAL` when the **approving coach** ([[BR-031]]) ends the link. Q-17 froze coach-owned work, but this row is the *student's* data: frozen, it never enters statistics ([[BR-017]]) and the student has no way out — it is not `REJECTED`, so Q-25's "enter a new result" does not apply. Can the student re-point it at another active coach, or is the result abandoned? Raised while answering Q-17 (2026-10-30). | [[FR-15]], [[BR-031]] | **open** | student may re-pick an approver among their active coaches; with no active coach the result stays pending |
 
 ## Answered
 
@@ -46,6 +46,7 @@ new ones; its open items `A-01`..`A-11` are tracked below with their `A` number 
 | Q-11 | Notification channels, quiet hours | 2026-10 (K-35) | **In-app + push; task-time reminders respect student-set quiet hours; coach messages always deliver.** Delivery mechanism depends on Q-26. |
 | Q-15 | Recurring schedule entries | 2026-10 (K-36) | **Moot in v1**: the editable grid is deferred; school hours are a single setting; the timeline is read-only. See [[FR-11]]. |
 | Q-16 | Can a coach reject an exam result? | 2026-10 (v2 §10.3) | **Yes — `REJECTED` exists.** Aftermath open → Q-25. |
+| Q-17 | What happens to work pending approval when the relationship ends? | 2026-10-30 (owner) | **Frozen in place, counted as not completed.** No auto-approve and no auto-return: the item keeps `submittedAt`, never gets `approvedAt`, so it stays `PENDING_APPROVAL` for good ([[ADR-0008]] — the derivation simply stops receiving facts). It is neither late nor overdue, so [[BR-010]] is untouched; re-linking does not revive it. See [[FR-04\|FR-04.13–15]], [[BR-030]]. The mock-exam variant is **not** covered → Q-28. |
 | Q-18 | Admin/support role? | 2026-10 (v2 §1) | **v1.1.** In v1, operational interventions go through direct DB access. |
 
 ## How to use this

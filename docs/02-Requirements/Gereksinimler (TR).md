@@ -1,7 +1,7 @@
 ---
 title: Gereksinimler (TR)
 status: draft
-updated: 2026-10-20
+updated: 2026-10-30
 ---
 
 # Gereksinimler — ne yapacağız, sade Türkçe
@@ -211,10 +211,25 @@ bildirim, kaynak önerisi. Sistem her kayıt için "bunu hangi koç yarattı?" s
 **Durum makinesi.** `PENDING_STUDENT_ACCEPT | PENDING_COACH_ACCEPT → ACTIVE → ENDED`, ayrıca
 `DECLINED` ve `EXPIRED`.
 
+**Onay bekleyen iş, ilişki biterken ne olur** (karar 2026-10-30, [[Open Questions|Q-17]] kapandı).
+İş **olduğu yerde donar**: otomatik onaylanmaz, otomatik geri gönderilmez. `submittedAt` kalır,
+`approvedAt` hiç gelmez, dolayısıyla durum kalıcı olarak `PENDING_APPROVAL` okunur — bunun için ayrı
+bir şey yazılmaz, durum zaten hesaplanıyor ([[ADR-0008]]) ve yeni bir olgu gelmiyor. İstatistikte
+**tamamlanmadı** sayılır; ne `COMPLETED_LATE` ne `OVERDUE` olduğu için [[BR-010]]'un ayrımı bozulmaz.
+Aynı çift yeniden bağlanırsa iş canlanmaz; yeni bağ ayrı bir kayıt.
+
+**Neden donuyor.** Otomatik onay, hiçbir koçun bakmadığı bir tamamlamayı öğrenciye yazardı — ve iki
+taraf da doğru anda bağı bitirip tamamlama toplayabilirdi. Otomatik geri gönderme ise zamanında
+gönderim yapan öğrenciyi, kendisinin olmayan bir karar yüzünden cezalandırırdı. Donmak, hiçbir hüküm
+uydurmayan tek seçenek. **Arayüz bunu açıklamak zorunda**: yoksa öğrenci sonsuza kadar "Onay
+bekliyor" görür ve gitmiş bir koçu bekler — satırda bağın bittiği de yazmalı.
+
 **Dikkat.** Aynı çift için iki aktif bağ olmasını **partial unique index** engellemeli. v1'de
 çoklu koç içeriği ayrı bir akışta değil, satır içinde "X koçundan" etiketiyle gösterilir.
 
-**Açık.** [[Open Questions|Q-17]] — ilişki biterken onay bekleyen işe ne olur.
+**Açık.** [[Open Questions|Q-28]] — aynı durumun deneme sonucu hâli: onaylayacak koç
+([[BR-031]]) bağı bitirirse öğrencinin kendi verisi donar ve istatistiğe hiç girmez. Q-17'nin cevabı
+koçun yarattığı işler için; bu satır öğrencinin.
 
 ### FR-05 — Veli–öğrenci ilişkisi
 
@@ -978,7 +993,8 @@ transaction'ında ve veritabanı kısıtıyla** kontrol edilir.
 **BR-030 — İlişki bitince koçun erişimi salt okunur olur.** Koç o ilişkinin geçmişini okumaya devam
 eder (hakediş geçmişi için şart) ama yeni hiçbir şey üretemez: görev, ödev, ders, dosya, bildirim
 yok. Öğrenci o koçun paylaştığı dosyaları ve önerdiği kaynakları görmeye devam eder. Öğrenci
-kendisine verilen materyali kaybetmemeli (K-18).
+kendisine verilen materyali kaybetmemeli (K-18). Salt okunur, onaylamayı da kapsar: bağ bittiğinde
+onay bekleyen iş **kalıcı olarak orada donar**, tamamlanmadı sayılır (2026-10-30, [[FR-04]]).
 
 ## İş (görev / ödev)
 
@@ -1158,7 +1174,6 @@ denetim kaydı yazılır.
 | [[Open Questions\|Q-12]] | Reşit olmayan hesapta KVKK rızasını kim verir | FR-01 |
 | [[Open Questions\|Q-13]] | Koç gönderimden sonra görevi düzenleyebilir mi | FR-06 |
 | [[Open Questions\|Q-14]] | Tekrarlayan dersler | FR-09 |
-| [[Open Questions\|Q-17]] | İlişki biterken onay bekleyen işe ne olur | FR-04 |
 | [[Open Questions\|Q-19]] | Hesap silmede bekleme süresi | FR-01 |
 | [[Open Questions\|Q-20]] | Onaysız deneme sonucu istatistiğe girer mi (A-01) | FR-15, BR-017 |
 | [[Open Questions\|Q-21]] | Beta aktif öğrenci limiti (A-03) | FR-22 |
@@ -1168,6 +1183,7 @@ denetim kaydı yazılır.
 | [[Open Questions\|Q-25]] | Reddedilen deneme sonucunun akıbeti (A-08) | FR-15 |
 | [[Open Questions\|Q-26]] | Müşterinin teknik planıyla çelişkiler — **platform tarafı kapandı** ([[ADR-0017]]), kimlik doğrulama ve barındırma tarafı açık | FR-16 |
 | [[Open Questions\|Q-27]] | Rol hayat boyu sabit mi kalmalı, yoksa hesap boşken değiştirilebilir mi | FR-01, ADR-0014 |
+| [[Open Questions\|Q-28]] | Onaylayacak koç bağı bitirirse onay bekleyen deneme sonucu ne olur | FR-15, BR-031 |
 
 Cevabı bilinmeyen bir kuralı **kodda uydurma** — [[Open Questions]]'a satır ekle.
 

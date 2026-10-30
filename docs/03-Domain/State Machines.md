@@ -1,7 +1,7 @@
 ---
 title: State Machines
 status: draft
-updated: 2026-10-14
+updated: 2026-10-30
 ---
 
 # State Machines
@@ -74,6 +74,12 @@ Guards:
 
 The on-time/late branch uses `submittedAt`, never `approvedAt` ([[BR-009]]) — doubly important now
 that most items are never explicitly approved.
+
+**`PENDING_APPROVAL` can be terminal.** If the assigning coach's link ends while an item waits there,
+no further transition is possible — approving is a write, and an `ENDED` link grants none
+([[BR-030]]). The item stays pending for good and counts as not completed, neither late nor overdue
+([[FR-04|FR-04.13]], owner decision 2026-10-30). Nothing special is stored for this: the derivation
+simply never receives another fact.
 
 ## Lesson ([[FR-09]], [[FR-10]])
 

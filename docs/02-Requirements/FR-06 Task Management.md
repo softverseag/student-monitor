@@ -6,7 +6,7 @@ area: work
 source: "§6, §7, §8 · v2 §5, §6"
 status: specified
 priority: must
-updated: 2026-10-14
+updated: 2026-10-30
 ---
 
 # FR-06 — Task Management
@@ -122,6 +122,11 @@ way, *submitted* and *approved* must never collapse into one timestamp.
 - Tasks may originate from a study plan ([[FR-23]]); plan-born tasks carry their plan/topic
   reference but behave identically.
 - Editing after submission: [[Open Questions|Q-13]].
+- **A `PENDING_APPROVAL` item outlives the relationship.** If the assigning coach's link ends while
+  the item waits, it stays `PENDING_APPROVAL` for good and counts as not completed — no auto-approve,
+  no auto-return ([[FR-04|FR-04.13]], [[BR-030]]). Statistics queries must therefore treat
+  "pending" as a non-completed bucket that is neither late nor overdue, not as a transient state
+  that will resolve.
 
 ## Open questions
 

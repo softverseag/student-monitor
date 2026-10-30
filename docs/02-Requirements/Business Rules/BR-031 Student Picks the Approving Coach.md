@@ -4,7 +4,7 @@ aliases: [BR-031, İK-031]
 source: "İK-031"
 area: exams
 status: specified
-updated: 2026-10-14
+updated: 2026-10-30
 ---
 
 # BR-031 — The student picks the coach who approves an exam result
@@ -23,4 +23,8 @@ coaches. Only that coach can approve or reject; every other coach gets 404 on th
 **Verification.** For a student with coaches A and B who picked A: B's approve and reject calls
 return 404; A's succeed and are recorded with coach and timestamp.
 
-**Related.** [[FR-15]] · [[BR-016]] · [[BR-007]]
+**Open.** What happens to a result still pending when that coach's link ends is [[Open Questions|Q-28]].
+The equivalent question for coach-owned work is decided — it freezes ([[FR-04|FR-04.13]]) — but this
+row is the student's own data, so the same answer is not assumed.
+
+**Related.** [[FR-15]] · [[BR-016]] · [[BR-007]] · [[BR-030]]

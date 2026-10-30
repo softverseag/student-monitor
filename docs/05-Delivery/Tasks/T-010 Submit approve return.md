@@ -6,7 +6,7 @@ status: todo
 milestone: M2
 area: work
 requirements: [FR-06]
-updated: 2026-10-14
+updated: 2026-10-30
 ---
 
 # T-010 — Submit, approve, return, derived status
@@ -30,6 +30,9 @@ updated: 2026-10-14
       explaining why `approvedAt` is deliberately unused
 - [ ] Derived `OVERDUE`, no cron job ([[ADR-0008]])
 - [ ] Resubmission after a return
+- [ ] Statistics treat `PENDING_APPROVAL` as a non-completed bucket that is neither late nor
+      overdue — it can be terminal when the assigning coach's link ends
+      ([[FR-04|FR-04.13]], [[BR-030]])
 
 ## Done when
 
@@ -40,3 +43,4 @@ updated: 2026-10-14
 - [ ] Never submitted, past due → `OVERDUE`, counted separately from late ([[BR-010]])
 - [ ] Changing the coach's default cutoff never reclassifies an existing item ([[BR-027]])
 - [ ] Return with an empty note succeeds
+- [ ] Ending the link on a pending item leaves it pending and in no completed, late or overdue count
