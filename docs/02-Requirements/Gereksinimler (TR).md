@@ -322,8 +322,28 @@ görevler silinmez ([[BR-025]]).
 ve "şu an"ın fonksiyonu. "Gecikenleri işaretle" diye cron çalıştırma; sorguda hesapla. Zamanında /
 geç ayrımı da öyle.
 
-**Açık.** [[Open Questions|Q-13]] koç gönderimden sonra görevi düzenleyebilir mi · geri
-gönderimden sonra hangi gönderim gecikmeyi belirler (son gönderim öneriliyor, onaylanmadı).
+**Gönderimden sonra düzenleme** (karar 2026-10-30, [[Open Questions|Q-13]] kapandı).
+
+- Atayan koç, öğrenci gönderdikten **sonra da** işi düzenleyebilir: içerik, ders, konu ve **son
+  tarih**. İş onay beklerken de, tamamlanmışken de. Yalnızca atayan koç ([[BR-007]]).
+- Düzenleme **gönderimi iptal etmez**. `submittedAt` yerinde kalır, iş `OPEN`'a dönmez. İşi tekrar
+  yaptırmanın yolu **geri göndermektir**; ikisi ayrı eylem.
+- Düzenlemeden sonra durum **yeniden türetilir** ([[ADR-0008]]). Yani son tarihi değiştirmek bir işi
+  "zamanında"dan "geç"e taşıyabilir — bu kasıtlı: istatistik her zaman işin **şu anki** son tarihini
+  yansıtır.
+- **Son gönderim esas alınır.** Gönderildi → geri gönderildi → tekrar gönderildi zincirinde gecikme
+  **en son** `submittedAt`'ten hesaplanır, ilkinden değil ([[BR-009]]). Önceki gönderimler geçmişte
+  durur ama durumu belirlemez. Zamanında bir ilk gönderim, geç yapılan bir tekrarı aklamaz.
+- **Gecikme saati donmuş kalır** ([[BR-027]]). Koç son tarihi oynatabilir; o işe kendi güncel
+  varsayılan saatini yeniden yazamaz — yoksa eski bir iş, atandığında var olmayan bir kurala göre
+  sessizce yeniden sınıflanır.
+- Her düzenleme **denetim kaydı** yazar (kim, ne zaman, hangi alan — [[FR-21]]) ve öğrenci işin
+  gönderiminden sonra değiştiğini görür.
+- **Silme yok.** Ne gönderimden önce ne sonra ([[BR-025]]).
+
+**Kabul edilen bedel.** Koç son tarihi geriye çekip zamanında bir tamamlamayı geç hâle getirebilir.
+Önlem engellemek değil, **görünürlük**: değişiklik denetime yazılır ve öğrenci görür. Engellemek
+zaten yetkiyi ortadan kaldırmazdı — aynı koç tamamlanmış işi geri gönderebiliyor ([[BR-006]]).
 
 ### FR-07 — Ödev yönetimi
 
@@ -1023,7 +1043,8 @@ aralarında telefondan geri gönderiyor; gerekçe dayatırsan ya geri göndermey
 yalnızca kendi gönderimini kontrol eder. Koçun yanıt süresi için öğrenciyi cezalandırmak istatistiği
 baştan sahte yapar — ve bunun faturasını veliler koça keser. `approvedAt` hiçbir gecikme
 karşılaştırmasına girmez; **bu, kuralı bilmeyen birine hata gibi göründüğü için kodda yorum satırını
-hak ediyor.**
+hak ediyor.** Hangi gönderim? **En sonu** (2026-10-30). Gönderilip geri gönderilen ve tekrar
+gönderilen bir iş, en son `submittedAt`'e göre değerlendirilir.
 
 **BR-010 — Geç tamamlanan ile hiç tamamlanmayan aynı şey değil.** Asla aynı istatistikte
 raporlanmaz. Bir öğrenci hakkında **zıt** şeyler söylerler: her şeyi bir gün geç bitirenin planlama
@@ -1172,7 +1193,6 @@ denetim kaydı yazılır.
 | [[Open Questions\|Q-04]] | `NO_SHOW` faturalanır mı — koç ayarının **varsayılanı** (A-11) | FR-19, FR-25 |
 | [[Open Questions\|Q-10]] | Abonelik paketleri, fiyatlar, ödeme sağlayıcı (A-02) | FR-22 (v1.1) |
 | [[Open Questions\|Q-12]] | Reşit olmayan hesapta KVKK rızasını kim verir | FR-01 |
-| [[Open Questions\|Q-13]] | Koç gönderimden sonra görevi düzenleyebilir mi | FR-06 |
 | [[Open Questions\|Q-14]] | Tekrarlayan dersler | FR-09 |
 | [[Open Questions\|Q-19]] | Hesap silmede bekleme süresi | FR-01 |
 | [[Open Questions\|Q-20]] | Onaysız deneme sonucu istatistiğe girer mi (A-01) | FR-15, BR-017 |

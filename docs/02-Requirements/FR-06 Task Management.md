@@ -94,6 +94,29 @@ way, *submitted* and *approved* must never collapse into one timestamp.
 - **FR-06.21** Past tasks are never deleted after completion or after the deadline passes
   ([[BR-025]]).
 
+### Editing after submission (decided 2026-10-30, answers [[Open Questions|Q-13]])
+
+- **FR-06.22** The assigning coach **can edit an item after the student has submitted it** — content,
+  subject, topic and due date — whether it is `PENDING_APPROVAL` or already completed. Only that
+  coach ([[BR-007]]); another coach of the same student gets 404 ([[BR-024]]).
+- **FR-06.23** An edit **does not undo the submission**. The item keeps its `submittedAt` and does
+  not return to `OPEN`. Sending work back is what [[BR-008|return]] is for; the two are separate
+  actions and must not be conflated in the API.
+- **FR-06.24** After an edit the status is simply **re-derived** from the new facts ([[ADR-0008]]).
+  Editing the due date can therefore move an item between `COMPLETED_ON_TIME` and `COMPLETED_LATE`,
+  and that is intended: the statistic always reflects the deadline the item currently carries.
+- **FR-06.25** **The latest submission is the one that counts** (decided 2026-10-30). Where an item
+  has several submissions — submitted, returned, resubmitted — lateness is computed from the **most
+  recent** `submittedAt`, never the first ([[BR-009]]). Earlier submissions stay in the history
+  (FR-06.19) but no longer drive the status.
+- **FR-06.26** The item's **late cutoff stays frozen** through an edit ([[BR-027]]). A coach may move
+  the due date; they cannot re-take their current default cutoff, or editing an old item would
+  silently reclassify it under a rule that did not exist when it was assigned.
+- **FR-06.27** Every edit writes an audit entry with actor, timestamp and the fields that changed
+  ([[FR-21]]), and the student can see that the item was edited after they submitted it.
+- **FR-06.28** There is still **no delete**. An item is never removed, before or after submission
+  ([[BR-025]]); a coach who wants the work redone returns it.
+
 ## Acceptance criteria
 
 - [ ] Submitting a default task at 19:59 with cutoff 20:00 on the due date yields
@@ -110,6 +133,14 @@ way, *submitted* and *approved* must never collapse into one timestamp.
 - [ ] Bulk-approving 12 items writes 12 audit entries, each flagged as bulk.
 - [ ] The completion notification reaches exactly one coach.
 - [ ] The full event history of a task with two returns and three submissions is reconstructable.
+- [ ] A task submitted on time, then edited by the coach to an earlier due date, reads
+      `COMPLETED_LATE` — with the submission intact and an audit entry naming the changed field
+      (FR-06.22–24, FR-06.27).
+- [ ] A task submitted on time, returned, then resubmitted after the deadline reads
+      `COMPLETED_LATE`: the last submission decides, not the first (FR-06.25).
+- [ ] Editing the due date leaves the item's frozen late cutoff untouched (FR-06.26, [[BR-027]]).
+- [ ] An edit never moves the item back to `OPEN` and never clears `submittedAt` (FR-06.23).
+- [ ] A second coach of the same student gets 404 on the edit route (FR-06.22, [[BR-024]]).
 
 ## Design notes
 
@@ -121,7 +152,18 @@ way, *submitted* and *approved* must never collapse into one timestamp.
   by v2 decision K-22: one entity, a `type` field, type-specific optional fields).
 - Tasks may originate from a study plan ([[FR-23]]); plan-born tasks carry their plan/topic
   reference but behave identically.
-- Editing after submission: [[Open Questions|Q-13]].
+- **Editing after submission is cheap precisely because status is derived** (FR-06.22–24). There is
+  no stored status to migrate and no recomputation job: change `dueAt`, and the next read gives the
+  new answer. The same decision under a stored-status model would need a backfill on every edit, and
+  would be the kind of thing that silently drifts ([[ADR-0008]]).
+- **`submittedAt` means "the latest submission"** (FR-06.25). Write it that way once, in the shared
+  derivation, rather than letting each query decide — a query that joins the *first* submission will
+  look correct and quietly disagree with every other number on the screen.
+- **The honest cost of allowing edits** (accepted 2026-10-30): a coach can move a due date backwards
+  and turn an on-time completion into a late one. The mitigations are visibility, not prevention —
+  the edit is audited ([[FR-21]]) and the student sees that the item changed after they submitted
+  (FR-06.27). Blocking the edit would not remove the capability anyway: the same coach can already
+  return a completed item ([[BR-006]]).
 - **A `PENDING_APPROVAL` item outlives the relationship.** If the assigning coach's link ends while
   the item waits, it stays `PENDING_APPROVAL` for good and counts as not completed — no auto-approve,
   no auto-return ([[FR-04|FR-04.13]], [[BR-030]]). Statistics queries must therefore treat
@@ -130,8 +172,9 @@ way, *submitted* and *approved* must never collapse into one timestamp.
 
 ## Open questions
 
-- [[Open Questions|Q-13]] — can a coach edit a task after submission?
-- Which submission determines lateness after a return (last submission proposed; unconfirmed).
+- [[Open Questions|Q-13]] — **answered** (owner, 2026-10-30): yes, the assigning coach can edit
+  after submission, and the **last** submission is what lateness is measured from. See
+  FR-06.22–28. Delete remains out — [[BR-025]] was never in question.
 
 ## Related
 
@@ -139,6 +182,10 @@ way, *submitted* and *approved* must never collapse into one timestamp.
 
 ## Change log
 
+- 2026-10-30 — Q-13 answered by the product owner: the assigning coach may edit an item after
+  submission, and the **latest** submission determines lateness (FR-06.22–28). The frozen cutoff
+  ([[BR-027]]) and the no-delete rule ([[BR-025]]) are unchanged. Also noted: a `PENDING_APPROVAL`
+  item can outlive the relationship ([[FR-04|FR-04.13]]).
 - 2026-10-14 — v2 integration: dispute model as default ([[BR-006]] reversed, K-13/K-14),
   requires-approval flag, bulk approval, frozen late cutoff ([[BR-027]]), free-text subject/topic
   with autocomplete, read-only visibility for other coaches ([[BR-024]] see/manage split)

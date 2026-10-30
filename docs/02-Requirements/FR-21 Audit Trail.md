@@ -6,7 +6,7 @@ area: platform
 source: "§34, §8"
 status: specified
 priority: must
-updated: 2026-09-12
+updated: 2026-10-30
 ---
 
 # FR-21 — Status and Action History
@@ -25,11 +25,14 @@ Cheap to build now; impossible to backfill later.
 
 - **FR-21.1** Significant state changes are traceable, with **actor** and **timestamp** preserved.
 - **FR-21.2** At minimum, these events are recorded:
-  task/assignment creation, completion request, return, approval, lesson request, lesson
+  task/assignment creation, **task/assignment edit after submission** (2026-10-30,
+  [[FR-06|FR-06.27]]), completion request, return, approval, lesson request, lesson
   acceptance/decline, lesson cancellation, mock exam result submission/approval, resource
   recommendation, price change, timesheet/earning creation.
 - **FR-21.3** For work items specifically (§8): creation time, due date, each submission time, each
-  approval time, each return time, the return note if any, resubmission details, final status.
+  approval time, each return time, the return note if any, resubmission details, final status, and
+  **each edit with the fields it changed** — a due-date edit can move the item between on-time and
+  late ([[FR-06|FR-06.24]]), so the old value has to stay recoverable.
 - **FR-21.4** Submission time and approval time are stored as distinct fields and never substituted.
 - **FR-21.5** Historical records are preserved for reporting; they are not deleted when a
   relationship ends or an item completes ([[BR-025]]).
@@ -59,4 +62,6 @@ Cheap to build now; impossible to backfill later.
 
 ## Change log
 
+- 2026-10-30 — editing a work item after submission is now allowed ([[FR-06|FR-06.22]], Q-13),
+  so the edit event and its changed fields join the audited list (FR-21.2, FR-21.3)
 - 2026-09-12 — created from catalog §34

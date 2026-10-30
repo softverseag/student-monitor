@@ -37,8 +37,16 @@ elif now > dueAt + lateCutoff:   OVERDUE
 else:                            OPEN
 ```
 
-On-time vs late is computed from `submittedAt <= dueAt + lateCutoff` and gives the same answer
-forever; `approvedAt` plays no part in it.
+On-time vs late is computed from `submittedAt <= dueAt + lateCutoff`; `approvedAt` plays no part in
+it.
+
+*As amended 2026-10-30 ([[Open Questions|Q-13]]):* `submittedAt` means **the latest submission**, and
+the coach may **edit a submitted item** — including its due date. So the derivation gives the same
+answer forever *for a given set of facts*, not unconditionally: an edit changes a fact and the next
+read reflects it, which is the point of deriving rather than storing. The frozen `lateCutoff`
+([[BR-027]]) is the one fact an edit cannot touch, so no item is ever reclassified under a rule that
+did not exist when it was assigned. Both are pure-function inputs — implement them in the one shared
+derivation, not per query ([[FR-06|FR-06.22–26]]).
 
 ## Consequences
 

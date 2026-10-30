@@ -7,6 +7,8 @@ source: "§4 · v2 §3"
 status: specified
 priority: must
 updated: 2026-10-30
+checkedBy:
+  - Batuhan Elmas
 ---
 
 # FR-04 — Coach–Student Relationship
@@ -114,6 +116,9 @@ See [[State Machines]] — `CoachStudentLink`:
 
 ## Change log
 
+- 2026-10-30 — read in full and approved by Batuhan Elmas (`checkedBy`). [[Open Questions|Q-28]] is
+  consciously left open: it is a follow-up in the exam area ([[FR-15]]), not a reservation about this
+  note.
 - 2026-10-30 — Q-17 answered by the product owner: work pending approval when a link ends freezes as
   `PENDING_APPROVAL` and counts as not completed (FR-04.13–15). The mock-exam variant of the same
   situation is now tracked separately as Q-28.

@@ -75,6 +75,12 @@ Guards:
 The on-time/late branch uses `submittedAt`, never `approvedAt` ([[BR-009]]) — doubly important now
 that most items are never explicitly approved.
 
+**Editing is not a transition.** The assigning coach may edit a submitted item, due date included
+([[FR-06|FR-06.22]], Q-13 answered 2026-10-30). That moves no arrow in this diagram: it changes the
+facts the status is derived from, so an item can cross between `COMPLETED_ON_TIME` and
+`COMPLETED_LATE` without any state change. An edit never clears `submittedAt` — returning is the
+only way back. Where an item has several submissions, the **latest** one decides ([[BR-009]]).
+
 **`PENDING_APPROVAL` can be terminal.** If the assigning coach's link ends while an item waits there,
 no further transition is possible — approving is a write, and an `ENDED` link grants none
 ([[BR-030]]). The item stays pending for good and counts as not completed, neither late nor overdue

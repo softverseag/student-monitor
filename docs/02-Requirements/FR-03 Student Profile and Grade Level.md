@@ -6,7 +6,9 @@ area: identity
 source: "§3.4"
 status: specified
 priority: must
-updated: 2026-10-20
+updated: 2026-10-30
+checkedBy:
+  - Batuhan Elmas
 ---
 
 # FR-03 — Student Profile and Grade Level
@@ -82,6 +84,8 @@ None. The exam-track list and the September-rollover behaviour were both decided
 
 ## Change log
 
+- 2026-10-30 — read in full and approved by Batuhan Elmas (`checkedBy`). No requirement changed;
+  the note had no open questions left after the 2026-10-20 decisions.
 - 2026-10-20 — two gaps closed by the product owner: the exam-track list is fixed with a `BELIRSIZ`
   value and YKS-prefixed labels (FR-03.5), and grade level is **never** auto-updated — no September
   prompt, manual edit only (FR-03.6).

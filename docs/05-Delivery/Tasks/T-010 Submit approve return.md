@@ -33,6 +33,11 @@ updated: 2026-10-30
 - [ ] Statistics treat `PENDING_APPROVAL` as a non-completed bucket that is neither late nor
       overdue — it can be terminal when the assigning coach's link ends
       ([[FR-04|FR-04.13]], [[BR-030]])
+- [ ] `edit` after submission, assigning coach only: content, subject, topic, due date; keeps
+      `submittedAt`, never returns the item to `OPEN`, leaves the frozen cutoff alone, writes an
+      audit row with the changed fields ([[FR-06|FR-06.22–27]])
+- [ ] The derivation reads the **latest** `submittedAt`, not the first ([[BR-009]]) — one shared
+      implementation, not per query
 
 ## Done when
 
@@ -44,3 +49,6 @@ updated: 2026-10-30
 - [ ] Changing the coach's default cutoff never reclassifies an existing item ([[BR-027]])
 - [ ] Return with an empty note succeeds
 - [ ] Ending the link on a pending item leaves it pending and in no completed, late or overdue count
+- [ ] On-time item edited to an earlier due date → reads `COMPLETED_LATE`, submission intact, audit
+      row names the changed field
+- [ ] On-time, returned, resubmitted past the cutoff → `COMPLETED_LATE` (last submission decides)
