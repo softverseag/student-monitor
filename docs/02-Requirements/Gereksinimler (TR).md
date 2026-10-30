@@ -247,6 +247,12 @@ değil: bir reşit olmayanın verisini kimin göreceğine karar veren, mesleki s
 
 **Durum makinesi.** `PENDING_COACH_APPROVAL → ACTIVE → REVOKED`, ayrıca `REJECTED`.
 
+**Açık (30 Ekim incelemesi).** Veli bağını **kim iptal edebilir**? Gereksinim aktör söylemiyor;
+[[State Machines]] "koç veya veli" diyor. Doğruysa, koç bağında iki tarafın da tek başına
+bitirebilmesiyle ([[FR-04]]) arasındaki fark bilinçli demek — öğrenci kendi velisini kesemiyor — ve
+bunun bir cümleyle yazılması gerekiyor. İkincisi: **koç veliyi doğrudan davet edebilir mi?** Şu an
+yalnızca velinin öğrenci kodunu girdiği yön tanımlı.
+
 **Tasarım notu.** İki veli genelde anne ve baba demek; ikisi de aynı şeyi görür, veli başına ayrı
 ayar yok.
 
