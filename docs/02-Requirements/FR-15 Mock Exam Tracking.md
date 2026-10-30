@@ -6,7 +6,7 @@ area: exams
 source: "§22, §23, §24 · v2 §10"
 status: specified
 priority: must
-updated: 2026-10-14
+updated: 2026-10-30
 ---
 
 # FR-15 — Mock Exam (Deneme) Tracking
@@ -89,6 +89,9 @@ data, the student picks which coach does ([[BR-031]]).
 - [[Open Questions|Q-16]] — **answered** (v2 §10.3): `REJECTED` exists.
 - [[Open Questions|Q-20]] — do unapproved results enter statistics? (A-01)
 - [[Open Questions|Q-25]] — the aftermath of a rejection. (A-08)
+- [[Open Questions|Q-28]] — a result left `PENDING_APPROVAL` when the approving coach ([[BR-031]])
+  ends the link. Coach-owned work freezes there by decision ([[FR-04|FR-04.13]]); whether the
+  student may re-point their own result at another active coach is open.
 
 ## Related
 

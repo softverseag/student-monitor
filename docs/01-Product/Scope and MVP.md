@@ -1,7 +1,7 @@
 ---
 title: Scope and MVP
 status: draft
-updated: 2026-10-14
+updated: 2026-10-20
 ---
 
 # Scope and MVP
@@ -13,6 +13,11 @@ The cut line was redrawn by the October 2026 requirement set ([[Source - Require
 [[Source - Decision Log (TR)]]): exams, resources, files, report cards, plans and the optional
 finance module moved **into** v1; the editable schedule grid, curriculum module, QR linking and
 payment integration moved **out**.
+
+**Redrawn again on 2026-10-20** by the product owner: the whole **finance module leaves v1**
+([[FR-18]], [[FR-19]], [[FR-25]]), and the platform split changed — mobile now carries all three
+roles, web shrinks to a coach-only portal ([[ADR-0017]]). Both changes are explained in the tables
+below.
 
 ## The core loop we must nail first
 
@@ -34,8 +39,8 @@ frictionless on a phone, nothing else matters.
 | Tasks + assignments (dispute model, bulk approval) | [[FR-06]], [[FR-07]] | the core loop |
 | **Study plans — prepare once, assign to many** | [[FR-23]] | the client calls it v1's most important module; it justifies the subscription |
 | Filiz progress character (thresholds decided) | [[FR-08]] | the reason a student opens the app daily |
-| Lesson request / accept / decline / cancel, 3 lesson types, group lessons | [[FR-09]] | drives both calendar and money |
-| Attendance (always on, finance-independent) | [[FR-10]] | the input to earnings and the parent's first question |
+| Lesson request / accept / decline / cancel, 3 lesson types, group lessons | [[FR-09]] | the calendar half of the relationship |
+| Attendance (always on, finance-independent) | [[FR-10]] | the parent's first question — and the earnings input when finance arrives in v1.1. Kept for v1; revisit alongside the calendar work |
 | Read-only student timeline + school-hours setting | [[FR-11]] | the student's day at a glance, without the grid's cost |
 | Mock exam tracking (auto net, coach approval) | [[FR-15]] | the most-watched number in exam prep |
 | Resource pool + recommendations | [[FR-12]] | feeds assignments; small |
@@ -44,8 +49,7 @@ frictionless on a phone, nothing else matters.
 | Daily + weekly + monthly progress, topic % from plans | [[FR-14]] | proves the loop is working |
 | Event notifications, task-time reminders with quiet hours, templates with audience | [[FR-16]] | the only mechanism that makes students open the app (K-35) |
 | Coach follow-up view | [[FR-17]] | how a coach handles 30 students |
-| **Finance module (opt-in): pricing, earnings, ledger, statements** | [[FR-18]], [[FR-19]], [[FR-25]] | the coach's strongest pull — made optional so wary coaches still adopt |
-| Parent read-only view behind 3 switches | [[FR-20]] | closes the trust loop |
+| Parent read-only view behind 2 switches (progress, exams) | [[FR-20]] | closes the trust loop |
 | Free beta with enforced student limit | [[FR-22]] | so v1.1 package tiers mean something (K-28) |
 | Audit trail from day one | [[FR-21]] | append-only, cannot be backfilled |
 
@@ -53,14 +57,15 @@ frictionless on a phone, nothing else matters.
 
 | Area | Reason |
 | --- | --- |
+| **The entire finance module — pricing, timesheet, earnings, ledger, statements** ([[FR-18]], [[FR-19]], [[FR-25]]) | **decided 2026-10-20.** Two reasons, both the owner's: handling other people's money carries legal and KVKK exposure we should not rush into, and coaches already track fees their own way, so it is not an urgent need. v1 proves the coaching loop instead. The rules stay written ([[BR-020]]–[[BR-023]], [[BR-028]], [[BR-029]]) and unimplemented. |
 | Payment / subscription billing integration | pricing undecided; free beta first ([[Open Questions|Q-10]]) |
-| Excel plan import | the plan editor covers the job ([[FR-23]]) |
+| Excel plan import | the plan editor plus plan duplication covers the job; coaches' sheets share no shape ([[FR-23]]) |
 | Editable student calendar grid | the coach cannot see it ([[BR-014]]), so high cost, no commercial return (K-36) |
 | Independent curriculum/topic module | content-production cost; derived from plan tasks instead (K-26) |
 | QR-code linking | invite code and link cover it |
 | In-resource progress tracking (page/test position) | pool holds only the book's identity in v1 |
 | Virus scanning of uploads | deliberately deferred risk; content-type validation ships in v1 ([[FR-13]]) |
-| End-to-end finance encryption (key held by the coach) | 3–4 weeks of work; validate coach resistance first (K-08) |
+| End-to-end finance encryption (key held by the coach) | 3–4 weeks of work; validate coach resistance first (K-08). Moot while the finance module itself is out. |
 | Admin / support panel | direct DB access in v1 (v2 §1) |
 | Institution / multi-coach organisation accounts | expectations *conflict* with the individual-coach model; a nullable `organizationId` is kept in the data model (K-12) |
 
@@ -76,8 +81,9 @@ frictionless on a phone, nothing else matters.
 ## Accepted risks (v2 §23.2)
 
 1. **No messaging** — see above.
-2. **iOS push on a PWA** works only after add-to-home-screen; student adoption depends on reminders,
-   so install guidance matters. (Mechanism depends on [[Open Questions|Q-26]].)
+2. ~~**iOS push on a PWA** works only after add-to-home-screen.~~ **Retired 2026-10-20** — we ship a
+   native mobile app ([[ADR-0017]]), so push is native and this risk is gone. It was the main reason
+   the single-PWA plan lost.
 3. **Student adoption is coach-dependent** — if the coach does not insist, no data is entered and
    Filiz stays empty; keep invite friction minimal.
 4. **KVKK ordering is backwards** — students sign themselves up but are mostly minors, and parental
@@ -88,16 +94,21 @@ frictionless on a phone, nothing else matters.
 
 ## Platform split for v1
 
-> [!warning] Under review — [[Open Questions|Q-26]]
-> The v2 technical plan assumes a **single responsive PWA** (K-27) instead of the Expo mobile app,
-> and self-managed JWT instead of Clerk. Until that conflict is resolved, the existing ADRs and the
-> split below stand.
+Decided 2026-10-20 — [[ADR-0017]]. The single-PWA plan (K-27) is rejected; the authentication half
+of [[Open Questions|Q-26]] (Clerk vs self-managed JWT) is still open.
 
 | App | Audience | Scope |
 | --- | --- | --- |
-| **Mobile** (Expo) | students, and coaches for quick approvals | full student experience; coach approvals, follow-up list, lesson requests |
-| **Web** (Next.js) | coaches, parents | full coach experience (plans, bulk assigning, earnings, follow-up); parent view |
+| **Mobile** (Expo) | **all three roles** — coaches, students, parents | the product. Full student and coach experience; the parent's single read-only screen |
+| **Web** (Next.js) | **coaches only** | a marketing site for the app plus a signed-in coach portal, there so plan authoring ([[FR-23]]) has a keyboard and a big screen |
 | **API** (NestJS) | all | one backend, all authorization here ([[BR-024]]) |
+
+Two consequences worth repeating, because they are easy to get wrong:
+
+- **Nothing is web-only.** Every coach feature ships on mobile too; web is an affordance, not a
+  capability. The coach chooses where to work.
+- **Coach-only web sign-in is a product surface, not a security boundary.** The API stays
+  role-neutral and relationship-scoped — never gate data on which client called.
 
 ## Cut-line principles
 
@@ -105,8 +116,13 @@ frictionless on a phone, nothing else matters.
 2. If a business rule is still open ([[Open Questions]]), ship the part that does not depend on it.
 3. Anything that writes history ships early, even if the reporting on top comes later — we can
    backfill reports, not events.
-4. The finance module must be severable: off by default, deletable on exit ([[BR-029]]).
+4. The finance module must be severable: off by default, deletable on exit ([[BR-029]]). It is out
+   of v1 entirely, which is the strongest form of the same principle — but nothing in v1 may be
+   built in a way that assumes money will never arrive.
 
 ## Related
+
+[[Kapsam ve MVP (TR)]] — this note in Turkish, for client conversations. A companion, not a source:
+where the two disagree, this one wins.
 
 [[Roadmap]] · [[Milestones]] · [[Requirements Index]] · [[Requirements v2 Delta]]

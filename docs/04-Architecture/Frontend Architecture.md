@@ -1,7 +1,7 @@
 ---
 title: Frontend Architecture
 status: draft
-updated: 2026-09-12
+updated: 2026-10-20
 ---
 
 # Frontend Architecture (web + mobile)
@@ -30,7 +30,7 @@ apps/<web|mobile>/src/
     files/                      # sharing                              FR-13
     notifications/              # feed, templates, push                FR-16
     students/                   # coach's follow-up view               FR-17
-    billing/                    # rates, timesheet, earnings           FR-18 FR-19
+    billing/                    # rates, timesheet, earnings           FR-18 FR-19  [v1.1]
     guardians/                  # parent view + sharing settings       FR-20
     subscription/               #                                      FR-22
     settings/
@@ -140,29 +140,34 @@ _layout.tsx                  providers: SWR, auth, theme
 
 ### Web — `apps/web/src/app/`
 
-Route groups carry the role guard, which is where [[FR-02]] lands in the UI:
+Web is a **marketing site plus a coach-only portal** ([[ADR-0017]]): no parent routes, no student
+routes. Route groups still carry the role guard, which is where [[FR-02]] lands in the UI — the
+guard is a UI redirect, never the thing protecting data.
 
 ```
 layout.tsx
-(auth)/login/page.tsx
+(marketing)/page.tsx         landing — what the app is, where to get it
+(auth)/login/page.tsx        coaches only in v1; other roles are pointed at the app
 (coach)/
   layout.tsx                 coach guard
   page.tsx                   follow-up: waiting on me / behind / fine   FR-17
   students/[id]/page.tsx
   work/page.tsx
+  plans/page.tsx             the portal's reason to exist                FR-23
   lessons/page.tsx
-  earnings/page.tsx                                                     FR-19
-(parent)/
-  layout.tsx                 parent guard
-  children/[id]/page.tsx                                                FR-20
+  earnings/page.tsx                                                     FR-19  [v1.1]
 ```
 
 **Modals on web:** use a plain client-side dialog inside the screen unless the modal needs its own
 URL. Only then reach for parallel + intercepting routes (`@modal/(.)work/[id]`) — they are powerful
 and they are the part of the App Router people most often get wrong.
 
-Note what is absent from web: `schedule/`. A coach cannot see a student's personal calendar
-([[BR-014]]) and students are on mobile, so the feature does not ship there.
+Note what is absent from web: `schedule/`, and the whole `(parent)` and student side. A coach cannot
+see a student's personal calendar ([[BR-014]]), and students and parents live in the mobile app
+([[ADR-0017]]).
+
+**Mobile carries all three roles**, so every coach route above has a mobile counterpart. Nothing is
+web-only — the portal is a bigger canvas for the same features, not a separate product.
 
 ## Import rules
 

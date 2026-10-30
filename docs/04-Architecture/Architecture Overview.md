@@ -13,8 +13,8 @@ One API, three clients, one shared domain package.
 ```mermaid
 flowchart TB
   subgraph clients [Clients]
-    M["Mobile — Expo / React Native<br/>students, coach quick actions"]
-    W["Web — Next.js App Router<br/>coaches, parents"]
+    M["Mobile — Expo / React Native<br/>coaches · students · parents"]
+    W["Web — Next.js App Router<br/>marketing + coach portal"]
   end
   subgraph shared ["packages/ — @sm/core · @sm/api"]
     SH["enums · Zod schemas · progress rules<br/>earnings rules · endpoints · SWR keys · copy"]

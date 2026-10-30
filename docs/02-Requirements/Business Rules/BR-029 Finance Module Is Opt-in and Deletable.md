@@ -4,10 +4,15 @@ aliases: [BR-029, İK-029]
 source: "İK-029"
 area: money
 status: specified
-updated: 2026-10-14
+updated: 2026-10-20
 ---
 
 # BR-029 — The finance module is opt-in and its data is truly deletable
+
+> [!info] v1.1 — the finance module is not built in v1
+> Deferred 2026-10-20 ([[Scope and MVP]]). The rule stands and is binding the moment the
+> module is built; there is simply nothing in v1 for it to govern.
+
 
 **Rule.** The finance module (prices, earnings, payments, statements) is **off by default**; a coach
 enables it deliberately, and the rest of the product works fully while it is off. When disabling the

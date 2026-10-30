@@ -67,10 +67,11 @@ unbearable if they go to the wrong person.
 
 - One `Notification` row per recipient per event, with `type` + structured `payload` — never a
   pre-rendered string, or translations and deep links become impossible later.
-- Channels: in-app feed plus push. The client plan assumes Web Push/VAPID on a PWA, which collides
-  with our Expo mobile app — the delivery mechanism is part of [[Open Questions|Q-26]]. Note the
-  client's accepted risk either way: on iOS, web push works only after the app is added to the home
-  screen (v2 §23.2).
+- Channels: in-app feed plus push. **Settled 2026-10-20** ([[ADR-0017]]): we ship a native mobile
+  app, so push is native (Expo push / APNs-FCM), not Web Push/VAPID on a PWA. The client's accepted
+  risk — on iOS, web push works only after add-to-home-screen (v2 §23.2) — no longer applies, and
+  was the main reason the single-PWA plan lost. The web portal is coach-only and does not need push
+  in v1.
 - Reminders imply infrastructure: a scheduled-job runner and a `scheduled_reminder`-style table —
   this is the mechanism that makes students open the app at all (K-35).
 - Templates want placeholders (`{{student}}`, `{{dueDate}}`) — cheap to add, and the reason a coach
@@ -80,14 +81,17 @@ unbearable if they go to the wrong person.
 ## Open questions
 
 - [[Open Questions|Q-11]] — **answered** (K-35, v2 §15.2): in-app + push, quiet hours exist and are
-  student-configured; coach messages bypass them. Delivery mechanism depends on
-  [[Open Questions|Q-26]].
+  student-configured; coach messages bypass them. Delivery mechanism **answered 2026-10-20** —
+  native mobile push ([[ADR-0017]]).
 
 ## Related
 
 [[FR-06]] · [[FR-09]] · [[FR-15]] · [[FR-17]] · [[FR-20]]
 
 ## Change log
+
+- 2026-10-20 — push delivery is native, not Web Push: the platform question behind it closed with
+  [[ADR-0017]].
 
 - 2026-10-14 — v2 integration: task-time reminders with student quiet hours (K-35), template
   audience field (K-34), send rate limit, event list extended

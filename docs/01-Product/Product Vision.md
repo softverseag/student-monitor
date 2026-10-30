@@ -1,7 +1,7 @@
 ---
 title: Product Vision
 status: draft
-updated: 2026-09-12
+updated: 2026-10-20
 ---
 
 # Product Vision
@@ -53,10 +53,14 @@ money in v1.
 - Not a school system: no classes, no grades, no teacher/administrator hierarchy.
 - Not an AI product: notification templates are stored text, explicitly not prompts (catalog §26).
 - No payment processing between coach and parent in v1.
+- **No finance module at all in v1** — pricing, earnings and the ledger ([[FR-18]], [[FR-19]],
+  [[FR-25]]) moved to v1.1 on 2026-10-20: legal/KVKK caution, and coaches already track fees their
+  own way ([[Scope and MVP]]).
 
 ## Success signals
 
-- A coach runs a full month — assigning, approving, scheduling, invoicing — without leaving the app.
+- A coach runs a full month — assigning, approving, scheduling — without leaving the app.
+  (Invoicing joins this list in v1.1.)
 - A student opens it daily without being told to.
 - A parent stops asking the coach "how is it going?" because they can see it.
 

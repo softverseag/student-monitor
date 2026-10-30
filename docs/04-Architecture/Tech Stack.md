@@ -13,8 +13,8 @@ updated: 2026-09-12
 | Backend | NestJS | modules map to requirement areas; DI makes the policy layer testable |
 | Database | PostgreSQL 16+ | partial unique indexes, `jsonb`, `tstzrange` if we want it |
 | ORM | Prisma | see [[ADR-0003]] |
-| Web | Next.js (App Router) + React | coaches and parents |
-| Mobile | Expo / React Native + Expo Router | students, plus coach quick actions |
+| Web | Next.js (App Router) + React | marketing site + coach-only portal ([[ADR-0017]]) |
+| Mobile | Expo / React Native + Expo Router | the product — coaches, students and parents ([[ADR-0017]]) |
 | Frontend structure | feature-sliced, identical in both apps | [[Frontend Architecture]], [[ADR-0009]] |
 | Server data | SWR | hooks and cache keys in `@sm/api` |
 | Client state | Zustand | feature-local and session stores |

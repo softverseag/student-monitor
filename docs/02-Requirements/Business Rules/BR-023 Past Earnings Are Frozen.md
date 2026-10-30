@@ -9,6 +9,11 @@ updated: 2026-09-12
 
 # BR-023 — Changing the price never rewrites past earnings
 
+> [!info] v1.1 — the finance module is not built in v1
+> Deferred 2026-10-20 ([[Scope and MVP]]). The rule stands and is binding the moment the
+> module is built; there is simply nothing in v1 for it to govern.
+
+
 **Rule.** Updating a student's current price must not retroactively change amounts already
 calculated for past lessons. A lesson delivered at 500 TL stays 500 TL after the price becomes
 600 TL.

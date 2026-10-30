@@ -6,7 +6,7 @@ area: parent
 source: "§30 · v2 §17"
 status: specified
 priority: must
-updated: 2026-10-14
+updated: 2026-10-20
 ---
 
 # FR-20 — Parent Information Access
@@ -26,13 +26,14 @@ that the work is happening and the money is accounted for — not a management c
 - **FR-20.2** The purpose on the parent side is general follow-up and information, not student
   management.
 - **FR-20.3** The coach controls visibility with exactly **three switches**, set per coach–student
-  relationship (K-29, v2 §17.1):
+  relationship (K-29, v2 §17.1). **In v1 only the first two exist** — the finance switch ships with
+  the finance module in v1.1 (2026-10-20 scope decision, [[Scope and MVP]]):
 
-  | Switch | Opens to the parent |
-  | --- | --- |
-  | **Progress** | weekly/daily progress, completed and missing work, lesson continuity, coach note |
-  | **Exams** | approved mock exam results and development ([[BR-017]]) |
-  | **Finance** | lesson price, debt, paid, balance, lesson breakdown — only effective while the coach's finance module is on ([[FR-25]]) |
+  | Switch | Opens to the parent | v1 |
+  | --- | --- | --- |
+  | **Progress** | weekly/daily progress, completed and missing work, lesson continuity, coach note | ✅ |
+  | **Exams** | approved mock exam results and development ([[BR-017]]) | ✅ |
+  | **Finance** | lesson price, debt, paid, balance, lesson breakdown — only effective while the coach's finance module is on ([[FR-25]]) | ⏳ v1.1 |
 
   A closed switch means that area **does not appear at all** in the parent's view — not greyed out,
   absent.
@@ -51,13 +52,16 @@ that the work is happening and the money is accounted for — not a management c
 - [ ] A newly approved parent sees the student's name and nothing else until the coach opens
       categories.
 - [ ] Turning off a category removes it from the parent's view immediately.
-- [ ] A parent's financial view shows price and earnings for every coach the student works with,
-      each attributed — but never a coach's pool total across other students.
+- [ ] *(v1.1, with the finance module)* A parent's financial view shows price and earnings for every
+      coach the student works with, each attributed — but never a coach's pool total across other
+      students.
 - [ ] Unapproved mock exam results never reach a parent ([[BR-017]]).
 - [ ] No parent endpoint allows a write to student data.
 
 ## Design notes
 
+- Two switches in v1, three once finance lands. The combination argument below is why the number is
+  small; the v1 cut makes it smaller still — four parent states instead of eight.
 - Three switches, not seven: the client cut the prototype's 7 toggles because the cost is the
   **combination count** — 128 states each needing a sensible parent screen vs 8 (K-29). Exams kept
   its own switch because results are sensitive.
@@ -69,7 +73,7 @@ that the work is happening and the money is accounted for — not a management c
 ## Open questions
 
 - [[Open Questions|Q-05]] — **answered** (K-29): three switches — progress / exams / finance, all
-  off by default.
+  off by default. **v1 ships two of them** (2026-10-20): the finance switch waits for [[FR-25]].
 
 ## Related
 
@@ -78,6 +82,9 @@ that the work is happening and the money is accounted for — not a management c
 
 ## Change log
 
+- 2026-10-20 — the **finance switch moves to v1.1** with the finance module; v1 ships progress and
+  exams only. The parent's v1 surface is a single read-only mobile screen ([[ADR-0017]]) — parents
+  do not get a web view.
 - 2026-10-14 — v2 integration: three visibility switches (K-29), hard never-visible list, report
   card visible, finance switch tied to the finance module
 - 2026-09-12 — created from catalog §30

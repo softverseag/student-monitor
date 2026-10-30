@@ -1,7 +1,7 @@
 ---
 title: State Machines
 status: draft
-updated: 2026-10-14
+updated: 2026-10-30
 ---
 
 # State Machines
@@ -75,6 +75,18 @@ Guards:
 The on-time/late branch uses `submittedAt`, never `approvedAt` ([[BR-009]]) — doubly important now
 that most items are never explicitly approved.
 
+**Editing is not a transition.** The assigning coach may edit a submitted item, due date included
+([[FR-06|FR-06.22]], Q-13 answered 2026-10-30). That moves no arrow in this diagram: it changes the
+facts the status is derived from, so an item can cross between `COMPLETED_ON_TIME` and
+`COMPLETED_LATE` without any state change. An edit never clears `submittedAt` — returning is the
+only way back. Where an item has several submissions, the **latest** one decides ([[BR-009]]).
+
+**`PENDING_APPROVAL` can be terminal.** If the assigning coach's link ends while an item waits there,
+no further transition is possible — approving is a write, and an `ENDED` link grants none
+([[BR-030]]). The item stays pending for good and counts as not completed, neither late nor overdue
+([[FR-04|FR-04.13]], owner decision 2026-10-30). Nothing special is stored for this: the derivation
+simply never receives another fact.
+
 ## Lesson ([[FR-09]], [[FR-10]])
 
 ```mermaid
@@ -87,17 +99,19 @@ stateDiagram-v2
   COMPLETED --> [*]
 ```
 
-A **group lesson** is one lesson record; each participant student has their own accept/decline,
-attendance and earning row ([[BR-028]]). Attendance is marked **only by the coach**, after the
-lesson, per participant:
+A **group lesson** is one lesson record; each participant student has their own accept/decline and
+attendance — plus, from v1.1, their own earning row ([[BR-028]]). Attendance is marked **only by the
+coach**, after the lesson, per participant:
 
-| Lesson outcome | Attendance | Billable (per-lesson model) |
+| Lesson outcome | Attendance | Billable (per-lesson model) — `[v1.1]` |
 | --- | --- | --- |
 | `COMPLETED`, student came | `ATTENDED` | yes |
 | `COMPLETED`, student absent | `NO_SHOW` | per-coach setting; default open ([[Open Questions|Q-04]]) |
 | `CANCELLED` | `CANCELLED` | **never** (v2 §8.3, decided) |
 
 Under the monthly-flat price model, billing comes from the period, not these rows ([[BR-021]]).
+**The billable column is v1.1** — attendance itself ships in v1 and is finance-independent
+([[FR-10]], [[Scope and MVP]]).
 
 ## Mock exam result ([[FR-15]])
 

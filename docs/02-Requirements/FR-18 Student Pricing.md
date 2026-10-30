@@ -4,15 +4,21 @@ aliases: [FR-18]
 title: Student Pricing
 area: money
 source: "§28 · v2 §16.2"
-status: specified
+status: deferred
 priority: must
-updated: 2026-10-14
+updated: 2026-10-20
 ---
 
 # FR-18 — Per-Student Pricing
 
 > **Source:** catalog §28 · [[Source - Requirements v2 (TR)|v2]] §16.2 · **Decisions:** K-02, K-03 ·
 > **Rules:** [[BR-020]], [[BR-022]], [[BR-023]], [[BR-029]]
+
+> [!warning] Deferred to v1.1 — not built in v1
+> The product owner took the **entire finance module out of v1** on 2026-10-20: handling other
+> people's money carries legal and KVKK exposure worth slowing down for, and coaches already track
+> fees their own way, so it is not urgent. v1 proves the coaching loop instead. This note stays
+> **specified and unimplemented** — the thinking is done, the build is not. See [[Scope and MVP]].
 
 ## Intent
 
@@ -74,6 +80,7 @@ no price data at all, and the rest of the product does not miss it.
 
 ## Change log
 
+- 2026-10-20 — **deferred to v1.1** with the rest of the finance module (legal/KVKK caution, no urgent coach need). Scope decision, not a requirement change — the requirements below still stand. See [[Scope and MVP]].
 - 2026-10-14 — v2 integration: two price models (K-02), per-lesson-type amounts (K-03), pricing
   gated behind the opt-in finance module ([[FR-25]])
 - 2026-09-12 — created from catalog §28

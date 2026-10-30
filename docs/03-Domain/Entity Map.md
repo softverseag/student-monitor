@@ -1,7 +1,7 @@
 ---
 title: Entity Map
 status: draft
-updated: 2026-10-14
+updated: 2026-10-20
 ---
 
 # Entity Map (ERD)
@@ -32,7 +32,8 @@ erDiagram
   }
   STUDENT_PROFILE {
     string userId FK
-    int gradeLevel "BR-026"
+    enum gradeLevel "5-12 or MEZUN, controlled list, never auto-updated, FR-03 BR-026"
+    enum examTrack "LGS, YKS_SAYISAL, YKS_ESIT_AGIRLIK, YKS_SOZEL, YKS_DIL, BELIRSIZ, FR-03"
     json schoolHours "one setting, not calendar entries, FR-11"
     json quietHours "defers reminders, never coach messages, FR-16"
   }

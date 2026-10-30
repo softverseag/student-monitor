@@ -4,10 +4,15 @@ aliases: [BR-021, İK-021]
 source: "İK-021"
 area: money
 status: specified
-updated: 2026-10-14
+updated: 2026-10-20
 ---
 
 # BR-021 — Earnings derive from the source records of the price model
+
+> [!info] v1.1 — the finance module is not built in v1
+> Deferred 2026-10-20 ([[Scope and MVP]]). The rule stands and is binding the moment the
+> module is built; there is simply nothing in v1 for it to govern.
+
 
 **Rule.** What generates an earning depends on the relationship's price model:
 
